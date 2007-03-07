@@ -1,0 +1,80 @@
+<p>
+&gt; You are creating a new user <br />
+</p>
+
+<table>
+<tr><td>
+
+<%= form_remote_tag(
+	:update => 'reply',
+	:url => {:controller => 'authadmin', :action => 'createuser'},
+	:loading => "Toggle.display('user_spinner')",
+	:complete => "Toggle.display('user_spinner')"
+	) %>
+
+	<div id="reply">
+	</div>
+
+<table cellpadding="3" cellspacing="3" border="0" class="signup">
+
+<tr><td>
+	Username
+</td><td>
+  <%= text_field "post", "login", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="post_password">Password</label>
+</td><td>
+  <%= password_field "post", "password", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+
+<tr><td>
+  <label for="post_passwordbis">Password (again)</label>
+</td><td>
+  <%= password_field "post", "passwordbis", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr>
+   <td>
+      <label for="post_email">Email address</label>
+   </td>
+   <td>
+      <%= text_field "post", "email", :size => 20, :class => "form" %>
+   </td>
+</tr>
+
+<tr>
+	<td>
+		<label for="post_notify">Notify him</label>
+	</td>
+	<td>
+		<%= check_box "post", "notify", :checked_value=>'1', :unchecked_value=>'0' %>
+	</td>
+</tr>
+
+<tr><td colspan="2">
+<hr width="200"/>
+</td></tr>
+
+<tr><td>&nbsp;</td>
+<td>
+  <input type="submit" value="Create this user &#187;" class="primary" />
+  <%= spinner_tag('user') %>
+</td></tr>
+
+<tr><td colspan="2">
+Note: the account will be active right away.<br />
+You can notify him if you wish, he will receive his login and his password.
+</td></tr>
+
+</table>
+<%= end_form_tag %>
+
+<td><td valign="top">
+</td></tr>
+</table>

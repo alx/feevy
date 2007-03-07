@@ -1,0 +1,69 @@
+<!-- show blog -->
+<% feed = subscription.feed %>
+<% unless feed.nil? %>
+<% if feed.bogus == false  %>
+<div id="blog_<%= subscription.id %>" class="caja1">
+  <!-- caja redondeada negra -->
+  <div class="xsnazzy">
+    <b class="xtopb"><b class="xb1b"></b><b class="xb2b"></b><b class="xb3b"></b><b class="xb4b"></b></b>
+    <div class="xboxcontentb">
+      <!-- capa contenedora -->
+      <div class="show_blog">
+        <br/>
+        <% if feed.avatar_locked == 1 %>
+          <img src='<%= feed.avatar.url %>' style='float:left;padding-right:5px;'/>
+        <% else %>
+          <img src='<%= subscription.avatar.url %>' style='float:left;padding-right:5px;'/>
+        <% end %>
+        <h3><%= "#{index}. #{feed.title}" %></h3>
+        <h5><%= feed.href %></h5>
+        <div class='right'>
+          <%= link_to_remote("edit", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
+          <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>
+        </div>
+        <br/>
+      </div>
+      <br/>
+    </div>
+    <b class="xbottomb"><b class="xb4b"></b><b class="xb3b"></b><b class="xb2b"></b><b class="xb1b"></b></b>
+  </div>
+  <!-- end caja redondeada -->
+</div>
+<!-- end caja! -->
+<% else %>
+<div id="bogus_<%= subscription.id %>" class='bogus_message'>
+  <h1>This blog is not working :-(</h1>
+  <p>The feed seems to be broken</p>
+  <p>Feevy team is working on it</p>
+</div>
+<!-- show blog -->
+<div id="blog_<%= subscription.id %>" class="caja1">
+  <!-- caja redondeada negra -->
+  <div class="bogus_feed">
+    <b class="bogus_top"><b class="bogus_1"></b><b class="bogus_2"></b><b class="bogus_3"></b><b class="bogus_4"></b></b>
+    <div class="bogus_content">
+      <!-- capa contenedora -->
+      <div class="show_blog">
+        <br/>
+        <% if feed.avatar_locked == 1 %>
+          <img src='<%= feed.avatar.url %>' style='float:left;padding-right:5px;'/>
+        <% else %>
+          <img src='<%= subscription.avatar.url %>' style='float:left;padding-right:5px;'/>
+        <% end %>
+        <h3><%= "#{index}. #{feed.title}" %></h3>
+        <h5><%= feed.href %></h5>
+        <div class='right'>
+          <%= link_to_remote("edit", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
+          <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>
+        </div>
+        <br/>
+      </div>
+      <br/>
+    </div>
+    <b class="bogus_bottom"><b class="bogus_4"></b><b class="bogus_3"></b><b class="bogus_2"></b><b class="bogus_1"></b></b>
+  </div>
+  <!-- end caja redondeada -->
+</div>
+<!-- end caja! -->   
+<% end %>
+<% end %>

@@ -1,0 +1,62 @@
+<!-- principal -->
+<div class="content">
+  <div class="boxcenter">
+    <p class="title">
+      <%= "Welcome back, #{@user.name}" %> <small>(<a href="/auth/info">Change password and details</a>)</small>
+    </p>
+    <h3>This is your current feevy</h3>
+    <!-- caja redondeada -->
+    <div class="xsnazzyz">
+      <b class="xtop"><b class="xb1z"></b><b class="xb2z"></b><b class="xb3z"></b><b class="xb4z"></b></b>
+      <div class="xboxcontentz">
+        <p></p>
+        <p></p><p></p><p></p>
+        <p id='feevy_code'>
+          <%= h("<script type='text/javascript' src='http://www.feevy.com/code/#{@user.id}'></script>") %>
+        </p>
+        <p class='code_control'>
+          choose style/color:
+          <select name="style" id="style">
+               <option value="dark">classic dark</option>
+               <option value="white">white - new!</option>
+               <option value="liquid">liquid -for CSS customization</option>
+          </select>
+          <%= observe_field "style",
+               :url => {:controller => "manage", :action => "display_feevy_code"},
+               :with => "'style='+ escape($('style').value)",
+               :update => "feevy_code" %>
+        </p><p></p>
+        <p></p>
+      </div>
+      <b class="xbottom"><b class="xb4z"></b><b class="xb3z"></b><b class="xb2z"></b><b class="xb1z"></b></b>
+    </div>
+    <!-- end caja -->
+    <p>Display only the <%= select_display_feevy(@user) %> most updated blogs on your feevy</p>
+    <%= observe_field "display_feevy", 
+                      :url => {:controller => "manage", :action => "update_opt_display_sub"},
+                      :with => "'display_feevy='+ escape($('display_feevy').value)" %>
+           
+    <!-- add blog partial -->
+    <%= render :partial => "add_blog", :locals => {:style => "display:none;"} %>
+    
+    <div class="right">
+    <%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
+    </div>
+    
+    <% unless @subscriptions.nil? || @subscriptions.empty? %>
+    <p>These are the blogs in your feevy</p>
+    <% else %>
+    <p>You don't have any blog in your feevy</p>
+    <% end -%>
+  </div>
+</div>
+
+<div id='feevy_list'>
+<% unless @subscriptions.nil? || @subscriptions.empty? %>
+  <% index = 1  %>
+  <% @subscriptions.each do |subscription| %>
+    <%= render :partial => 'show_blog', :locals => {:index => index, :subscription => subscription } %>
+    <% index = index + 1 %>
+  <% end -%>
+<% end -%>  
+</div>

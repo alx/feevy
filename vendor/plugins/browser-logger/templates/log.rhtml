@@ -1,0 +1,120 @@
+<style type='text/css'>/*<![CDATA[*/
+  #browser_logger{
+    width: 920px;    
+    margin: 0 auto;
+    overflow: auto;
+  }
+  .debug_line {
+    padding: 5px 10px;
+    background-color: #EEEEEE;
+  }
+  .show {
+    text-align:right;
+  }
+  .debug_line:hover {
+    background-color: #FEFEFE;
+  }
+  .debug_line.debug_warn, .debug_line.debug_error {
+    background-color: #FF9999;
+  }
+  #browser_logger .preamble {
+    background-color: #9999FF;
+  }
+  #browser_logger .preamble.debug_line.database,
+  #browser_logger .debug_line.debug_database {
+    background-color: yellow;
+  }
+  #browser_logger .debug_line.debug_database:hover {
+    background-color: #FFFFAA;
+  }
+  .preamble span {
+    cursor:pointer;
+  }
+  .preamble span:hover {
+    font-weight:bold;
+  }
+  #browser_logger {
+    min-height:400px;
+  }
+/*]]>*/
+</style>
+<div id="browser_logger">
+  <% bb = $browser_buf %>
+  <div class="preamble debug_line">Application: 
+    <span class="log_error"><%= ERB::Util::h bb.select{|l| l.first.to_s =~ /error/i}.size %> errors, </span>
+    <span class="log_warn"><%= ERB::Util::h bb.select{|l| l.first.to_s =~ /warn/i}.size %>  warns, </span>
+    <span class="log_info"><%= ERB::Util::h bb.select{|l| l.first.to_s =~ /info/i}.size %>  infos, </span>
+    <span class="log_trace"><%= ERB::Util::h bb.select{|l| l.first.to_s =~ /trace/i}.size %>  traces, </span>
+    <span class="log_debug"><%= ERB::Util::h bb.select{|l| l.first.to_s =~ /debug/i}.size %>  debugs.</span>
+  </div>
+  <div class="preamble debug_line database">Database: 
+    <span class="log_database"><%= bb.select{|l| l.last =~ /SELECT.*FROM/}.size %> selects,
+    <%= ERB::Util::h bb.select{|l| l.last =~ /UPDATE/}.size %>  updates,
+    <%= ERB::Util::h bb.select{|l| l.last =~ /INSERT/}.size %>  inserts,
+    <%= ERB::Util::h bb.select{|l| l.last=~ /DELETE/}.size %>  deletes,
+    <%= ERB::Util::h bb.select{|l| l.last=~ /SHOW FIELD/}.size %>  show fields.</span>
+  </div>
+  <div class="preamble show"><span class="all">Show All</span></div>
+  <% bb.each do |pr| %>
+    <div class='debug_line debug_<%= pr.first %> 
+      <pre>
+      <%= ERB::Util::h 'debug_database' if pr.last =~ /UPDATE|SELECT|INSERT|SHOW FIELDS|DELETE/m %>'>
+      <%= ERB::Util::h pr.first.to_s.upcase %>: <%= ERB::Util::h pr.last%>
+      </pre>
+    </div>
+  <% end %>
+</div>
+<script type="text/javascript">//<![CDATA[
+  Event.observe(window,"load",initialize_logger);
+  var LogViewer = Class.create();
+  Object.extend( LogViewer.prototype, {
+    types:["error","warn","info","trace","debug","database"],
+    initialize: function(logger){
+      this.logger = $(logger);
+      var sections = document.getElementsByClassName("preamble",this.logger);
+      for( var j = 0; j < sections.length; ++j ){
+        var links = sections[j].getElementsByTagName("span");
+        for( var i = 0; i < links.length; ++i ){
+          Event.observe(links[i],"click",this.showType.bindAsEventListener(this,links[i].className));
+        }
+      }
+    },
+    showType: function(event,type){
+      type = Event.element(event).className;
+      type = type.replace(/log_/,'');
+      if( type == "all" ){
+        for( var i = 0; i < this.types.length; ++i ){
+          var t = "debug_" + this.types[i];
+          var logs = document.getElementsByClassName(t,this.logger);
+          for( var j = 0; j < logs.length; ++j ){
+            Element.show( logs[j] );
+          }
+        }
+      }
+      else{
+        type = "debug_" + type;
+        for( var i = 0; i < this.types.length; ++i ){
+          var t = "debug_" + this.types[i];
+          if( type == t ){ 
+            var logs = document.getElementsByClassName(type,this.logger);
+            for( var j = 0; j < logs.length; ++j ){
+              Element.show( logs[j] );
+            }
+          }
+          else{
+            var logs = document.getElementsByClassName(t,this.logger);
+            for( var j = 0; j < logs.length; ++j ){
+              Element.hide( logs[j] );
+            }
+          }
+        }
+      }
+    }
+  });
+
+  function initialize_logger()
+  {
+    new LogViewer('browser_logger');
+  }
+//]]>
+</script>

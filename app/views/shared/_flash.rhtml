@@ -1,0 +1,62 @@
+<% flash_names = [:notice, :warning, :message] %>
+
+<% for name in flash_names %>
+  <% if flash[name] %>
+  <div class="content">
+		<div class="content6">
+	 	</div>
+
+		<div class="cajac">
+		<div class="caja10">
+			<div class="box">
+				<b class="spiffy">
+				<b class="spiffy1"><b></b></b>
+				<b class="spiffy2"><b></b></b>
+				<b class="spiffy3"></b>
+				<b class="spiffy4"></b>
+				<b class="spiffy5"></b>
+
+				</b> 
+				<div class="spiffy_content">
+				  <br>
+				  
+				  <% #Display smileys depending on the kind of error %>
+				  <% if name.to_s == "warning" %>
+				   <p class="warning">:-(</p>
+ 				  <% elsif name.to_s == "notice" %>
+ 				   <p class="notice">:-)</p>
+				  <% end %>
+				  
+				  <% #Display flash message %>
+				  <p><%= flash[name] %></p>
+				  
+				  <% #Set a series of possible actions %>
+				  <% if flash[:actions] %>
+				    <p>
+					<ul>
+					
+				    <% for action in flash[:actions] %>
+						<li><%= link_to action[:label], 
+								 :controller => action[:controller],
+								 :action => action[:action] %>
+						</li>
+				    <% end %>
+					</ul>
+				    </p>
+				  <% end %>
+				  <br>
+				</div>
+				<b class="spiffy">
+				<b class="spiffy5"></b>
+
+				<b class="spiffy4"></b>
+				<b class="spiffy3"></b>
+				<b class="spiffy2"><b></b></b>
+				<b class="spiffy1"><b></b></b>
+				</b>
+			</div> 
+			</div>
+		</div>
+	</div>
+  <% end -%>
+<% end -%>

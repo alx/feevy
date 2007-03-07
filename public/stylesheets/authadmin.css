@@ -1,0 +1,91 @@
+/* 
+ * $Id: default.css 1008 2003-12-18 10:52:38Z cvscourt $
+ */
+
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif, monospace;
+	font-size: 10px;
+}
+
+body {
+	font-size: 10px;
+	background: #f1f1f1;
+	margin: 20pt;
+	width: 800px;
+  margin: auto;
+}
+div.main {
+	background: #fff;
+	color : #000;
+	border : 1px solid #bbb; 
+	padding : 1em;
+}
+div.footer {
+	text-align: center;
+	font-size: 10px;
+}
+div.news {
+	width: 70%;
+	text-align: justify;
+	margin-bottom: 30px;
+}
+div.poster {
+	margin-top: 10px;
+	color: #bbb;
+}
+div.titre {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+div.cote {
+	float: right;
+	width: 25%;
+}
+input.s {
+	border: solid 1px #bbb;
+	font-size: 10px;
+	margin-top: 5px;
+}
+input.sv {
+	font-size: 10px;
+	margin-top: 5px;
+	border: solid 1px #bbb;
+}
+.form {
+	border: solid 1px #bbb;
+}
+input.login {
+	font-size: 10px;
+	border: solid 1px #bbb;
+}
+div.hidden {
+	display: none;
+}
+div.boite {
+	border: 1px solid #ccc;
+	-moz-border-radius: 10px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+div.boite h1 {
+	margin-top: 0px;
+}
+div.boite ul {
+	display: inline;
+	list-style-type: none;
+}
+div.boite li {
+}
+div.Message {
+	text-align: left;
+	padding: 5px;
+	font-size: 11px;
+	margin: 0 0 10px 0;
+	color: #000;
+
+	background: #dfd;
+	border-color: #0a0;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+}

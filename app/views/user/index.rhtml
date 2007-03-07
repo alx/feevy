@@ -1,0 +1,10 @@
+<!-- principal -->
+<div class="content">
+  <div class="content6">
+    <h2>Here is your personnal info</h2>
+    <p>Change whatever you want</p>
+  </div>
+
+<%= render :partial => 'info', :locals => {:user => @user, :action => '/user/edit', :submit => 'Update'} %>
+</div>
+

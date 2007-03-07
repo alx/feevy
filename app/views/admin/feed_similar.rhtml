@@ -1,0 +1,11 @@
+<table>
+  <tr><th>Website</th><th>Possible feed</th></tr>
+<% @similars.each { |base_url, feeds| -%>
+  <tr>
+  <td><%= base_url %></td>
+  <% feeds.each do |feed| -%>
+    <%= "<td><a href='/admin/edit_feed/#{feed}'>#{feed}</a></td>" %>
+  <% end -%>
+  </tr>
+<% } -%>
+</table>

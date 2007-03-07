@@ -1,0 +1,36 @@
+<% if not @edituser.nil? %>
+
+<% if @params[:post].nil? or @params[:post][:domain].nil? or flash['note'] %>
+<ul>
+	<% @edituser.domains.sort.each { |key, value| %>
+		<li>
+			<div id="dom_<%= key %>"><%= key %>: <%= value %> 
+			<%= 
+			link_to_remote "(delete)", { :update => "domains", :url => {:action=>"deldomain", :id=>"#{@edituser.id},#{key}"}, :loading => "new Effect.Fade('dom_#{key}')" }
+			%></div>
+			</li>
+	<% } %>
+</ul>
+<% else %>
+<ul>
+	<% @edituser.domains.sort.each { |key, value| %>
+			<li>
+			<div id="dom_<%= key %>">
+			<%= key %>: <%= value %> <%=
+			link_to_remote "(delete)", { :update => "domains", :url => {:controller => 'authadmin', :action => 'deldomain', :id => "#{@edituser.id},#{key}"}, :loading => "new Effect.Fade('dom_#{key}')" }
+			%>
+			</div>
+			</li>
+	<% } %>
+	<script type="text/javascript">new Effect.Highlight('dom_<%= @params[:post][:domain].upcase %>')</script>
+</ul>
+<% end %>
+<% end %>
+
+<% if flash['note'] %>
+<div class="Message">
+<%= flash['note'] %>
+</div>
+<% end %>
+
+</div>

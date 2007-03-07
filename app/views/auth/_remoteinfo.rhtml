@@ -1,0 +1,15 @@
+<% if user_logged_in? -%>
+<%=  link_to user_icon(@user.login,@user.email), auth_url(:action => 'info') %>
+<%=  spinner_tag %>
+
+Hola <%= @user.name %>! 
+<%=  link_to_remote "(logout)", { :update => 'accountinfo', 
+					:url => auth_url(:action => 'logout'),
+					:loading => "Element.show('ident_spinner')"
+     }, { :href => auth_url(:action => 'logout') } %>
+<% else -%>
+<%=  link_to auth_icon('buddy'), auth_url %>
+<b>You did not authenticate.</b> 
+<a href="javascript:showloginform();">(login)</a>
+<%#= link_to_remote '(login)', {:update => 'accountinfo', :url => auth_url('remotelogin')}, {:href => auth_url(:action => 'login') } -%>
+<% end -%>

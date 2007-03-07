@@ -1,0 +1,111 @@
+	<!-- principal -->
+	<div class="principal1">
+
+
+
+		<div class="box-1">	
+			<div class="side-a">
+			<br />
+			<img src="/images/yourblog.png" width="370" height="258" alt=""/>
+
+			<br />
+				
+			</div>	
+				<br />
+				<div class="side-b">
+				<h2>display content from other blogs at your website with
+				just one simple html tag</h2>
+				
+			<div class="centrar">	
+				<br />
+				<br />
+				<% if user_logged_in? %>
+				  <%= link_to(image_tag("getfeevy.png"), url_for(:controller => 'manage')) %>
+				<% else %>
+				  <%= link_to(image_tag("getfeevy.png"), url_for(:controller => 'auth', :action => 'signup')) %>
+				<% end %>
+			</div>
+									
+			</div>
+		</div>
+		
+		<div class="box-1">
+			
+			<div class="side-a">
+				<h3>Use as many feevies as you like</h3>
+				<p>You can use as many feevy tags as you like. placing them anywhere in your blog or your html page. You can:</p>
+							
+				<ul>
+
+					<li>Replace static, boring blogrolls with dynamic content and transform your blog into a web portal for your network of friends</li>
+					<li>Build a vertical portal</li>
+					<li>Setup a community of blogs</li>
+					
+				</ul>
+			</div>
+			
+			<div class="side-b">
+				
+				<h3>How feevy works</h3>
+
+				<p>You tell us your favorite blogs (or any source with a RSS feed). We give you a personalized feevy tag. Just place the tag in your blog template and... bang! Your friends will appear in your blog! Feevy shows the latest posts from your favorite blogs in one column putting them in order according to the latest updates, which will appear on top.</p>
+				
+			</div>
+		</div>
+
+		<div class="box-3">
+						<div class="xsnazzy">	
+							<b class="xtop"><b class="xa1"></b><b class="xa2"></b><b class="xa3"></b><b class="xa4"></b></b>
+								<div class="xboxacontent">				
+		<div class="box-2">
+			
+					<div class="side-an">
+
+							<h3>People may be feeving you right now</h3><br />
+							<h5>Right now, people may be using feevy to display your posts at their blogs. Learn who is feeving your blog at this time. There are <%= @nb_users %> active feevys right now</h5>
+					</div>
+					
+					<div class="side-bn">
+              <!-- <h3>Who is feeving you?</h3><br />
+              <h5>Enter your URL and learn who is feeving your posts.</h5>
+              <form action="#" method="post">
+
+              <div class="left">
+              <p><input type="text" id="text2" /></p></div>
+              <div class="left">
+              <p><input type="submit" id="boton" value="tell me who"/></p></div>
+          </form> -->
+					</div>
+				
+		</div>	
+												</div>
+							<b class="xbottom"><b class="xa4"></b><b class="xa3"></b><b class="xa2"></b><b class="xa1"></b></b>
+
+						</div>
+
+		</div>
+		
+		<div class="box-1">
+			<div class="side-a">
+				<h3>Latest blogs first linked by a feevy</h3>
+				<p>
+				<% @feeds.each do |feed| %>
+				<%= "<a href='#{feed.href}'>#{feed.title}</a><br/>" %>
+				<% end %>
+				</p>
+			</div>
+			<div class="side-b">
+				<div class="sin-salto">
+					<h3>Development news</h3>
+					<% @rss.entries.each do |entry| %>
+					<p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br />
+					<h4><%= entry.title %></h4><br />
+					<h5><%= entry.description %> <a href="<%= entry.link %>">continue</a>.</h5><br /><br />
+					<% end %>
+				</div>
+				
+				
+				<a href="http://blog.feevy.com/">Read Feevy blog</a>	
+			</div>
+		</div>
+	</div>

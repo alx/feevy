@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Class: Technorati</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+	<script type="text/javascript">
+	// <![CDATA[
+
+	function popupCode( url ) {
+		window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+	}
+
+	function toggleCode( id ) {
+		if ( document.getElementById )
+			elem = document.getElementById( id );
+		else if ( document.all )
+			elem = eval( "document.all." + id );
+		else
+			return false;
+
+		elemStyle = elem.style;
+		
+		if ( elemStyle.display != "block" ) {
+			elemStyle.display = "block"
+		} else {
+			elemStyle.display = "none"
+		}
+
+		return true;
+	}
+	
+	// Make codeblocks hidden by default
+	document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+	
+	// ]]>
+	</script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <h1>Technorati <sup class="type-note">(Class)</sup></h1>
+        <table class="header-table">
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/technorati_rb.html">
+                technorati.rb
+                </a>
+				&nbsp;(<a href="http://cvs.pablotron.org/cgi-bin/viewcvs.cgi/technorati/technorati.rb">CVS</a>)
+				<br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+	<div id="bodyContent">
+
+
+	<div id="contextContent">
+
+
+
+		<div id="method-list">
+			<h2 class="section-bar">Methods</h2>
+
+			<div class="name-list">
+			<a href="#M000006">bloginfo</a>&nbsp;&nbsp;
+			<a href="#M000002">cosmos</a>&nbsp;&nbsp;
+			<a href="#M000004">info</a>&nbsp;&nbsp;
+			<a href="#M000001">new</a>&nbsp;&nbsp;
+			<a href="#M000005">outbound</a>&nbsp;&nbsp;
+			<a href="#M000003">search</a>&nbsp;&nbsp;
+			</div>
+		</div>
+
+		<div id="constants-list">
+			<h2 class="section-bar">Constants</h2>
+
+			<div class="name-list">
+				<table summary="Constants">
+				<tr class="top-aligned-row context-row">
+					<td class="context-item-name">VERSION</td>
+					<td>=</td>
+					<td class="context-item-value">'0.1.0'</td>
+				</tr>
+				<tr class="top-aligned-row context-row">
+					<td class="context-item-name">TYPE_PROCS</td>
+					<td>=</td>
+					<td class="context-item-value">{     :str  =&gt; proc { |str| str },     :int  =&gt; proc { |str| str.to_i },     :time =&gt; proc { |str| Time::mktime(*ParseDate::parsedate(str)) },     :flt  =&gt; proc { |str| str.to_f },   }</td>
+				</tr>
+				<tr class="top-aligned-row context-row">
+					<td class="context-item-name">QUERY_SCHEMAS</td>
+					<td>=</td>
+					<td class="context-item-value">{     'cosmos'  =&gt; {       'weblog/name'         =&gt; :str,       'weblog/url'          =&gt; :str,       'weblog/rssurl'       =&gt; :str,       'weblog/atomurl'      =&gt; :str,       'weblog/inboundblogs' =&gt; :int,       'weblog/inboundlinks' =&gt; :int,       'weblog/lastupdate'   =&gt; :time,       'nearestpermalink'    =&gt; :str,       'exerpt'              =&gt; :str,       'linkcreated'         =&gt; :time,       'linkurl'             =&gt; :str,        # these are all &lt;result&gt;-specific       'weblog/rank'         =&gt; :int,       'rankingstart'        =&gt; :int,       'url'                 =&gt; :str,     },      'search'  =&gt; {       'query'               =&gt; :str,       'querycount'          =&gt; :int,       'inboundblogs'        =&gt; :int,       'querytime'           =&gt; :flt, # check this       'rankingstart'        =&gt; :int,        'weblog/name'         =&gt; :str,       'weblog/url'          =&gt; :str,       'weblog/rssurl'       =&gt; :str,       'weblog/atomurl'      =&gt; :str,       'weblog/inboundblogs' =&gt; :int,       'weblog/inboundlinks' =&gt; :int,       'weblog/lastupdate'   =&gt; :time,       'title'               =&gt; :str,       'exerpt'              =&gt; :str,       'created'             =&gt; :time,     },      'getinfo' =&gt; {       'username'            =&gt; :str,       'firstname'           =&gt; :str,       'lastname'            =&gt; :str,       'thumbnailpicture'    =&gt; :str,              'weblog/name'         =&gt; :str,       'weblog/url'          =&gt; :str,       'weblog/rssurl'       =&gt; :str,       'weblog/atomurl'      =&gt; :str,       'weblog/inboundblogs' =&gt; :int,       'weblog/inboundlinks' =&gt; :int,       'weblog/lastupdate'   =&gt; :time,       'rank'                =&gt; :int,       'lang'                =&gt; :str,       'lat'                 =&gt; :str,       'lon'                 =&gt; :str,       'foafurl'             =&gt; :str,     },      'outbound'  =&gt; {       'url'                 =&gt; :str,       'weblog/name'         =&gt; :str,       'weblog/url'          =&gt; :str,       'weblog/rssurl'       =&gt; :str,       'weblog/atomurl'      =&gt; :str,       'weblog/inboundblogs' =&gt; :int,       'weblog/inboundlinks' =&gt; :int,       'weblog/lastupdate'   =&gt; :time,       'weblog/rank'         =&gt; :int,       'inboundblogs'        =&gt; :int,       'inboundlinks'        =&gt; :int,       'rankingstart'        =&gt; :int,     },      'bloginfo'  =&gt; {       'url'                 =&gt; :str,       'weblog/name'         =&gt; :str,       'weblog/url'          =&gt; :str,       'weblog/rssurl'       =&gt; :str,       'weblog/atomurl'      =&gt; :str,       'weblog/inboundblogs' =&gt; :int,       'weblog/inboundlinks' =&gt; :int,       'weblog/lastupdate'   =&gt; :time,       'weblog/rank'         =&gt; :int,       'inboundblogs'        =&gt; :int,       'inboundlinks'        =&gt; :int,     },   }</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+
+
+
+			
+
+	</div>
+
+
+
+		<!-- if includes -->
+
+
+		<!-- if method_list -->
+		<div id="methods">
+			<h2 class="section-bar">Public Class methods</h2>
+
+			<div id="method-M000001" class="method-detail">
+				<a name="M000001"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000001.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000001.html');return false;">
+					<span class="method-name">new</span><span class="method-args">(key)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Connect to <a href="Technorati.html">Technorati</a> with key <tt>key</tt>
+</p>
+<p>
+Note: if the key is invalid, <a href="Technorati.html">Technorati</a>-Ruby
+will not raise an exception until you make an actual call. You can get a
+key from <a
+href="http://technorati.com/developers">technorati.com/developers</a>/.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # read key from $HOME/.technorati_key and use it to connect
+  key = IO::readlines(File::join(ENV['HOME'], '.technorati_key')).join.strip
+  t = Technorati.new(key)
+</pre>
+				</div>
+			</div>
+
+			<h2 class="section-bar">Public Instance methods</h2>
+
+			<div id="method-M000006" class="method-detail">
+				<a name="M000006"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000006.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000006.html');return false;">
+					<span class="method-name">bloginfo</span><span class="method-args">(url, start = nil)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Returns the results of a <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/BlogInfoQuery">BlogInfoQuery</a>.
+A <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/BlogInfoQuery">BlogInfoQuery</a>
+provides info on what blog, if any, is associated with a given URL. It also
+returns additional info such as cosmos stats, RSS feed Give it any URL and
+it&#8217;ll tell you what blog, if any, that URL came from, and all the
+info it has on that blog, like cosmos stats and RSS feed.
+</p>
+<p>
+Arguments:
+</p>
+<ul>
+<li><tt>url</tt> (required): URL to search for.
+
+</li>
+</ul>
+<p>
+Returns a hash containing information about the query URL.
+</p>
+<p>
+Valid Return Keys:
+</p>
+<ul>
+<li>&#8216;url&#8217;: Blog URL.
+
+</li>
+<li>&#8216;weblog/name&#8217;: Name of blog.
+
+</li>
+<li>&#8216;weblog/url: URL of blog.
+
+</li>
+<li>&#8216;weblog/rssurl&#8217;: RSS URL of blog.
+
+</li>
+<li>&#8216;weblog/atomurl&#8217;: Atom URL of blog.
+
+</li>
+<li>&#8216;weblog/inboundblogs&#8217;: Number of inbound blogs of blog.
+
+</li>
+<li>&#8216;weblog/inboundlinks&#8217;: Number of inbound links of blog.
+
+</li>
+<li>&#8216;weblog/lastupdate&#8217;: Date blog was last updated.
+
+</li>
+<li>&#8216;weblog/rank&#8217;: Blog cosmos rank.
+
+</li>
+<li>&#8216;inboundblogs&#8217;: Inbound blogs.
+
+</li>
+<li>&#8216;inboundlinks&#8217;: Inbound links.
+
+</li>
+</ul>
+<p>
+Raises an exception on error.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # print out the Name, URL, and RSS URL for atrios.blogspot.com
+  result = t.bloginfo('atrios.blogspot.com')
+  blog_keys = { 'Name' =&gt; 'name', 'URL' =&gt;'url', 'RSS' =&gt; 'rssurl' }
+  puts blog_keys.map { |ary| &quot;#{ary[0]}: #{result['weblog/' + ary[1]]}&quot; }
+</pre>
+				</div>
+			</div>
+
+			<div id="method-M000002" class="method-detail">
+				<a name="M000002"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000002.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000002.html');return false;">
+					<span class="method-name">cosmos</span><span class="method-args">(url, limit = nil, type = nil, start = nil, current = nil)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Returns the results of a <a href="http://technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/CosmosQuery">CosmosQuery</a>. A
+<a href="http://technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/CosmosQuery">CosmosQuery</a>
+lets you see what blogs are linking to a given URL.
+</p>
+<p>
+Arguments:
+</p>
+<ul>
+<li><tt>url</tt> (required): URL you are searching for. The
+&#8216;http://&#8217; prefix is optional.
+
+</li>
+<li><tt>limit</tt>: Set this to a number larger than 0 and smaller or equal to
+100 and it will return <tt>limit</tt> number of links for a query. By
+default this value is 20.
+
+</li>
+<li><tt>type</tt>: Set this to &#8216;link&#8217; and you&#8217;ll get the
+freshest links to your target URL. Set it to &#8216;weblog&#8217; and
+you&#8217;ll get a reverse blogroll - the last set of blogs that linked to
+the target URL.
+
+</li>
+<li><tt>start</tt>: Set this to a number larger than 0 and you&#8217;ll get the
+<tt>start</tt> + <tt>limit</tt> freshest items (links or blogs), e.g. set
+it to <tt>limit</tt> + 1, and you&#8217;ll get the second page of rankings.
+
+</li>
+<li><tt>current</tt>: By default, cosmos returns the links that are currently
+on the source&#8217;s index page. If you set current to no, you will have
+all links to the given URL.
+
+</li>
+</ul>
+<p>
+Returns a hash containing information about the query URL and a list of
+blogs.
+</p>
+<p>
+Valid Return Keys:
+</p>
+<ul>
+<li>&#8216;weblog/name&#8217;: Name of blog.
+
+</li>
+<li>&#8216;weblog/url&#8217;: URL of blog.
+
+</li>
+<li>&#8216;weblog/rssurl&#8217;: RSS syndication URL of blog.
+
+</li>
+<li>&#8216;weblog/atomurl&#8217;: Atom syndication URL of blog.
+
+</li>
+<li>&#8216;weblog/inboundblogs&#8217;: Number of inbound blogs.
+
+</li>
+<li>&#8216;weblog/inboundlinks&#8217;: Number of inbound links.
+
+</li>
+<li>&#8216;weblog/lastupdate&#8217;: Date of last update.
+
+</li>
+<li>&#8216;nearestpermalink&#8217;: Nearest permanent link.
+
+</li>
+<li>&#8216;exerpt&#8217;: Exerpt from page matching search result.
+
+</li>
+<li>&#8216;linkcreated&#8217;: Date link was created.
+
+</li>
+<li>&#8216;linkurl&#8217;: Link URL.
+
+</li>
+<li>&#8216;weblog/rank&#8217;: Cosmos Rank.
+
+</li>
+<li>rankingstart:
+
+</li>
+<li>&#8216;url&#8217;: URL.
+
+</li>
+<li>&#8216;items&#8217;: an array of hashes containing blogs
+
+</li>
+</ul>
+<p>
+Raises an exception on error.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # print out a list of the first 35 sites linking to slashdot.org
+  puts t.cosmos('slashdot.org', 35)['items'].map do |item|
+    item['weblog/name']
+  end
+</pre>
+				</div>
+			</div>
+
+			<div id="method-M000004" class="method-detail">
+				<a name="M000004"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000004.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000004.html');return false;">
+					<span class="method-name">info</span><span class="method-args">(user)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Returns the results of a <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/GetInfoQuery">GetInfoQuery</a>.
+A <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/GetInfoQuery">GetInfoQuery</a>
+tells you things that <a href="Technorati.html">Technorati</a> knows about
+a user. In the simplest case you can use <a
+href="Technorati.html#M000004">Technorati#info</a> to find out information
+that a blogger wants to make known about himself, along with some
+information that <a href="Technorati.html">Technorati</a> has calculated
+and verified about that person. The returned info is broken up into two
+sections: The first part describes some information that the user wants to
+allow people to know about him- or herself. The second part of the document
+is a listing of the weblogs that the user has successfully claimed and the
+information that <a href="Technorati.html">Technorati</a> knows about these
+weblogs.
+</p>
+<p>
+Arguments:
+</p>
+<ul>
+<li><tt>user</tt> (required): Username
+
+</li>
+</ul>
+<p>
+Returns a hash containing information about the user and a list of blogs
+associated with that user.
+</p>
+<p>
+Valid Return Keys:
+</p>
+<ul>
+<li>&#8216;username&#8217;: User name of user.
+
+</li>
+<li>&#8216;firstname&#8217;: First name of user.
+
+</li>
+<li>&#8216;lastname&#8217;: Last name of user.
+
+</li>
+<li>&#8216;thumbnailpicture&#8217;: URL to thumbnail picture.
+
+</li>
+<li>&#8216;weblog/name&#8217;: Name of blog containing match.
+
+</li>
+<li>&#8216;weblog/url: URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/rssurl&#8217;: RSS URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/atomurl&#8217;: Atom URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/inboundblogs&#8217;: Number of inbound blogs of blog
+containing match.
+
+</li>
+<li>&#8216;weblog/inboundlinks&#8217;: Number of inbound links of blog
+containing match.
+
+</li>
+<li>&#8216;weblog/lastupdate&#8217;: Date blog was last updated.
+
+</li>
+<li>&#8216;rank&#8217;: Cosmos ranking.
+
+</li>
+<li>&#8216;lang&#8217;: Blog language as integer.
+
+</li>
+<li>&#8216;lat&#8217;: Geographical information.
+
+</li>
+<li>&#8216;lon&#8217;: Geographical information.
+
+</li>
+<li>&#8216;foafurl&#8217;: <a href="http://foaf.org/">FOAF</a> URL.
+
+</li>
+<li>&#8216;items&#8217;: an Array of Hashes with each matched user&#8217;s
+blog.
+
+</li>
+</ul>
+<p>
+Raises an exception on error.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # print out a list of blog URLs associated with 'giblet'
+  puts t.info('giblet')['items'] map { |blog| blog['weblog/url'] }
+</pre>
+				</div>
+			</div>
+
+			<div id="method-M000005" class="method-detail">
+				<a name="M000005"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000005.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000005.html');return false;">
+					<span class="method-name">outbound</span><span class="method-args">(url, start = nil)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Returns the results of a <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/OutboundQuery">OutboundQuery</a>.
+A <a href="http:/technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/OutboundQuery">OutboundQuery</a>
+query&lt;/a&gt; lets you see what blogs are linked to on a given blog,
+including their associated info.
+</p>
+<p>
+Arguments:
+</p>
+<ul>
+<li><tt>url</tt> (required): URL to search for.
+
+</li>
+</ul>
+<p>
+Returns a hash containing information about the query URL and a list of
+blogs.
+</p>
+<p>
+Valid Return Keys:
+</p>
+<ul>
+<li>&#8216;url&#8217;: Blog URL.
+
+</li>
+<li>&#8216;weblog/name&#8217;: Name of blog.
+
+</li>
+<li>&#8216;weblog/url: URL of blog.
+
+</li>
+<li>&#8216;weblog/rssurl&#8217;: RSS URL of blog.
+
+</li>
+<li>&#8216;weblog/atomurl&#8217;: Atom URL of blog.
+
+</li>
+<li>&#8216;weblog/inboundblogs&#8217;: Number of inbound blogs of blog.
+
+</li>
+<li>&#8216;weblog/inboundlinks&#8217;: Number of inbound links of blog.
+
+</li>
+<li>&#8216;weblog/lastupdate&#8217;: Date blog was last updated.
+
+</li>
+<li>&#8216;weblog/rank&#8217;: Blog cosmos rank.
+
+</li>
+<li>&#8216;inboundblogs&#8217;: Inbound blogs.
+
+</li>
+<li>&#8216;inboundlinks&#8217;: Inbound links.
+
+</li>
+<li>&#8216;rankingstart&#8217;: Start parameter value.
+
+</li>
+<li>&#8216;items&#8217;: an Array of Hashes containing blogs linking to the
+given blog.
+
+</li>
+</ul>
+<p>
+Raises an exception on error.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # print out a list of blogs linking to 'engadget.com'
+  puts t.outbound('engadget.com')['items'].map { |blog| blog['weblog/name'] }
+</pre>
+				</div>
+			</div>
+
+			<div id="method-M000003" class="method-detail">
+				<a name="M000003"></a>
+
+				<div class="method-heading">
+					<a href="Technorati.src/M000003.html" target="Code" class="method-signature"
+						onclick="popupCode('Technorati.src/M000003.html');return false;">
+					<span class="method-name">search</span><span class="method-args">(words, start = nil)</span>
+					</a>
+				</div>
+			
+				<div class="method-description">
+					<p>
+Returns the results of a <a href="http://technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/SearchQuery">SearchQuery</a>. A
+<a href="http://technorati.com/">Technorati</a> <a
+href="http://developers.technorati.com/wiki/SearchQuery">SearchQuery</a>
+lets you see what blogs contain a given search string.
+</p>
+<p>
+Arguments:
+</p>
+<ul>
+<li><tt>words</tt> (required): an Array of words or a whitespace-separated <a
+href="String.html">String</a>
+
+</li>
+<li><tt>start</tt>: Set this to a number larger than 0 and you&#8217;ll get the
+<tt>start</tt> + 20 freshest items (links or blogs), e.g. set it to 20+1,
+and you&#8217;ll get the second page of rankings 21-40.
+
+</li>
+</ul>
+<p>
+Returns a hash containing information about the query and a list of blogs.
+</p>
+<p>
+Valid Return Keys:
+</p>
+<ul>
+<li>&#8216;query&#8217;: Query string.
+
+</li>
+<li>&#8216;querycount&#8217;: Number of matches.
+
+</li>
+<li>&#8216;inboundblogs&#8217;: Number of inbound blogs.
+
+</li>
+<li>&#8216;querytime&#8217;: Duration of query (in seconds).
+
+</li>
+<li>&#8216;rankingstart&#8217;: Value of start parameter.
+
+</li>
+<li>&#8216;weblog/name&#8217;: Name of blog containing match.
+
+</li>
+<li>&#8216;weblog/url&#8217;: URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/rssurl&#8217;: RSS URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/atomurl&#8217;: Atom URL of blog containing match.
+
+</li>
+<li>&#8216;weblog/inboundblogs&#8217;: Number of inbound blogs of blog
+containing match.
+
+</li>
+<li>&#8216;weblog/inboundlinks&#8217;: Number of inbound links of blog
+containing match.
+
+</li>
+<li>&#8216;weblog/lastupdate&#8217;: Date blog was last updated
+
+</li>
+<li>&#8216;title&#8217;: Title of matching entry.
+
+</li>
+<li>&#8216;exerpt&#8217;: Exerpt of matching entry with relevant text.
+
+</li>
+<li>&#8216;created&#8217;: Date matching entry was created.
+
+</li>
+<li>&#8216;items&#8217;: Array of hashes containing matching entries.
+
+</li>
+</ul>
+<p>
+Raises an exception on error.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # print out a list of the first 20 entries that match the
+  # phrase 'cooking'
+  puts t.search('cooking')['items'] do |item|
+    [&quot;Blog: #{item['weblog/url']}&quot;,
+     &quot;Entry Title: #{item['title']}&quot;,
+     &quot;Entry Date: #{item['created']}&quot;,
+     &quot;Entry Exerpt: #{item['exerpt']}&quot;,
+     '']
+  end.flatten
+</pre>
+				</div>
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

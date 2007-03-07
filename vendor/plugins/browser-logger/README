@@ -1,0 +1,31 @@
+BrowserLogger
+================
+
+edward.frederick@revolution.com
+rails-trunk@revolution.com
+
+
+Appends just this request's logs to the end of the response. It's a little more convenient than tailing a log, especially when you're not logged in. For now, it's 'always on.' Feel free to modify init.rb to incorporate whatever on/off switch you want.
+
+You'll get all the database logs as well, complete with rudimentary color coding and JS filtering.
+
+This will always gather ALL logging actions, regardless of configured log level--helpful when you're in prod mode and want to debug a request without changing the log level and bouncing.
+
+Usage:
+
+Install plugin:
+
+./script/plugin install svn://rubyforge.org/var/svn/browser-logger 
+
+Fire up your rails app, make a request with log! or logs! appended as a query param.
+
+e.g.:
+
+http://localhost/pets/show/1
+http://localhost/pets/show/1?log!
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+<!-- subscription -->
+
+<% feed = subscription.feed %>
+
+<div class="caja1" id='uploadavatar_<%= subscription.id %>'>
+  <!-- caja redondeada negra -->
+  <div class="xsnazzy">
+    <b class="xtopb"><b class="xb1b"></b><b class="xb2b"></b><b class="xb3b"></b><b class="xb4b"></b></b>
+    <div class="xboxcontentb">
+      <!-- capa contenedora -->
+      <div id='avatar_content_<%= subscription.id %>' class="cajacontent">
+        <br/>
+        <h3><%= feed.title %></h3>
+        <h5><%= feed.href %></h5>
+        <br />
+        
+        <h3>Choose a picture from your computer</h3>
+        <p>(it will be scaled down to 40x40)</p>
+        <br/>
+        <form action="/manage/upload_avatar" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+          <%= file_field "subscription", "picture", :size => 30 %>
+          <input type="hidden" name="subscription[id]" value="<%= subscription.id %>">
+          <br/><br/>
+          <input type="submit" value="Update &rarr;">
+        </form>
+        <br/>
+        <div class='right'>
+          <%= link_to_remote "return", {:url => {:action => "edit_blog", :id => subscription.id, :return => true }} %>
+        </div>
+      </div>
+      <br/>
+    </div>  
+      <b class="xbottomb"><b class="xb4b"></b><b class="xb3b"></b><b class="xb2b"></b><b class="xb1b"></b></b>
+  </div>
+  <!-- end caja redondeada -->
+</div>
+<!-- end caja! -->

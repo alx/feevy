@@ -1,0 +1,24 @@
+<% if not @err.nil? and @err == 2 %>
+
+<div id="accounterror" class="Message" >
+Wrong login or password!
+</div>
+
+<%= render :partial => "remotelogin" %>
+<%= javascript_tag("document.getElementById('post_login').focus();") %>
+
+<% elsif not @err.nil? and @err == 0 %>
+
+<div id="accounterror" class="Message" >
+Login successfull!
+</div>
+
+<%= javascript_tag "new Ajax.Updater('accountinfo', '" + auth_url(:action => 'remoteinfo') + "', {asynchronous:true});" %>
+
+<% else %>
+
+<%= render :partial => "remotelogin" %>
+<%= javascript_tag("document.getElementById('post_login').focus();") %>
+
+<% end %>
+

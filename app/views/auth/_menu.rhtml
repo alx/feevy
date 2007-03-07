@@ -1,0 +1,23 @@
+<div class="menu">
+	<%= link_to auth_icon('home'), @app[:url] %>
+	<%= link_to auth_icon('user'), auth_url(:action => 'info') %>
+
+<% if user_logged_in? and @user.in_domain?('ADMIN') -%>
+<%= link_to auth_icon('admin'), :controller => 'authadmin' %>
+<% end %>
+
+<% if not user_logged_in? -%>
+<%   if @app[:allow_self_registration] -%>
+<%= link_to auth_icon('newuser'), auth_url(:action => 'signup') %>
+<%   end -%>
+<%= link_to auth_icon('lostpass'), auth_url(:action => 'lostpassword') %>
+<% end -%>
+
+<%= if user_logged_in?
+link_to_remote(auth_icon('signout'),
+					{ :update=>'content', 
+					:loading=>'document.getElementById(\'content\').innerHTML=\'Please wait while we log you out ...\';', 
+					:url => auth_url(:action => 'logout')}, 
+					{ :href=> auth_url(:action=>'logout') } )
+	end %>
+</div>

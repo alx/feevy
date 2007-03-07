@@ -1,0 +1,53 @@
+<h1>Status</h1>
+Warning: <%= @warnings.size %><br/>
+Errors: <%= @errors.size %><br/>
+<table border="0" cellspacing="0" cellpadding="0" style='width:800px;'>
+  <tr>
+    <% unless @percent_working < 1 %>
+    <td style='width:<%= @percent_working %>%;background-color:#DFD;color:#060;height:20px;'></td>
+    <% end %>
+    <td style='width:<%= @percent_warning %>%;background-color:#CAA;color:#300;height:20px;'></td>
+    <td style='width:<%= @percent_error %>%;background-color:#933;color:#600;height:20px;'></td>
+  </tr>
+</table>
+
+<h1>Feeds</h1>
+<ul>
+  <li><%= link_to "Display all feeds", :action => "feeds" %></li>
+  <li><%= link_to "Display bogus feeds", :action => "bogus_feeds" %></li>
+  <li><%= link_to "Repair feeds", :action => "feed_repair" %></li>
+  <li><%= link_to "Remove duplicates", :action => "remove_duplicate_feeds" %></li>
+</ul>
+<form action="/admin/merge_duplicates" method="post" accept-charset="utf-8">
+  <label for='merged'>Feed id to merge: </label><input type="text" name="merged" value="" id="merged" size=5>
+  <label for='central'>Merge into feed id: </label><input type="text" name="central" value="" id="central" size=5>
+  <input type="submit" value="Merge &rarr;">
+</form>
+
+<h1>Subscriptions</h1>
+<ul>
+  <li><%= link_to "Clean Empty Subscriptions", :action => "clean_empty_subscription" %></li>
+</ul>
+
+<h1>Update workers</h1>
+
+<%= link_to "Start a new worker", :action => "background_task" %>
+<%= link_to "Start a new hpricot worker", :action => "add_feed_worker" %>
+<br/>
+<table>
+  <tr><th>Description</th><th>Progress</th><th>Infinite</th><th>Action</th></tr>
+<% @workers.each do |job_key, worker| -%>
+  <tr>
+    <td>Job running: <%= job_key %></td>
+    <td><span id='progress_<%= job_key %>'><%= worker.progress %></span>/<%= worker.feed_count %>
+      <%= periodically_call_remote(
+          :frequency => 10,
+          :url => { :action => "task_progress", :job_key => job_key }) %></td>
+    <td><%= worker.infinite ? "yes" : "no" %>
+    <td>
+    <%= link_to "Stop worker", :action => "stop_task", :job_key => job_key %>
+    <%= worker.infinite ? link_to("Set limited", :action => "set_task_infinity", :job_key => job_key , :infinite => false) : link_to("Set infinite", :action => "set_task_infinity", :job_key => job_key , :infinite => true) %>
+    </td>
+  </tr>
+<% end -%>
+</table>

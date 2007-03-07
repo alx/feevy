@@ -1,0 +1,5 @@
+page.select(".avatar_#{@subscription.id}").all() do |element, index|
+  page.call 'Element.removeClassName', element, 'selected_avatar'
+end
+
+page.call 'Element.addClassName', @update_avatar, 'selected_avatar'

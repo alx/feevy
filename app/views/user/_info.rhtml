@@ -1,0 +1,43 @@
+<div class="caja">
+  <div class="caja10">
+    <div class="box">
+      <small><%= error_messages_for 'user' %></small>
+
+      <b class="spiffy">
+        <b class="spiffy1"><b></b></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy4"></b>
+        <b class="spiffy5"></b>
+
+      </b> 
+      <div class="spiffy_content">
+        <br />
+        <form action="<%= action %>" method="post" class="signup">
+          <label for='user[email]'>e-mail</label>
+          <%= text_field 'user', 'email', { "size" => '17', :class => 'signup'} %><br>
+          <label for='user[password]'>choose a password</label>
+          <input class="signup" id="user_password" name="user[password]" size="17" type="password" /><br /><br />
+          <label for='user[password_confirmation]'>confirm password</label>
+          <input class="signup" id="user_password" name="user[password_confirmation]" size="17" type="password" /><br /><br />
+          <label for='user[country]'>your country</label>
+          <%= select_tag("user[country]", country_options_for_select(user.country.nil? ? "Spain" : user.country)) %><br />
+          <br />
+          <div class="centrar">
+            <input type="submit" id="boton2" value="<%= submit %>" class='signup'/>
+          </div>
+          <br />
+        </form>
+        <br />
+      </div>
+      <b class="spiffy">
+        <b class="spiffy5"></b>
+
+        <b class="spiffy4"></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy1"><b></b></b>
+      </b>
+    </div> 
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<tr id="bogus_<%= bug.id %>" class="<%= status %>">
+  <td><%= bug.id %></td>
+  <td><%= bug.feed.title %></td>
+  <td><%= link_to bug.feed.href, :url => bug.feed.href %></td>
+  <td><%= link_to bug.feed.link, :url => bug.feed.link %></td>
+  <td><%= bug.description %></td>
+  <td>
+    <%= link_to_remote "Test", {:url => {:action => "bogus_test", :id => bug.id}} %>
+    <% if status == "bogus_ok" %>
+      <br/>
+      <%= link_to_remote "Resolve", {:url => {:action => "bogus_resolve", :id => bug.id}} %>
+    <% end -%>
+  </td>
+</tr>

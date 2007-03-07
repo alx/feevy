@@ -1,0 +1,4 @@
+page.visual_effect :fade, "bogus_#{@bug.id}", :duration=>0.5
+page.delay(0.5) do
+  page.remove "bogus_#{@bug.id}"
+end

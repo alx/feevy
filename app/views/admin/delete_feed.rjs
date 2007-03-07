@@ -1,0 +1,4 @@
+page.visual_effect :fade, "row_#{@feed.id}", :duration=>0.5
+page.delay(0.5) do
+  page.remove "feed_#{@feed.id}"
+end

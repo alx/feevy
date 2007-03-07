@@ -1,0 +1,20 @@
+### auth_generator
+###
+### Add the following routes to routes.rb
+### You can replace 'auth' and 'admin/auth' with some appropriate name
+### for your setup, e.g. 'members', 'account', etc.
+###
+
+    map.auth 'auth/:action/:id',
+      :controller => 'auth', :action => nil, :id => nil
+    map.authadmin 'authadmin/:action/:id',
+      :controller => 'authadmin', :action => nil, :id => nil
+
+###
+### Other example:
+###
+#   map.auth 'members/:action/:id',
+#     :controller => 'auth', :action => nil, :id => nil
+#   map.authadmin 'members/admin/:action/:id',
+#      :controller => 'authadmin', :action => nil, :id => nil
+#

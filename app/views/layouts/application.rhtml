@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Feevy home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-UTF-8" />
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+	<%= javascript_include_tag :defaults %> 
+	<%= javascript_include_tag 'auth_generator' %>
+</head>
+
+
+<body>
+	<!-- contenedor de la pagina -->
+	<div id="container">
+
+		<!-- cabecera -->
+		<div class="header">
+		<!-- principal -->
+			<!-- logo-->
+			<div class="header1">
+			 <a href='/'><img src="/images/feevy.png" width="147px" height="71px" alt="Feevy" /></a>
+			</div>
+			<!-- user -->
+			
+			<%= render :partial => 'shared/register' %>
+		</div>
+		<%= render :partial => 'shared/flash' %>
+		<%= @content_for_layout %>
+<!-- pie de pagina -->
+		<div class="footer">
+
+		<div class="foot">
+		<div class="imgfooter"></div>
+		Feevy is a product of <a href="http://www.lasindias.com">Sociedad de las Indias Electr&oacute;nicas</a> <a href="http://www.feevy.com/faq">FAQ</a> <a href="http://www.feevy.com/privacy">privacy policy</a> <a href="http://www.feevy.com/terms">Terms and conditions of use</a>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

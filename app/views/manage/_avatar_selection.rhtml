@@ -1,0 +1,94 @@
+<!-- subscription -->
+
+<% feed = subscription.feed %>
+
+<div class="caja1" id='selectavatar_<%= subscription.id %>'>
+  <!-- caja redondeada negra -->
+  <div class="xsnazzy">
+    <b class="xtopb"><b class="xb1b"></b><b class="xb2b"></b><b class="xb3b"></b><b class="xb4b"></b></b>
+    <div class="xboxcontentb">
+      <!-- capa contenedora -->
+      <div id='avatar_content_<%= subscription.id %>' class="cajacontent">
+        <br/>
+        <h3><%= feed.title %></h3>
+        <h5><%= feed.href %></h5>
+        <br /><p>choose the image you want to relate to this blog:</p>
+        <br/>
+        <!-- alinea imagen a la izq (cajaleft)-->
+        <div class="cajaleft-z">
+          <% if subscription.avatar.nil? or subscription.avatar.is_common? %>
+          <div id='user_avatar_<%= subscription.id %>' class="user_avatar" style='padding-top:10px;text-align:center'>
+            <%= link_to_remote "upload your avatar",
+            {:url => {:action => "change_avatar", :id => subscription.id}} %>
+          </div>
+          <% else -%>
+          <div id='user_avatar_<%= subscription.id %>' class="navenlace user_avatar">
+            <%= avatar_display(subscription.avatar.id, subscription) %><br/>
+            <%= link_to_remote "change",
+            {:url => {:action => "change_avatar", :id => subscription.id}} %>
+          </div>
+          <% end -%>
+        </div>
+        <div class="cajaleft-z">
+          <br/><h2>or...</h2>
+        </div>
+        <!-- caja de imagenes -->
+        <div class="box-fotos">
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(1, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(2, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(3, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(4, subscription) %>
+            </div> 
+          </div>
+
+          <br/> <!-- salto de linea para separar los bloques -->
+
+
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(5, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(6, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(7, subscription) %>
+            </div> 
+          </div>
+          <div class="cajaleft">
+            <div class="navenlace">
+              <%= avatar_display(8, subscription) %>
+            </div> 
+          </div>
+        </div>
+        <% if action  %>
+        <div class='right'>
+          <%= link_to_remote "return", {:url => {:action => "show_blog", :id => subscription.id }} %>
+        </div>
+        <% end -%>
+      </div>
+      <br/>
+    </div>
+    <b class="xbottomb"><b class="xb4b"></b><b class="xb3b"></b><b class="xb2b"></b><b class="xb1b"></b></b>
+  </div>
+  <!-- end caja redondeada -->
+</div>
+<!-- end caja! -->

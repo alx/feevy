@@ -1,0 +1,16 @@
+CREATE TABLE users (
+  id integer NOT NULL PRIMARY KEY,
+  login varchar(80) default NULL,
+  cryptpassword varchar(40) default NULL,
+  validkey varchar(40) default NULL,
+  email varchar(100) NOT NULL default '',
+  newemail varchar(100) default NULL,
+  ipaddr varchar(15) NOT NULL default '',
+  created_at datetime NOT NULL default '0000-00-00 00:00:00',
+  updated_at datetime NOT NULL default '0000-00-00 00:00:00',
+  confirmed integer(1) NOT NULL default '0',
+  domains text NOT NULL,
+  image blob,
+  firstname varchar(40) NOT NULL default '',
+  lastname varchar(40) NOT NULL default ''
+);

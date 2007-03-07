@@ -1,0 +1,31 @@
+<% if params[:id] %>
+<p>
+&gt; You are listing users included in the <%= params[:id] %> domain.<br />
+&gt; <%= link_to 'View all users', :controller => 'authadmin' %>.
+</p>
+<% end %>
+
+<p style="text-align: center;">
+<%= pagination_links @user_pages %>
+</p>
+
+<table border="1">
+	<tr>
+		<td>id</td>
+		<td>&nbsp;</td>
+		<td>Login</td>
+		<td>Email</td>
+		<td>Firstname</td>
+		<td>Lastname</td>
+		<td>IP</td>
+		<td>Updated_at</td>
+		<td>Domains</td>
+		<td>Conf?</td>
+		<td>Del</td>
+	</tr>
+<%= render :partial => "user", :collection => @users %>
+</table>
+
+<p style="text-align: center;">
+<%= pagination_links @user_pages %>
+</p>

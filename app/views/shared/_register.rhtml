@@ -1,0 +1,7 @@
+<div class="header2">
+<% if user_logged_in? %>
+	<p>Welcome <%= @user.name %>, <%= link_to "logout", :controller => "auth", :action => "logout"%></p>
+<% else %>
+	<p>Registered users, <%= link_to "sign in", :controller => "auth", :action => "login" %> </p>
+<% end %>
+</div>

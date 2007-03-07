@@ -1,0 +1,12 @@
+if @return
+page.hide "uploadavatar_#{@subscription.id}"
+page.insert_html :after, "uploadavatar_#{@subscription.id}",
+  :partial => "avatar_selection",
+  :locals => {:subscription => @subscription, :action => false}
+page.remove "uploadavatar_#{@subscription.id}"
+else
+page.hide "blog_#{@subscription.id}"
+page.insert_html :after, "blog_#{@subscription.id}",
+  :partial => "avatar_selection",
+  :locals => {:subscription => @subscription, :action => true}
+end

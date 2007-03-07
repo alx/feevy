@@ -1,0 +1,70 @@
+###
+### dummy_user shows the defaults in the database
+### It cannot be saved as is.
+###
+dummy_user:
+  id: 123
+  login: nil
+  cryptpassword: nil
+  validkey: nil
+  email: ''
+  newemail: nil
+  ipaddr: '12.23.34.45'
+  created_at: '1800-01-01 00:00:01'
+  updated_at: '1800-01-01 00:00:01'
+  confirmed: 0
+  domains: 'USERS,1'
+  image: nil
+  firstname: ''
+  lastname: ''
+
+# password is "bigchief"
+admin_user:
+  id: 124
+  login: 'admin'
+  cryptpassword: 'cfbcfea51a4522fda09c0ebf9cb1a538cde5ca5d'
+  validkey: nil
+  email: 'admin@example.com'
+  newemail: 'admin@example.com'
+  ipaddr: '127.0.0.1'
+  created_at: '2005-11-12 00:00:00'
+  updated_at: '1800-01-01 00:00:01'
+  confirmed: 1
+  domains: 'USERS,1 ADMIN,1'
+  image: nil
+  firstname: 'big'
+  lastname: 'chief'
+
+# password is "johndoe"
+new_user:
+  id: 125
+  login: 'joe'
+  cryptpassword: '6c074fa94c98638dfe3e3b74240573eb128b3d16'
+  validkey: nil
+  email: 'joe@example.com'
+  newemail: 'joe@example.com'
+  ipaddr: '12.23.34.45'
+  created_at: '1800-01-01 00:00:01'
+  updated_at: '1800-01-01 00:00:01'
+  confirmed: 0
+  domains: 'USERS,1'
+  image: nil
+  firstname: ''
+  lastname: ''
+
+# password is "janedoe"
+confirmed_user:
+  id: 126
+  login: 'jane'
+  cryptpassword: '6c074fa94c98638dfe3e3b74240573eb128b3d16'
+  validkey: nil
+  email: 'jane@example.com'
+  newemail: 'jane@example.com'
+  ipaddr: '12.23.34.45'
+  created_at: '2006-02-01 01:02:03'
+  updated_at: '1800-01-01 00:00:01'
+  confirmed: 1
+  domains: 'USERS,1'
+  image: nil
+  firstname: 'Jane'
+  lastname: 'Doe'

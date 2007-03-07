@@ -1,0 +1,35 @@
+Technorati-Ruby 0.1.0 README
+============================
+
+This document was last updated on Wed Sep 29 09:29:19 2004.  Please see
+the file COPYING for licensing and warranty information.  Visit
+http://pablotron.org/software/technorati-ruby/ for the latest version of
+this software.
+
+Overview
+========
+Technorati (http://technorati.com/) bindings for Ruby.  You'll need to
+create an account at Technorati and obtain an API key in order to use
+Technorati-Ruby.  An RDoc-generated API reference is in doc/, and some
+simple examples are in examples/.
+
+Requirements
+============
+* Ruby (http://www.ruby-lang.org/), version 1.8.0 (or newer).
+* ParseDate (included with Ruby 1.8.x).
+* REXML (included with Ruby 1.8.x).
+
+Installation
+============
+# copy technorati lib to site_ruby dir
+cp technorati.rb /usr/local/lib/site_ruby/1.8/
+
+  or (if you have RubyGems installed)
+
+# build and install RubyGem
+gem build technorati.gemspec && gem install *.gem
+
+About the Author
+================
+Paul Duncan <pabs@pablotron.org>
+http://www.pablotron.org/

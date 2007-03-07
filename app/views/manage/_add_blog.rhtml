@@ -1,0 +1,39 @@
+<div class="cajab" id='add_blog_box' style='<%= style %>'>
+  <div class="caja10">
+    <div class="box">
+      <b class="spiffy">
+        <b class="spiffy1"><b></b></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy4"></b>
+        <b class="spiffy5"></b>
+      </b> 
+      <div class="spiffy_content">
+        <br />
+        <% if style == "display:none;" %>
+        <a href="#" onClick="$('add_blog_box').hide()" class='right'>close this box</a>
+        <% end -%>
+        <form method="post" action="/manage/select_blogs" class='select_blogs'>
+          <div id='add_blog_form'>
+          <p>blog address<br><input id="blogs[]" type="text" size="27" name="blogs[]"/></p><br>
+          </div>
+          <div class="ladoa">
+            <%= link_to_remote "+ add more", {:url => {:action => "add_more_blog"}} %>
+            <br/>
+          </div>
+          <div class="ladob"><input type="submit" id="boton2" value="next >" class="submit"/></div>
+          <br/>
+          <br/>
+        </form>
+        <br />
+      </div>
+      <b class="spiffy">
+        <b class="spiffy5"></b>
+        <b class="spiffy4"></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy1"><b></b></b>
+      </b>
+    </div>
+  </div>
+</div>

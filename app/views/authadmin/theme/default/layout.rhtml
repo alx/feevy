@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title><%= @title.nil? ? "Admin Interface: #{controller.action_name}" : @title %></title>
+  <%= stylesheet_link_tag 'authadmin' %>
+	<%= javascript_include_tag 'prototype', 'effects' %>
+</head>
+<body>
+
+<p>
+<%= link_to 'home', @app[:url] %> | 
+<%= link_to 'admin', {:controller => 'authadmin', :action => 'index'} %> |
+<%= link_to 'new user', {:controller => 'authadmin', :action => 'newuser'} %>
+<br />
+<%= start_form_tag({:action=> "list" }, :multipart => true, :method=>'get') %>
+  <%= text_field "post", "s", :size => 20, :class=>"form" %>
+<input type="submit" name="search" value="search" />
+<%= end_form_tag %>
+</p>
+
+<h1><%= account_infos %></h1>
+
+<div class="main" id="content">
+
+<%= @content_for_layout %>
+
+</div>
+
+
+</div>
+</body>
+</html>

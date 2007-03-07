@@ -1,0 +1,40 @@
+###
+### auth_generator Configuration File
+###
+
+### Your website title (no sensible default)
+title: Feevy.com
+### Your website homepage (default: http://localhost:3000/)
+url: http://www.feevy.com/
+### Administrator email (no sensible default)
+email: admin@feevy.com
+
+### Default icon for users (default: /images/auth/buddy.png)
+default_icon: /images/auth/buddy.png
+### Pixel size of the icons (both width and height)
+icon_size: 48
+
+### Allow self-registration (default: true; use false to disable)
+allow_self_registration: true
+
+### Format of the user name. Choices are:
+###  login: login
+###  first: firstname
+###   last: lastname
+###   name: firstname lastname
+###   full: firstname lastname <email>
+name_format: login
+
+### The crypt method to store user password. (default: SHA1)
+### You can use SHA1, MD5 or SHA1moresalt
+crypt_method: SHA1
+
+### You can define a theme you'd like to use for the auth_generator
+### Available themes are : default, simple
+theme: default
+themeadmin: default
+
+### Do you want to use Gravatar instead of your oww ?
+### For more information see http://www.gravatar.com/
+### The default icon will still be used if users have no gravatar
+gravatar: false

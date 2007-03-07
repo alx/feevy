@@ -1,0 +1,18 @@
+###
+### dummy_subscription shows the defaults in the database
+### It cannot be saved as is.
+###
+dummy_subscription:
+  id: 123
+  user_id: nil
+  feed_id: nil
+  
+latejedora_feed:
+  id: 124
+  user_id: 0
+  feed_id: 124
+  
+dplus_feed:
+  id: 125
+  user_id: 0
+  feed_id: 125

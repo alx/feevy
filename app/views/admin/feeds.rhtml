@@ -1,0 +1,17 @@
+<form action='/admin/search_feed' method='post'>
+  <input type="text" name="search" value="" id="search"><input type="submit" value="Search &raquo;" id="some_name">
+</form>
+<br/>
+<form action="/admin/merge_duplicates" method="post" accept-charset="utf-8">
+  <label for='merged'>Feed id to merge: </label><input type="text" name="merged" value="" id="merged" size=5>
+  <label for='central'>Merge into feed id: </label><input type="text" name="central" value="" id="central" size=5>
+  <input type="submit" value="Merge &rarr;">
+</form>
+<br/>
+<table border="0" cellspacing="5" cellpadding="5">
+  <tr><th>id</th><th>Website</th><th>Feed</th><th>Actions</th></tr>
+  <%= render :partial => 'feed_row', :collection => @feeds %>
+  <% if @page -%>
+  <%= will_paginate(@nb_pages, Feed.per_page, @page) %>
+  <% end -%>
+</table>

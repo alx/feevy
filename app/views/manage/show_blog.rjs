@@ -1,0 +1,2 @@
+page.remove "selectavatar_#{@subscription.id}"
+page.show "blog_#{@subscription.id}"

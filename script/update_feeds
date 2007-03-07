@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+RAILS_ENV = 'production'
+require File.dirname(__FILE__) + '/../config/boot'
+require "#{RAILS_ROOT}/config/environment"
+
+@range = 50
+@timeout = 30
+@offset = 0
+@feeds = Feed.find(:all)
+
+while true
+  @feeds[@offset, @range].each {|feed|
+    begin
+      Timeout::timeout(@timeout) {
+        feed.refresh(true) unless feed.bogus == true
+      }
+    rescue Timeout::Error
+      unless feed.nil?
+        feed.raise_bug("timeout", Bug::WARNING)
+        puts "Timeout on feed ##{feed.id}: #{feed.link}"
+      end
+    end
+  }
+  @offset += @range
+  if @offset > @feeds.size
+    puts "Update completed, restarting"
+    @feeds = Feed.find(:all)
+    @offset = 0
+  else
+    puts "#{@offset}/#{@feeds.size} completed"
+  end
+end

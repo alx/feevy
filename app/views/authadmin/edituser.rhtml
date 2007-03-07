@@ -1,0 +1,164 @@
+<p>
+&gt; You are editing the user <%= @edituser %>.<br />
+&gt; <%= link_to "View all users", :action => '' %>.
+</p>
+
+<table>
+<tr><td>
+
+ <%= start_form_tag ({:action => 'edituser'}, :multipart => true, :onSubmit => "Toggle.display('edituser_spinner')") %>
+<%= hidden_field "edituser", "id", :value => @params[:id] %>
+
+  <% if flash['notice'] %>
+  <div class="Message">
+  <%= flash['notice'] %>
+  </div>
+  <% end %>
+
+  <% @edituser and if error_messages_for('edituser') != "" %>
+  <div class="Message"><%= error_messages_for 'edituser' %></div>
+  <% end %>
+
+	<div id="edituserinfo"></div>
+
+<table cellpadding="3" cellspacing="3" border="0" class="signup">
+
+<tr><td>Current Icon</td>
+	<td><%= user_icon(@edituser.login,@edituser.email) %></td>
+</tr>
+<% if not @edituser.image.nil? %>
+<tr><td><label for="delete">Delete the Icon</td>
+<td><%= check_box_tag "delete_image", '1' %></td>
+</tr>
+<% end %>
+
+<% if @app[:gravatar] == true %>
+<tr><td colspan="2">This website use <a href="http://www.gravatar.com">gravatar</a> icons. You don't need to upload/delete user icons.</td></tr>
+<% end %>
+
+
+<tr><td>
+	<label for="edituser_login">Username</label>
+</td><td>
+  <%= text_field "edituser", "login", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="edituser_lastname">Last name</label>
+</td><td>
+  <%= text_field "edituser", "lastname", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="edituser_firstname">First name</label>
+</td><td>
+  <%= text_field "edituser", "firstname", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="edituser_image">The icon</label>
+</td><td>
+  <%= file_field "edituser", "image", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr>
+   <td colspan="2">
+		 Note: The icon buddy will be resized to match <%= @app[:icon_size] %>x<%= @app[:icon_size] %> pixels.
+     It may loose quality in the process.
+   </td>
+</tr>
+
+
+<tr><td>
+  <label for="edituser_password">Password</label>
+</td><td>
+  <%= password_field "edituser", "password", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+
+<tr><td>
+  <label for="edituser_passwordbis">Password (again)</label>
+</td><td>
+  <%= password_field "edituser", "passwordbis", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr>
+   <td>
+      <label for="edituser_email">email address</label>
+   </td>
+   <td>
+      <%= text_field "edituser", "email", :size => 20, :class => "form" %>
+   </td>
+</tr>
+
+<% if not @edituser.newemail.nil? %>
+<tr>
+   <td>
+      New email address waiting
+   </td>
+   <td>
+      <%= @edituser.newemail %>
+   </td>
+</tr>
+<% end %>
+
+<tr>
+   <td>
+      <label for="post_confirmed">confirmed?</label>
+   </td>
+   <td>
+		  <%= check_box "edituser", "confirmed" %>
+   </td>
+</tr>
+<tr><td>Creation</td><td><%= @edituser.created_at.to_s(:long) %></td></tr>
+<tr><td>Update</td><td><%= @edituser.updated_at.to_s(:long) %></td></tr>
+
+<tr><td colspan="2">
+<hr width="200"/>
+</td></tr>
+
+<tr><td>&nbsp;</td>
+<td>
+  <input type="submit" value="Modify his preferences &#187;" class="primary" />
+<%= spinner_tag('edituser') %>
+</td></tr>
+
+</table>
+<%= end_form_tag %>
+
+<td><td valign="top">
+<h1>Domains</h1>
+<p>
+This user belongs to the following domains.<br />
+You may add more domains if you need to.
+</p>
+<%= form_remote_tag(
+	:update => 'domains',
+	:url => {:controller => 'authadmin', :action => 'editdomains'},
+	:loading => "Toggle.display('domain_spinner');",
+	:complete => "Toggle.display('domain_spinner'); $('domain_form').reset();",
+	:html => { 'id' => 'domain_form' }
+	) %>
+  <%= hidden_field "post", "id", :value => @edituser.id %>
+
+<div id="domains">
+<%= render :partial => 'domains' %>
+</div>
+
+<%= text_field "post", "domain" , :size => 15, :class=>"form" %>
+<%= select("post", "domain_level", {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9}.sort ) %>
+<input type="submit" value="Add this user to this domain &#187;" class="primary" />
+<%= spinner_tag('domain') %>
+<p>
+tip: you can choose different levels for users in the same domain.
+</p>
+	
+<%= end_form_tag %>
+</td></tr>
+</table>

@@ -1,0 +1,5 @@
+<% if flash['notice'] %>
+  <div class="Message"><%= flash['notice'] %></div>
+<% end %>
+
+<%= link_to '&#171; logout', auth_url(:action => 'logout') %>  

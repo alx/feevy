@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>Access denied</title>
+  <%= stylesheet_link_tag 'auth' %>
+	<%= javascript_include_tag 'prototype' %>
+</head>
+<body>
+
+<div class="denied">
+<% if flash['notice'] %>
+  <div class="Message"><%= flash['notice'] %></div>
+<% else %>
+	<div class="Message">You don't have the right to access this page</div>
+<% end %>
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+page.insert_html :bottom, 
+                "add_blog_form", 
+                "<p>blog address<br><input id='blogs[]' type='text' size='27' name='blogs[]'/></p><br>"

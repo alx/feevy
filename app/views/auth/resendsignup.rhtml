@@ -1,0 +1,15 @@
+<%= start_form_tag %>
+
+<% if flash['notice'] %>
+  <div class="Message"><%= flash['notice'] %></div>
+<% end %>
+
+<p>
+Please enter your email address:
+</p>
+<%= text_field "post", "email", :size => 20, :value => @email, :class=>"form" %>
+
+<p><input type="submit" value="Resend &#187;" class="primary" /></p>
+
+
+<%= end_form_tag %>

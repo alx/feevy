@@ -1,0 +1,15 @@
+Hello <%= @user.name %>,
+
+An admin created an account for you. The informations are :
+
+login    : <%= @user.login %>
+password : <%= @password %>
+
+You can update your personal informations using:
+
+<%= @app[:url] %>auth/info
+
+Thank you,
+
+<%= @app[:title] %> Administrator
+<%= @app[:url] %>

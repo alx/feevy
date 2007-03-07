@@ -1,0 +1,103 @@
+body {
+	font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background: #fff;
+	margin: 20pt;
+}
+div.denied, div.logout {
+	width: 30em;
+	height: 20em;
+	margin: auto;
+	margin-top: 10em;
+
+	text-align: center;
+	padding: 5px;
+	font-size: 11px;
+	color: #000;
+
+	background: #dfd;
+	border-color: #0a0;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+}
+div.main {
+	width: 30em;
+	margin: auto;
+	background: #fff;
+	color : #000;
+	border : 1px solid #bbb; 
+	padding : 1em;
+}
+div.main h1 {
+	color: #990033; 
+	font-weight: bold;
+	font-size: 1.5em;
+}
+div.main h2 {
+	color: #990033; 
+	font-weight: bold;
+	font-size: 1em;
+	margin: 0px;
+	padding: 0px;
+}
+div.menu {
+	border-bottom: 1px solid #bbb;
+}
+input.form, select.form, textarea.form {
+	border: 1px #bbb solid;
+	/* background-color: #dce0e6; */
+	font-size: 1em;
+}
+/*
+input.form:active, input.form:focus, textarea.form:active, textarea.form:focus {
+	border: 1px #bbb solid;
+	background-color: white;
+	font-size: 1em;
+}*/
+.loginbox div.errorMessage, .loginbox div.Message {
+	text-align: left;
+	padding: 5px;
+	font-size: 11px;
+	margin: 0 0 10px 0;
+	color: #000;
+
+	background: #dfd;
+	border-color: #0a0;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+
+}
+.loginbox div#errorMessage a:link,
+.loginbox div#errorMessage a:visited {
+	color: #fff;
+}
+table.signup {
+	font-size: 1em;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+div.footer {
+	width: 30em;
+	margin: auto;
+	background: #fff;
+	color : #000;
+	/* border: 1px solid #bbb; */
+	padding : 0em 1em 0em 1em;
+	font-size: 0.8em;
+}
+
+input.username {
+	padding-left:18px;
+	background-image: url('/images/auth/account_username.png');
+	background-repeat: no-repeat;
+	border: 1px #bbb solid;
+	font-size: 1em;
+}
+
+input.password {
+	padding-left:18px;
+	background-image: url('/images/auth/account_password.png');
+	background-repeat: no-repeat;
+	border: 1px #bbb solid;
+	font-size: 1em;
+}

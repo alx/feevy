@@ -1,0 +1,21 @@
+
+* Wed Sep 29 08:54:00 2004, pabs <pabs@pablotron.org>
+  * added COPYING
+  * added ChangeLog
+  * added technorati.gemspec
+  * technorati.rb: documentation cleanup (finished adding keys)
+  * README: added intro, isntall, requirements
+  * TODO: marked one item off
+
+* Wed Sep 29 10:08:12 2004, pabs <pabs@pablotron.org>
+  * added examples/referrer_rss.rb
+  * technorati.rb: removed debugging output
+
+* Wed Sep 29 10:10:07 2004, pabs <pabs@pablotron.org>
+  * technorati.gemspec: more verbose requirements
+  * technorati.gemspec: added examples/referrer_rss.rb to RDoc list
+  * MANIFEST: updated
+
+* Wed Sep 29 10:12:25 2004, pabs <pabs@pablotron.org>
+  * technorati.gemspec: fix one little gotcha
+  * releasing 0.1.0

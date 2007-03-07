@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+another:
+  id: 2
+
+error_bug:
+  id: 321
+  level: 2
+  status: 0
+  description: 'error bug'
+  feed_id: nil
+warning_bug:
+  id: 322
+  level: 2
+  status: 0
+  description: 'warning bug'
+  feed_id: nil
+error_bug_fixed:
+  id: 323
+  level: 2
+  status: 1
+  description: 'error bug resolved'
+  feed_id: nil

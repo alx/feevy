@@ -1,0 +1,37 @@
+<div class="caja">
+  <div class="caja10">
+    <div class="box">
+      <b class="spiffy">
+        <b class="spiffy1"><b></b></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy4"></b>
+        <b class="spiffy5"></b>
+      </b> 
+      <div class="spiffy_content">
+        <br />
+        <%= start_form_tag({:action => 'login'}, {:class => "small" }) %>
+          <label for='post_login'>Username</label>
+          <%= text_field "post", "login", :size => 17, :value => @user.login %><br>
+          
+          <label for="post_password">Password</label>
+          <%= password_field "post", "password", :size => 17 %><br />
+          <br />
+          <%= check_box("post", "keepalive") %> Remember me<br />
+          <br />
+          <input type="submit" value="Sign In &#187;" class="primary signup" />
+        <%= end_form_tag %>
+        <p><%= link_to 'New to Feevy? Signup!', auth_url(:action => 'signup') %></p>
+        <p><%= link_to 'Forgot your password?', auth_url(:action => 'lostpassword') %></p>
+        <br />
+      </div>
+      <b class="spiffy">
+        <b class="spiffy5"></b>
+        <b class="spiffy4"></b>
+        <b class="spiffy3"></b>
+        <b class="spiffy2"><b></b></b>
+        <b class="spiffy1"><b></b></b>
+      </b>
+    </div> 
+  </div>
+</div>

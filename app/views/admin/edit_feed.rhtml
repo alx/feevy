@@ -1,0 +1,18 @@
+<table border="0" cellspacing="5" cellpadding="5">
+<form action="/admin/edit_feed" method="post">
+  <tr><td>Title</td><td><%= text_field "feed", "title", :size => 20 %></td></tr>
+  <tr><td>Website <small>(<a href='<%= @feed.href %>'>url</a>)</small></td><td><%= text_field "feed", "href", :size => 50 %></td></tr>
+  <tr><td>Feed <small>(<a href='<%= @feed.link %>'>url</a>)</small></td><td><%= text_field "feed", "link", :size => 50 %></td></tr>
+  <tr><td></td><td><input type="hidden" name="id" value="<%= @feed.id %>" id="id">
+  <input type="submit" value="Update feed attributes &#187;"/>
+  <%= link_to "Update feed content", :action => "update_feed", :id => @feed.id %></td></tr>
+</form>
+</table>
+
+<p>
+  Errors: <%= @feed.bugs.count %><br/>
+  <% @feed.bugs.each do |bug| -%>
+    <%= bug.description %> at <b><%= bug.created_at %></b><br/><br/>
+  <% end -%>
+</p>
+<a href='/admin/feeds'>Feed list</a>

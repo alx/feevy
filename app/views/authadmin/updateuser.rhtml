@@ -1,0 +1,9 @@
+<% if flash['notice'] %>
+<div class="Message">
+<%= flash['notice'] %>
+</div>
+<% end %>
+
+<% @edituser and if error_messages_for('edituser') != "" %>
+<div class="Message"><%= error_messages_for 'edituser' %></div>
+<% end %>

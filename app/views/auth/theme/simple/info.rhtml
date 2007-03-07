@@ -1,0 +1,93 @@
+<%= start_form_tag({:action => 'info'}, :multipart => true) %>
+
+  <% @newuser and if error_messages_for('newuser') != "" %>
+  <div class="Message"><%= error_messages_for 'newuser' %></div>
+  <% end %>
+
+    <% if flash['notice'] %>
+      <div class="message"><%= flash['notice'] %></div>
+			<% if @err and @err == 2 %>
+			<script type="text/javascript">Effect.Shake('main')</script>
+			<% end %>
+    <% end %>
+
+
+<table cellpadding="3" cellspacing="3" border="0" class="signup">
+
+<tr><td>
+	Username
+</td><td>
+  <%= @user.login %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="post_lastname">Last name</label>
+</td><td>
+  <%= text_field "post", "lastname", :size => 20, :class=>"form", :value => @user.lastname %>
+</td>
+</tr>
+
+<tr><td>
+  <label for="post_firstname">First name</label>
+</td><td>
+  <%= text_field "post", "firstname", :size => 20, :class=>"form", :value => @user.firstname %>
+</td>
+</tr>
+
+<%= user_info_icon_subpart %>
+
+<tr><td>
+  <label for="post_password">Password</label>
+</td><td>
+  <%= password_field "post", "password", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+
+<tr><td>
+  <label for="post_passwordbis">Password (again)</label>
+</td><td>
+  <%= password_field "post", "passwordbis", :size => 20, :class=>"form" %>
+</td>
+</tr>
+
+<tr>
+   <td>
+      <label for="post_newemail">email address</label>
+   </td>
+   <td>
+      <%= text_field "post", "newemail", :size => 20, :class => "form", :value => @user.email %>
+   </td>
+</tr>
+
+<% if not @user.newemail.nil? %>
+<tr>
+   <td>
+      New email address
+   </td>
+   <td>
+      <%= @user.newemail %>
+   </td>
+</tr>
+
+<tr><td>&nbsp;</td>
+<td>
+<%= link_to 'Resend the confirmation', auth_url(:action => 'resendnewemail') %>
+</td></tr>
+
+<% else %>
+<tr>
+   <td colspan="2">
+      Note: You need to confirm the message you will receive to validate your new email address.
+   </td>
+</tr>  
+<% end %>
+
+<tr><td>&nbsp;</td>
+<td>
+  <input type="submit" value="Modify your preferences &#187;" class="primary" />
+</td></tr>
+
+</table>
+<%= end_form_tag %>

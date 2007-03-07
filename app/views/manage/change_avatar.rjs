@@ -1,0 +1,3 @@
+page.replace "selectavatar_#{@subscription.id}",
+                         :partial => "avatar_upload",
+                         :locals => {:subscription => @subscription}

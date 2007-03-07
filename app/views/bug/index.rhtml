@@ -1,0 +1,13 @@
+<table border="0" cellspacing="5" cellpadding="5">
+  <tr>
+    <th>Feed id</th>
+    <th>Title</th>
+    <th>Website</th>
+    <th>Feed</th>
+    <th>Error</th>
+    <th>Actions</th>
+  </tr>
+  <% @bugs.each do |bug| %>
+    <%= render :partial => 'bogus_feed', :locals => {:bug => bug, :status => ""} %>
+  <% end -%>
+</table>

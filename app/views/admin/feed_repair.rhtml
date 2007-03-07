@@ -1,0 +1,45 @@
+<% unless @obvious_feeds.empty? -%>
+<h1>Obvious feeds</h1>
+<ul>
+<% @obvious_feeds.each do |feed| -%>
+<li><%= feed.href %></li>
+<% end -%>
+</ul>
+<%= link_to "Repair all obvious", :action => 'repair_obvious_feeds' %>
+<% end -%>
+
+<h1><%= @nil_feeds.size %> feeds without url</h1>
+<% @nil_feeds.each do |feed| %>
+  <div id='nil_feed_<%= feed.id %>'>
+    <a href="<%= feed.href %>"><%= feed.href %></a> - <a href="view-source:<%= feed.href %>">source</a> - <a href="#" onClick='$("feed_link_<%= feed.id %>").value = "<%= feed.href %>"'>Set href as feed</a>
+    <%= form_tag :action => "edit_feed_url" %>
+      <label for='feed[link]'>Feed url:</label><input id="feed_link_<%= feed.id %>" name="feed[link]" size="20" type="text" />
+      <input type="hidden" name="feed[id]" value="<%= feed.id %>" id="feed[id]">
+      <%= submit_tag 'Update Feed' %>
+    </form>
+    <%= form_tag :action => "remove_feed" %>
+      <input type="hidden" name="feed[id]" value="<%= feed.id %>" id="feed[id]">
+      <%= submit_tag 'Remove Feed' %>
+    </form>
+    <%= link_to 'Edit', {:action => 'edit_feed', :id => feed.id} %>
+    <hr>
+  </div>
+<% end %>
+
+<h1><%= @bad_format_feeds.size %> feeds with wrong url</h1>
+<% @bad_format_feeds.each do |feed| %>
+  <div id='nil_feed_<%= feed.id %>'>
+    <a href="<%= feed.href %>"><%= feed.href %></a> - <a href="view-source:<%= feed.href %>">source</a> - current url: <%= feed.link %>
+    <%= form_tag :action => "edit_feed_url" %>
+      <label for='feed[link]'>Feed url:</label><input id="feed_link_<%= feed.id %>" name="feed[link]" size="20" type="text" value="<%= feed.link %>" />
+      <input type="hidden" name="feed[id]" value="<%= feed.id %>" id="feed[id]">
+      <%= submit_tag 'Update Feed' %>
+    </form>
+    <%= form_tag :action => "remove_feed" %>
+      <input type="hidden" name="feed[id]" value="<%= feed.id %>" id="feed[id]">
+      <%= submit_tag 'Remove Feed' %>
+    </form>
+    <%= link_to 'Edit', {:action => 'edit_feed', :id => feed.id} %>
+    <hr>
+  </div>
+<% end %>

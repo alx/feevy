@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title><%= @title.nil? ? 'User Interface: ' + controller.action_name : @title %></title>
+		<%= stylesheet_link_tag 'auth/simple' %>
+		<%= javascript_include_tag 'prototype', 'effects' %>
+		<%= javascript_include_tag 'auth_generator' %>
+	</head>
+	<body>
+		<div id="accountinfo">
+			<div class="main" id="content">
+				<%= render :partial => 'menu' %>
+				<% if user_logged_in? -%>
+				<h1><%= link_to user_icon(@user.login,@user.email), auth_url(:action => 'info') %>
+					Hi <%= @user.name %>!</h1>
+				<% end -%>
+				<div class="loginbox">
+					<%= @content_for_layout %>
+				</div>
+
+				<div class="footer">
+					Powered by <a href="http://penso.info/rails/auth_generator/">auth_generator</a>. 
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>

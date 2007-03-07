@@ -1,0 +1,16 @@
+Hello <%= @user.name %>,
+
+You required a new account and need to confirm.
+
+The validation key is :
+
+<%= @user.validkey %>
+
+You can also visit the following URL :
+
+<%= @app[:url] %>auth/confirm/<%= @user.email %>,<%= @user.validkey %>
+
+Thank you,
+
+<%= @app[:title] %> Administrator
+<%= @app[:url] %>

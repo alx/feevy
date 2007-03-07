@@ -1,0 +1,21 @@
+<div id=\"feevy_bar_<%= id %>\">
+<div class=\"bar_content\">
+<% if @entradas %>
+<% @entradas.each do |post| %>
+<div class=\"feevy_item\">
+<div class=\"item_content\">
+<div class=\"feevy_title\">
+<img src=\"<%= post[:img] %>\" width=40 height=40/>
+<h1><a href=\"<%= post[:post_url] %>\"><%= url_escape(post[:title]) %></a></h1>
+</div>
+<div class=\"feevy_content\">
+<%= url_escape(post[:texto]) %> <a href=\"<%= post[:post_url] %>\">read more</a>
+</div>
+<a class=\"blog_url\" href=\"<%= post[:blog_url] %>\"><%= url_escape(post[:name]) %></a>
+</div>
+</div>
+<% end -%>
+<div class=\"footer\">Feevy is a free service <a href=\"http://www.feevy.com\">Get yours</a></div>
+<% end -%>
+</div>
+</div>

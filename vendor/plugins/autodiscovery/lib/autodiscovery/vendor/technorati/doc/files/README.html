@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>File: README</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+	<script type="text/javascript">
+	// <![CDATA[
+
+	function popupCode( url ) {
+		window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+	}
+
+	function toggleCode( id ) {
+		if ( document.getElementById )
+			elem = document.getElementById( id );
+		else if ( document.all )
+			elem = eval( "document.all." + id );
+		else
+			return false;
+
+		elemStyle = elem.style;
+		
+		if ( elemStyle.display != "block" ) {
+			elemStyle.display = "block"
+		} else {
+			elemStyle.display = "none"
+		}
+
+		return true;
+	}
+	
+	// Make codeblocks hidden by default
+	document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+	
+	// ]]>
+	</script>
+
+</head>
+<body>
+
+
+
+	<div id="fileHeader">
+		<h1>README</h1>
+		<table class="header-table">
+		<tr class="top-aligned-row">
+			<td><strong>Path:</strong></td>
+			<td>README
+				&nbsp;(<a href="http://cvs.pablotron.org/cgi-bin/viewcvs.cgi/technorati/README">CVS</a>)
+			</td>
+		</tr>
+		<tr class="top-aligned-row">
+			<td><strong>Last Update:</strong></td>
+			<td>Wed Sep 29 09:42:22 EDT 2004</td>
+		</tr>
+		</table>
+	</div>
+  <!-- banner header -->
+
+	<div id="bodyContent">
+
+
+	<div id="contextContent">
+
+		<div id="description">
+			<p>
+<a href="../classes/Technorati.html">Technorati</a>-Ruby 0.1.0 README
+</p>
+<h6>======================</h6>
+<p>
+This document was last updated on Wed Sep 29 09:29:19 2004. Please see the
+file COPYING for licensing and warranty information. Visit <a
+href="http://pablotron.org/software/technorati-ruby">pablotron.org/software/technorati-ruby</a>/
+for the latest version of this software.
+</p>
+<p>
+Overview
+</p>
+<h6>==</h6>
+<p>
+<a href="../classes/Technorati.html">Technorati</a> (<a
+href="http://technorati.com">technorati.com</a>/) bindings for Ruby.
+You&#8216;ll need to create an account at <a
+href="../classes/Technorati.html">Technorati</a> and obtain an API key in
+order to use <a href="../classes/Technorati.html">Technorati</a>-Ruby. An
+RDoc-generated API reference is in doc/, and some simple examples are in
+examples/.
+</p>
+<p>
+Requirements
+</p>
+<h6>======</h6>
+<ul>
+<li>Ruby (<a href="http://www.ruby-lang.org">www.ruby-lang.org</a>/), version
+1.8.0 (or newer).
+
+</li>
+<li>ParseDate (included with Ruby 1.8.x).
+
+</li>
+<li>REXML (included with Ruby 1.8.x).
+
+</li>
+</ul>
+<p>
+Installation
+</p>
+<h6>======</h6>
+<p>
+# copy technorati lib to site_ruby dir cp technorati.rb
+/usr/local/lib/site_ruby/1.8/
+</p>
+<pre>
+  or (if you have RubyGems installed)
+</pre>
+<p>
+# build and install RubyGem gem build technorati.gemspec &amp;&amp; gem
+install *.gem
+</p>
+<p>
+About the Author
+</p>
+<h6>==========</h6>
+<p>
+Paul Duncan &lt;pabs@pablotron.org&gt; <a
+href="http://www.pablotron.org">www.pablotron.org</a>/
+</p>
+
+		</div>
+
+
+
+
+
+
+			
+
+	</div>
+
+
+
+		<!-- if includes -->
+
+
+		<!-- if method_list -->
+
+
+	</div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

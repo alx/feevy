@@ -1,0 +1,923 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:at="http://www.sixapart.com/ns/at">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="http://www.vox.com/" />
+    <meta http-equiv="imagetoolbar" content="no" />  
+    <title>Yogi's blog</title> 
+    <link rel="stylesheet" type="text/css" href="http://static.vox.com/.shared:v0.8.3:comet-us/css/base.css?dialog.css,flyout-view.css" />
+    <link rel="stylesheet" type="text/css" href="http://static.vox.com/.shared:v0.8.3:comet-us/themes/default/screen.css" />  
+    <link rel="stylesheet" type="text/css" href="http://static.vox.com/.shared:v0.8.3:comet-us/themes/hills/screen.css" /> 
+    <link rel="stylesheet" type="text/css" href="http://static.vox.com/.shared:v0.8.3:comet-us/themes/hills-midnight/screen.css" />  
+    <link rel="openid.server" href="http://www.vox.com/services/openid/server" />   
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed for Posts" href="http://yogi.vox.com/library/posts/atom.xml" />
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Posts" href="http://yogi.vox.com/library/posts/rss.xml" />  
+    <link rel="meta" type="application/rdf+xml" title="FOAF" href="http://yogi.vox.com/profile/foaf.rdf" />
+    <meta name="foaf:maker" content="foaf:mbox_sha1sum '2dcf0f6ad2b55e04c3d50105d53e1cbbe9bc5f90'" />         
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://yogi.vox.com/rsd.xml" /> 
+    <link rel="icon" href="http://static.vox.com/.shared:v0.8.3:comet-us/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://static.vox.com/.shared:v0.8.3:comet-us/images/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="http://static.vox.com/.shared:v0.8.3:comet-us/js/core.jsc,dom.jsc,dom/proxy.jsc,json.jsc,timer.jsc,observer.jsc,cache.jsc,client.jsc,template.jsc,autolayout.jsc,component.jsc,dialog.jsc,app.jsc,archetype.jsc,archetype/client.jsc,archetype/controller.jsc"></script>     
+        <script type="text/javascript" src="http://static.vox.com/.shared:v0.8.3:comet-us/js/archetype/view.jsc,archetype/delegates.jsc"></script>
+    
+    <!--WEBSIDESTORY CODE HBX1.0 (Universal)-->
+    <!--COPYRIGHT 1997-2005 WEBSIDESTORY,INC. ALL RIGHTS RESERVED. U.S.PATENT No. 6,393,479B1. MORE INFO:http://websidestory.com/privacy-->
+    <script type="text/javascript">
+        // <![CDATA[ 
+        var _hbEC=0,_hbE=new Array;function _hbEvent(a,b){b=_hbE[_hbEC++]=new Object();b._N=a;b._C=0;return b;}
+        var hbx=_hbEvent("pv");hbx.vpc="HBX0100u";hbx.gn="ehg-sixapart.hitbox.com";
+        hbx.acct="DM5512303ADB96EN3"; 
+        hbx.pn="User Home"; 
+        hbx.mlc="Comet"; 
+        hbx.pndef="title"; 
+        hbx.ctdef="full"; 
+        hbx.fv=""; 
+        hbx.lt="auto"; 
+        hbx.dlf="n"; 
+        hbx.dft="n"; 
+        hbx.elf="n"; 
+        // ]]>
+    </script>
+    <script type="text/javascript" defer="defer" src="http://static.vox.com/.shared:v0.8.3:comet-us/js/hbx.js"></script>
+</head>
+<body class="asset-stream-list asset-stream layout-wt" id="home"> <script type="text/javascript">
+    // <![CDATA[ 
+ArcheType.PrivacyGroups = {  };     // ]]>
+</script> <script type="text/javascript">
+    // <![CDATA[ 
+ArcheType.ContactGroups = [ 
+];     // ]]>
+</script> <script type="text/javascript">
+    // <![CDATA[ 
+    Template.templates.EditAssetName = '[# if( editing ) { #]\n    <input type=\"text\" class=\"edit-asset-name asset-name page-header1\" maxlength=\"100\"\n        value=\"[#|H|h asset.name #]\" /><br /> <input type=\"submit\" class=\"command-save button button-system\" name=\"ArcheType Viewer\" value=\"Save\" /> <input type=\"submit\" class=\"command-cancel button button-system\" name=\"ArcheType Viewer\" value=\"Cancel\" />\n[# } else if( updating ) { #]\n    <h1 class=\"asset-name page-header1\">Updating…<\/h1>\n[# } else { #]\n    <h1 class=\"asset-name page-header1\">[#|h asset.name || \"\\u00A0\" #]<\/h1>\n[# } #]';
+    Template.templates.EditAssetDescription = '[# if( editing ) { #]\n    <textarea cols=\"30\" rows=\"4\" />[#|H|h asset.description #]<\/textarea><br/> <input type=\"submit\" class=\"command-save button button-system\" name=\"ArcheType Viewer\" value=\"Save\" /> <input type=\"submit\" class=\"command-cancel button button-system\" name=\"ArcheType Viewer\" value=\"Cancel\" />\n[# } else if ( updating ) { #] Updating…\n[# } else { \n    if ( asset.description ) { #]\n        [#|h asset.description #]\n    [# } else { #]\n        <span class=\"asset-description-empty\">Click here to add a description<\/span>\n    [# } #]\n[# } #]';
+    Template.templates.EditAssetPrivacy = '[# if ( editing ) { #]\n    <div class=\"editing\">\n        Viewable by <select class=\"edit-privacy\">\n        [# for ( id in ArcheType.PrivacyGroups ) {\n            if ( !ArcheType.PrivacyGroups.hasOwnProperty( id ) )\n                continue;\n        #]\n            <option value=\"[#= id #]\"[#= ( id == asset.privacy ) ? \' selected=\"selected\"\' : \'\' #]>[#= ArcheType.PrivacyGroups[ id ].replace( /your /, \"\" ) #]<\/option>\n        [# } #]\n        <\/select><br /> <input type=\"submit\" class=\"command-save button button-system\" name=\"ArcheType Viewer\" value=\"Save\" /> <input type=\"submit\" class=\"command-cancel button button-system\" name=\"ArcheType Viewer\" value=\"Cancel\" />\n    <\/div>\n[# } else if ( updating ) { #] Updating…\n[# } else { #]\n    <span>Viewable by [#|h ArcheType.PrivacyGroups[ asset.privacy ].replace( /your /, \"\" ) #]<\/span>\n[# } #]';
+    Template.templates.EditAssetTags = '[# if ( editing ) { #]\n    <input type=\"text\" size=\"20\" maxlength=\"5000\" /> <input type=\"submit\" class=\"command-save button button-system\" name=\"ArcheType Viewer\" value=\"Add\" /> <input type=\"submit\" class=\"command-cancel button button-system\" name=\"ArcheType Viewer\" value=\"Cancel\" />\n[# } else if ( updating ) { #]\n    <span class=\"updating\">Updating…<\/span>\n[# } #]';
+    Template.templates.EditAssetTagsFlyout = '<div at:flyout=\"1\" at:tag=\"[#|h tag.label #]\" at:xid=\"[#= asset.xid #]\" class=\"asset-tags-flyout\">\n    <div class=\"asset-tags-flyout-content\">\n        <p><strong>Explore all of Vox with this tag<\/strong><\/p>\n        <div class=\"asset-tags-flyout-links\">\n            <a href=\"http://www.vox.com/explore/posts/tags/[#|u|h tag.normalized_label #]\">posts<\/a>\n            <a href=\"http://www.vox.com/explore/photos/tags/[#|u|h tag.normalized_label #]\">photos<\/a>\n            <a href=\"http://www.vox.com/explore/audio/tags/[#|u|h tag.normalized_label #]\">audio<\/a>\n            <a href=\"http://www.vox.com/explore/videos/tags/[#|u|h tag.normalized_label #]\">videos<\/a>\n            <a href=\"http://www.vox.com/explore/books/tags/[#|u|h tag.normalized_label #]\">books<\/a>\n        <\/div>\n    <\/div>\n[# if ( tag.can_remove ) { #]\n    <div class=\"asset-tags-flyout-remove\">\n        <a href=\"javascript: void 0;\" onclick=\"return false;\" class=\"command-remove\">Remove this tag<\/a>\n    <\/div>\n[# } #]\n<\/div>';
+    Template.templates.PeopleConnect = '[# if ( contact.xid == \"\" ) { #]\n        <div at:user-id=\"[#= contact.xid #]\" at:screen-name=\"[#|h contact.screen_name #]\">\n            <ul>\n                <li><a href=\"http://www.vox.com//profile/edit\">Edit your profile<\/a><\/li>\n                <li><a href=\"http://www.vox.com//profile\">Edit member photo<\/a><\/li>\n                <li><a href=\"http://www.vox.com//profiles/[#= contact.xid #]\">View profile<\/a><\/li> \n            <\/ul>\n        <\/div>\n        [#*return #]\n[# }\n  \n   var screen_name = context.f.h( contact.screen_name );\n   var rel = \"Add \" + screen_name + \" to your neighborhood\";\n   if ( contact.label == \"Friends\" )\n       rel = screen_name + \" is a friend\";\n   else if ( contact.label == \"Family\" )\n       rel = screen_name + \" is family\";\n   else if ( contact.label == \"Neighbors\" )\n       rel = screen_name + \" is in your neighborhood\";\n   else if( contact.label )\n       rel = screen_name + \" is a friend and family\";\n   else if( action.relationship )\n       rel = \"You\'re not connected to \" + screen_name;\n\n   if ( action.relationship ) { #]\n       [#|h rel #] \n       [#*return #]\n[# } #]\n<div at:user-id=\"[#= contact.xid #]\" at:screen-name=\"[#|h contact.screen_name #]\">\n[#\n   if ( action.editing ) {\n        if ( contact.groups.length ) { #]\n            <h3>[#|h rel #]<\/h3>\n[#      } else {\n            var add = \"Add \" + screen_name + \" to your neighborhood?\";\n            #]\n            <h3>[#= add #]<\/h3>\n            [#|h contact.screen_name #]’s posts will be included in your neighborhood.<br/>\n[#      } #]\n        <p class=\"text\">Optionally, mark as:<\/p>\n        <div class=\"groups\">\n            [# for ( var i = 0; i < ArcheType.ContactGroups.length; i++ ) { #]\n                <label for=\"checkbox-[#= contact.xid #]-[#|h|lc ArcheType.ContactGroups[ i ].label #]\">\n                    <input type=\"checkbox\" value=\"[#|h ArcheType.ContactGroups[ i ].id #]\" \n                       id=\"checkbox-[#= contact.xid #]-[#|h|lc ArcheType.ContactGroups[ i ].label #]\"\n                        [# if ( contact.groups.indexOf( ArcheType.ContactGroups[ i ].id ) != -1 ) { #] checked=\"checked\"[# } #]> [#|h ArcheType.ContactGroups[ i ].label #]\n                <\/label>\n            [# } #]\n        <\/div>\n        <div class=\"clr\"><\/div> <input type=\"submit\" class=\"command-save button button-system\" name=\"ArcheType Viewer\" value=\"Save\" /> <input type=\"submit\" class=\"command-cancel button button-system\" name=\"ArcheType Viewer\" value=\"Cancel\" />\n        [# if ( contact.groups.length ) { #]\n            <a href=\"javascript:void(0);\" class=\"command-remove\">Remove from Neighborhood<\/a>\n        [# } #]\n[# } else if ( action.updating ) { #] Updating...\n[# } else if ( contact.groups.length ) { #]\n        [#|h rel #] (<a href=\"javascript:void(0);\" class=\"command-edit\">Edit<\/a>)\n        <ul>\n            <li><a href=\"http://www.vox.com//profiles/[#= contact.xid #]\">View profile<\/a><\/li>\n            <li><a href=\"[#= contact.uri #]\">View blog<\/a><\/li>\n        <\/ul>\n[# } else { #]\n        <ul>\n            <li><a href=\"javascript:void(0);\" class=\"command-edit\">Add to neighborhood<\/a><\/li>\n            <li><a href=\"http://www.vox.com//profiles/[#= contact.xid #]\">View profile<\/a><\/li>\n            <li><a href=\"[#= contact.uri #]\">View blog<\/a><\/li>\n        <\/ul>\n[# } #]\n<\/div>';
+    Template.templates.FavoriteAsset = '[# if ( added ) { #]\n    <a href=\"javascript:void(0);\" onclick=\"return false;\" class=\"favorite-funciton is-a-favorite command-remove-favorite\" title=\"Unmark as a favorite\">A favorite<\/a>\n[# } else { #]\n    <a href=\"javascript:void(0);\" onclick=\"return false;\" class=\"favorite-function command-add-favorite\" title=\"Mark as a favorite\">Favorite<\/a>\n[# } #]\n[# if ( asset.favorite_count > 0 ) { #]\n    (<a href=\"[#= asset.favorites_uri #]\"\n    title=\"View people who?ve marked this as a favorite\"\n    class=\"favorite-count\"\n    >[#= asset.favorite_count #]<\/a>)\n[# } #]'; 
+    Template.templates.FlagAssetOffensive = '[# if ( flagged ) { #] You have flagged this as possibly offensive. <a href=\"javascript:void(0);\" onclick=\"return false;\" class=\"command-unflag\">Unflag?<\/a>\n[# } else { #] <a href=\"javascript:void(0);\" onclick=\"return false;\" class=\"command-flag\">Flag this<\/a> as possibly offensive.\n[# } #]'; 
+    Template.templates.EnterPostTitle = 'Please enter a title for your post';
+    Template.templates.Confirm = 'Are you sure?';     // ]]>
+</script>
+    <div id="modal-mask" class="autolayout-height-parent hidden">
+        <iframe frameborder="0" scrolling="no" src="about:blank"></iframe>
+        <div></div>
+    </div>
+<div id="body-inner">
+<div id="control-strip"> 
+    <div id="control-strip-ad" class="ad">
+        <div id="control-strip-ad-inner">
+        <a href="http://team.vox.com/"><img width="728" height="15" src="http://static.vox.com/.shared:v0.8.3:comet-us/images/ads/banner-housead.gif" alt="What's new on Vox? Read Team Vox." border="0" /></a>
+       </div>
+    </div> 
+<div id="control-strip-inner">
+    <div class="control-strip-left">
+        <div class="control-strip-logo">
+            <a href="http://www.vox.com/" title="Return to Vox homepage"><span>Vox</span></a>
+        </div> 
+    </div>
+    <div class="control-strip-right"> 
+        <div class="control-strip-sign-in">Vox Members<br /><a href="http://www.vox.com/sitelogin/force?uri=http://yogi.vox.com/">Sign in</a></div>  
+    </div>
+</div></div><!-- End Control-Strip -->
+<div id="page"><div id="page-inner"> 
+    <div id="message-window" class="hidden"></div>
+    <div id="header"><div id="header-inner">
+        <div id="header-content"><div id="header-content-inner"> 
+            <div id="header-photo">
+                <div id="header-photo-inner" at:user-id="6p00c2251c384b8fdb" at:screen-name="Yogi"><a href="http://yogi.vox.com/"><img src="http://up3.vox.com/6a00c2251c384b8fdb00c2251c379b604a-50si" alt="Yogi" at:delegate="people-connect" /></a></div>
+            </div>  
+            <div id="header-text">
+                <ul class="nav"> 
+                    <li class="item first current"><a href="http://yogi.vox.com/" title="View Yogi’s Blog: 'Yogi's blog'">Blog</a></li> 
+                    <li class="item"><a href="http://yogi.vox.com/profile/" title="View Yogi’s Profile">Profile</a></li>
+                    <li class="item"><a href="http://yogi.vox.com/explore/neighborhood/" title="View Yogi’s Neighborhood">Neighborhood</a></li>
+                </ul>
+                <div id="header-name"> 
+                    <a href="http://yogi.vox.com/" title="View Yogi’s Blog: 'Yogi's blog'">Yogi's blog</a> 
+                </div>  
+                <div id="header-description">No Talent  ( ! )  *&lt;||:o)</div> 
+            </div>
+        </div><span id="header-content-decor" class="decor"><b></b><u></u><s></s><i></i></span></div><!-- End Header Content -->
+    </div><span id="header-decor" class="decor"><b></b><u></u><s></s><i></i></span></div><!-- End Header -->
+    <div id="content"><div id="content-inner">
+        <div id="alpha">
+            <div id="alpha-inner">                 
+                
+                <!-- Asset Stream -->    
+                <div at:xid="6a00c2251c384b8fdb00c2251ec297604a" id="asset-6a00c2251c384b8fdb00c2251ec297604a" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/this-time-last-summer.html" title="View post detail">This Time Last Summer</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-27T14:04:25-07:00">Jul 27, 2006 at 2:04 PM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/this-time-last-summer.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                </p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                <div at:enclosure="asset" at:xid="6a00c2251c384b8fdb00c2251ec51ef219" at:format="large" at:align="center"
+                                    class="enclosure enclosure-center enclosure-large" >
+                                <div class="enclosure-inner enclosure-photo">
+                                    <ul class="enclosure-list">
+                                        <li class="enclosure-item photo-asset last">
+                                            <div class="enclosure-image">
+                                        
+                                                <a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ec51ef219.html" title="See Tire Swing 4 at Flickr"><img src="http://a6.vox.com/6a00c2251c384b8fdb00c2251ec51ef219-320pi" alt="Tire Swing 4" title="Tire Swing 4" /></a>
+                                
+                                        
+                                            </div>
+                                            <dl class="enclosure-meta">
+                                                <dt class="enclosure-asset-name"><a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ec51ef219.html" title="Tire Swing 4">Tire Swing 4</a></dt>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div><!-- end enclosure -->
+                                
+                                <p><br /></p>
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="photo" at:tag-normalized="photo" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/photo/"
+                                    >photo</a>, </li>   
+                                <li class="item" at:tag="flickr" at:tag-normalized="flickr" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/flickr/"
+                                    >flickr</a>, </li>   
+                                <li class="item" at:tag="summer" at:tag-normalized="summer" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/summer/"
+                                    >summer</a>, </li>   
+                                <li class="item" at:tag="swing" at:tag-normalized="swing" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/swing/"
+                                    >swing</a>, </li>   
+                                <li class="item" at:tag="naomi" at:tag-normalized="naomi" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/naomi/"
+                                    >naomi</a>, </li>   
+                                <li class="item last" at:tag="tire swing" at:tag-normalized="tire swing" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/tire swing/"
+                                    >tire swing</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251ec2b08fdb" id="asset-6a00c2251c384b8fdb00c2251ec2b08fdb" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-your-fantasy-restaurant.html" title="View post detail">QotD: Your fantasy restaurant</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-27T14:02:38-07:00">Jul 27, 2006 at 2:02 PM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-your-fantasy-restaurant.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote>If you could open any sort of restaurant, what would it be like?</blockquote>
+                                My restaurant would be a small, family run style of restaurant not unlike Blighty&#39;s Bistro in Oak Bay (may faovourite restaurtant in all of Victoria, by far).&#160; The wait staff will have been with the place since opening, and we&#39;d know all the regulars.&#160; It would be intimate but still family friendly and serve a modest number of entrees that cover a broad spectrum of tastes.&#160; Seafood, pasta, pork and beef.&#160; Mmmm.&#160; Gotta get back to Blighty&#39;s soon!!<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="fantasy restaurant" at:tag-normalized="fantasy restaurant" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/fantasy restaurant/"
+                                    >fantasy restaurant</a>, </li>   
+                                <li class="item" at:tag="blighty's bistro" at:tag-normalized="blighty's bistro" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/blighty's bistro/"
+                                    >blighty's bistro</a>, </li>   
+                                <li class="item last" at:tag="restaurtant" at:tag-normalized="restaurtant" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/restaurtant/"
+                                    >restaurtant</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251f9db88e1d" id="asset-6a00c2251c384b8fdb00c2251f9db88e1d" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/more-green-faerie.html" title="View post detail">More Green Faerie</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-26T16:42:11-07:00">Jul 26, 2006 at 4:42 PM</abbr></span></li>  
+                                    <li class="asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/more-green-faerie.html#comments"
+                                        title="View comments"
+                                        >4 comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                </p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                <div at:enclosure="asset" at:xid="6a00c2251c384b8fdb00c2251ea8da549d" at:format="large" at:align="center"
+                                    class="enclosure enclosure-center enclosure-large" >
+                                <div class="enclosure-inner enclosure-photo">
+                                    <ul class="enclosure-list">
+                                        <li class="enclosure-item photo-asset last">
+                                            <div class="enclosure-image">
+                                        
+                                                <a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ea8da549d.html" title="See Childhood of Selva at Flickr"><img src="http://a2.vox.com/6a00c2251c384b8fdb00c2251ea8da549d-320pi" alt="Childhood of Selva" title="Childhood of Selva" /></a>
+                                
+                                        
+                                            </div>
+                                            <dl class="enclosure-meta">
+                                                <dt class="enclosure-asset-name"><a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ea8da549d.html" title="Childhood of Selva">Childhood of Selva</a></dt>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div><!-- end enclosure -->
+                                
+                                <br /><p><br /></p><p>Looks like she popped straight outta a bottle of Absinthe, eh?<br /></p>
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="photo" at:tag-normalized="photo" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/photo/"
+                                    >photo</a>, </li>   
+                                <li class="item" at:tag="ocean" at:tag-normalized="ocean" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/ocean/"
+                                    >ocean</a>, </li>   
+                                <li class="item" at:tag="flickr" at:tag-normalized="flickr" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/flickr/"
+                                    >flickr</a>, </li>   
+                                <li class="item" at:tag="green" at:tag-normalized="green" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/green/"
+                                    >green</a>, </li>   
+                                <li class="item" at:tag="beach" at:tag-normalized="beach" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/beach/"
+                                    >beach</a>, </li>   
+                                <li class="item" at:tag="water" at:tag-normalized="water" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/water/"
+                                    >water</a>, </li>   
+                                <li class="item" at:tag="naomi" at:tag-normalized="naomi" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/naomi/"
+                                    >naomi</a>, </li>   
+                                <li class="item last" at:tag="faerie" at:tag-normalized="faerie" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/faerie/"
+                                    >faerie</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251f952e8e1d" id="asset-6a00c2251c384b8fdb00c2251f952e8e1d" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-i-wish-i-could.html" title="View post detail">QotD: I wish I could...</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-26T10:48:46-07:00">Jul 26, 2006 at 10:48 AM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-i-wish-i-could.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote><p>Play any instrument or speak any language, which do you choose?<br />Question submitted by <a href="http://cruftbox.vox.com">cruftbox.vox.com</a>.</p></blockquote>
+                                I&#39;d go the any language gig.&#160; I&#39;d much rather be able to talk to anyone I meet around the world in their native tongue than be able to busk with any available instrument on street corners around the world :)<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="languages" at:tag-normalized="languages" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/languages/"
+                                    >languages</a>, </li>   
+                                <li class="item" at:tag="instruments" at:tag-normalized="instruments" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/instruments/"
+                                    >instruments</a>, </li>   
+                                <li class="item last" at:tag="talent wish" at:tag-normalized="talent wish" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/talent wish/"
+                                    >talent wish</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e874a8fdb" id="asset-6a00c2251c384b8fdb00c2251e874a8fdb" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-sugar-sugar.html" title="View post detail">QotD: Sugar, Sugar</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-25T14:33:27-07:00">Jul 25, 2006 at 2:33 PM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-sugar-sugar.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote>What was your favorite candy when you were a kid? How does that compare to now?</blockquote>
+                                I can&#39;t recall a particular favourite as a kid.&#160; Candy was candy and it was all good.&#160; I recall Fun Dip, Bottlecaps, Mike&#39;n&#39;Ikes, Goodies, Pixie Stix, Licorice Pipes, Soap Candies (Floral Gums?) with equal fondness.&#160; These days I&#39;m mostly into sour type candies, or fruit gummy/berry type ones.&#160; Can&#39;t go wrong with chocolate covered almonds though...<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="candy" at:tag-normalized="candy" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/candy/"
+                                    >candy</a>, </li>   
+                                <li class="item last" at:tag="favorite candy" at:tag-normalized="favorite candy" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/favorite candy/"
+                                    >favorite candy</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e6e17f219" id="asset-6a00c2251c384b8fdb00c2251e6e17f219" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/curbside-elijah.html" title="View post detail">Curbside Elijah</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-24T20:50:55-07:00">Jul 24, 2006 at 8:50 PM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/curbside-elijah.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                </p>
+                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                    
+                                <div at:enclosure="asset" at:xid="6a00c2251c384b8fdb00c2251f5de48e1d" at:format="large" at:align="center"
+                                    class="enclosure enclosure-center enclosure-large" >
+                                <div class="enclosure-inner enclosure-photo">
+                                    <ul class="enclosure-list">
+                                        <li class="enclosure-item photo-asset last">
+                                            <div class="enclosure-image">
+                                        
+                                                <a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251f5de48e1d.html" title="See Curbside at Flickr"><img src="http://a4.vox.com/6a00c2251c384b8fdb00c2251f5de48e1d-320pi" alt="Curbside" title="Curbside" /></a>
+                                
+                                        
+                                            </div>
+                                            <dl class="enclosure-meta">
+                                                <dt class="enclosure-asset-name"><a href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251f5de48e1d.html" title="Curbside">Curbside</a></dt>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div><!-- end enclosure -->
+                                
+                                <p><br /></p>
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="photo" at:tag-normalized="photo" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/photo/"
+                                    >photo</a>, </li>   
+                                <li class="item" at:tag="flickr" at:tag-normalized="flickr" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/flickr/"
+                                    >flickr</a>, </li>   
+                                <li class="item" at:tag="elijah" at:tag-normalized="elijah" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/elijah/"
+                                    >elijah</a>, </li>   
+                                <li class="item last" at:tag="curb" at:tag-normalized="curb" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/curb/"
+                                    >curb</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e6d99f219" id="asset-6a00c2251c384b8fdb00c2251e6d99f219" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-back-where-im-from.html" title="View post detail">QotD: Back where I'm from...</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-24T20:39:26-07:00">Jul 24, 2006 at 8:39 PM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-back-where-im-from.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote><p>Soda? Cola? Pop? What do you say? Any other regional words that set you apart?<br /><span style="font-size: 0.8em;">Question submitted by </span><a href="http://gladys.vox.com/"><span style="font-size: 0.8em;">Gladys</span></a><span style="font-size: 0.8em;">.</span></p></blockquote>
+                                It&#39;s pop here, as far as I know.&#160; Coke is Coke, Pepsi is Pepsi, and both are pop of the cola variety.&#160; I don&#39;t think there is much regional here that sets us apart, but perhaps I just don&#39;t travel enough.<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="pop" at:tag-normalized="pop" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/pop/"
+                                    >pop</a>, </li>   
+                                <li class="item last" at:tag="regional differences" at:tag-normalized="regional differences" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/regional differences/"
+                                    >regional differences</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e4ee7549d" id="asset-6a00c2251c384b8fdb00c2251e4ee7549d" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-weekend-wrapup-1.html" title="View post detail">QotD: Weekend Wrap-up</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-24T09:44:39-07:00">Jul 24, 2006 at 9:44 AM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-weekend-wrapup-1.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote><span style="font-size: 1.25em;">What was the highlight of this past weekend?</span></blockquote>
+                                The entire weekend was great, but the highlight had to be going out for dinner with Leanne Friday night.&#160; We don&#39;t get out just the two of us very often anymore. so it&#39;s that much sweeter when we do.&#160; Other highlights include having watching Naomi and Elijah running about in the sun and being stunned by how beautiful they are, and dinner with friends Sunday night.&#160; We also had the company picnic on Saturday... a busy by fun weekend overall!<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="weekend" at:tag-normalized="weekend" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/weekend/"
+                                    >weekend</a>, </li>   
+                                <li class="item last" at:tag="weekend wrap-up" at:tag-normalized="weekend wrap-up" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/weekend wrap-up/"
+                                    >weekend wrap-up</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e285a549d" id="asset-6a00c2251c384b8fdb00c2251e285a549d" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-its-hot-in-here.html" title="View post detail">QotD: It's hot in here...</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-22T17:37:22-07:00">Jul 22, 2006 at 5:37 PM</abbr></span></li>  
+                                    <li class="asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-its-hot-in-here.html#comments"
+                                        title="View comments"
+                                        >1 comment</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote><strong>What&#39;s the most extreme weather you&#39;ve been in? A memorable storm? Heat wave? Or something else?</strong></blockquote>
+                                Dude.&#160; I live in Victoria, with the Pacific Ocean on three sides and in the shadow of the Olympic Pennisula.&#160; Yesterday it reached 34C here, and that&#39;s probably as extreme as it&#39;s ever been.&#160; Moderation is one of the wonderful things about Victoria, weather-wise.<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="weather" at:tag-normalized="weather" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/weather/"
+                                    >weather</a>, </li>   
+                                <li class="item last" at:tag="extreme weather" at:tag-normalized="extreme weather" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/extreme weather/"
+                                    >extreme weather</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div>  
+                <div at:xid="6a00c2251c384b8fdb00c2251e23fdf219" id="asset-6a00c2251c384b8fdb00c2251e23fdf219" class="post-asset asset">
+                    <div class="asset-inner">
+                        <div class="asset-header"> 
+                            <h2 class="asset-name page-header2"><a href="http://yogi.vox.com/library/post/qotd-shaken-not-stirred.html" title="View post detail">QotD: Shaken not stirred</a></h2> 
+                            <div class="asset-meta">   
+                                <ul class="asset-meta-list">
+                                    <li class="asset-meta-datetime-issued item"><span><abbr class="datetime" title="2006-07-22T08:34:02-07:00">Jul 22, 2006 at 8:34 AM</abbr></span></li>  
+                                    <li class="asset-meta-no-comments asset-meta-comments item"> 
+                                    <a href="http://yogi.vox.com/library/post/qotd-shaken-not-stirred.html#comment-form"
+                                        title="View comments"
+                                        >No comments</a> 
+                                    </li>      
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-body">
+                                <blockquote><p>What&#39;s your favorite drink or cocktail? What&#39;s in it?<br /><span style="font-size: 0.8em;">Question submitted by </span><a href="http://charm.vox.com/"><span style="font-size: 0.8em;">charm.vox.com</span></a></p></blockquote>
+                                Whiskey sour is one of my favorite drinks, but I also like gin martinis, beer, and wine.<br /> 
+                            </div>
+                            <div at:delegate="edit-asset-tags" class="asset-tags">
+                                <h4 class="asset-tags-header page-header4">Tags:</h4>
+                                <ul class="asset-tags-list"> <li class="item" at:tag="qotd" at:tag-normalized="qotd" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/qotd/"
+                                    >qotd</a>, </li>   
+                                <li class="item" at:tag="drinks" at:tag-normalized="drinks" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/drinks/"
+                                    >drinks</a>, </li>   
+                                <li class="item" at:tag="alcohol" at:tag-normalized="alcohol" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/alcohol/"
+                                    >alcohol</a>, </li>   
+                                <li class="item" at:tag="favorite drink" at:tag-normalized="favorite drink" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/favorite drink/"
+                                    >favorite drink</a>, </li>   
+                                <li class="item last" at:tag="whiskey sour" at:tag-normalized="whiskey sour" at:can-remove="0"><a href="http://yogi.vox.com/library/posts/tags/whiskey sour/"
+                                    >whiskey sour</a> </li>
+                                </ul> 
+                            </div>
+                        </div>
+                        <div class="asset-footer"></div>
+                    </div>
+                </div> 
+                <div class="stream-footer">  
+                    <p><a href="/library/posts/page/2/">Read more from Yogi</a></p>    
+                    <div class="asset-nav">
+                        View Yogi's    
+                                <a href="http://yogi.vox.com/library/posts/">posts</a>,    
+                                <a href="http://yogi.vox.com/library/photos/">photos</a>,    
+                                <a href="http://yogi.vox.com/library/books/">books</a>,    
+                                <a href="http://yogi.vox.com/library/audio/">audio</a>,    
+                                 or <a href="http://yogi.vox.com/library/videos/">videos</a>.   
+                    </div> 
+                </div>
+                <!-- End Asset Stream --> 
+            </div>
+        </div>
+        <div id="beta"><div id="beta-inner">     
+            <div class="about-me-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header">
+                        <a href="http://yogi.vox.com/profile/">About Me</a> 
+                    </h3>
+                    <div class="widget-content"> 
+                        <dl class="about-me widget-list">
+                            <dt class="about-me-name">Yogi</dt>
+                            <dd class="about-me-location">Canada</dd>
+                            <dd class="about-me-profile-link"><a href="http://yogi.vox.com/profile/">View my profile</a></dd>
+                            <dd class="about-me-minibio">No Talent Ass Clown</dd>
+                        </dl>
+                        <dl class="contact-me-list widget-list">   
+                            <dt class="item-title">AIM:</dt>
+                            <dd class="contact-aim item" style="background-image: url(http://big.oscar.aol.com/tweedlebug1971?on_url=http://static.vox.com/.shared:v0.8.3:comet-us/themes/default/icon-aim-on.gif&amp;off_url=http://static.vox.com/.shared:v0.8.3:comet-us/themes/default/icon-aim-off.gif);"><a href="aim:goim?screenname=tweedlebug1971">tweedlebug1971</a></dd>  
+                            <dt class="item-title">Yahoo:</dt>
+                            <dd class="contact-yim item" style="background-image: url(http://opi.yahoo.com/online?u=tweedlebug1971&amp;m=g&amp;t=0);"><a href="http://edit.yahoo.com/config/send_webmesg?.target=tweedlebug1971">tweedlebug1971</a></dd>   
+                            <dt class="item-title">MSN:</dt>
+                            <dd class="contact-msn item"><a href="msnim:chat?contact=kyle_flood@hotmail.com" title="kyle_flood@hotmail.com">kyle_flood@hotmail.com</a></dd>  
+                            <dt class="item-title">Google Talk:</dt>
+                            <dd class="contact-googletalk item">kflood@gmail.com</dd> 
+                        </dl>
+                    </div>
+                    <div class="widget-footer"></div> 
+                </div>
+            </div>     
+            <div class="photo-stream-widget media-stream-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header"> 
+                        <a href="http://yogi.vox.com/library/photos/" title="View all Photos">Photos</a>  
+                    </h3>
+                    <div class="widget-content">      
+                        <ul class="widget-list"> 
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ec51ef219.html"><img src="http://a6.vox.com/6a00c2251c384b8fdb00c2251ec51ef219-75si" class="asset-img-thumb"
+                        alt="Tire Swing 4"
+                        title="Tire Swing 4" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251ea8da549d.html"><img src="http://a2.vox.com/6a00c2251c384b8fdb00c2251ea8da549d-75si" class="asset-img-thumb"
+                        alt="Childhood of Selva"
+                        title="Childhood of Selva" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251f5de48e1d.html"><img src="http://a4.vox.com/6a00c2251c384b8fdb00c2251f5de48e1d-75si" class="asset-img-thumb"
+                        alt="Curbside"
+                        title="Curbside" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251df24ff219.html"><img src="http://a7.vox.com/6a00c2251c384b8fdb00c2251df24ff219-75si" class="asset-img-thumb"
+                        alt="Elijah:  Future WC Champion Series"
+                        title="Elijah:  Future WC Champion Series" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251d8d36549d.html"><img src="http://a6.vox.com/6a00c2251c384b8fdb00c2251d8d36549d-75si" class="asset-img-thumb"
+                        alt="Beautiful Green Faerie"
+                        title="Beautiful Green Faerie" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251e20bb8e1d.html"><img src="http://a3.vox.com/6a00c2251c384b8fdb00c2251e20bb8e1d-75si" class="asset-img-thumb"
+                        alt="QT"
+                        title="QT" /></a></li>    
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/photo/6a00c2251c384b8fdb00c2251c379b604a.html"><img src="http://a3.vox.com/6a00c2251c384b8fdb00c2251c379b604a-75si" class="asset-img-thumb"
+                        alt="Me by Stan Funk"
+                        title="Me by Stan Funk" /></a></li> 
+                        </ul>  
+                    </div>
+                    <div class="widget-footer"> 
+                        <p><a href="http://yogi.vox.com/library/photos/">View more of my photos</a></p> 
+                    </div> 
+                </div>
+            </div>     
+            <div class="connections-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header">
+                        <a href="http://yogi.vox.com/profile/neighbors/" title="View Yogi’s Neighbors">Neighbors</a> 
+                    </h3>
+                    <div class="widget-content"> 
+                        <ul class="widget-list"> 
+                            <li class="item">
+                                <div class="user-pic" at:user-id="6p00c2251d2a948fdb" at:screen-name="Special">
+                                    <a href="http://special.vox.com/"><img src="http://up4.vox.com/6a00c2251d2a948fdb00c2251e54e28e1d-50si"
+                                        alt="Special" at:delegate="people-connect" /></a>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="http://special.vox.com/" title="View Special’s blog"
+                                        class="contact-name">Special</a><br /> 
+                                    <span class="contact-update-datetime"><abbr class="datetime" title="">Updated Jul 27, 2006</abbr></span> 
+                                </div>
+                            </li> 
+                            <li class="item">
+                                <div class="user-pic" at:user-id="6p00c11413209fc408" at:screen-name="bhikku">
+                                    <a href="http://bhikku.vox.com/"><img src="http://up7.vox.com/6a00c11413209fc40800c114132948c408-50si"
+                                        alt="bhikku" at:delegate="people-connect" /></a>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="http://bhikku.vox.com/" title="View bhikku’s blog"
+                                        class="contact-name">bhikku</a><br /> 
+                                    <span class="contact-update-datetime"><abbr class="datetime" title="">Updated Jul 26, 2006</abbr></span> 
+                                </div>
+                            </li> 
+                            <li class="item">
+                                <div class="user-pic" at:user-id="6p00c2251d1e2a549d" at:screen-name="mojito">
+                                    <a href="http://emdash.vox.com/"><img src="http://up2.vox.com/6a00c2251d1e2a549d00c2251d2bb7f219-50si"
+                                        alt="mojito" at:delegate="people-connect" /></a>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="http://emdash.vox.com/" title="View mojito’s blog"
+                                        class="contact-name">mojito</a><br /> 
+                                    <span class="contact-update-datetime"><abbr class="datetime" title="">Updated Jul 26, 2006</abbr></span> 
+                                </div>
+                            </li> 
+                            <li class="item">
+                                <div class="user-pic" at:user-id="6p00c2251d7891549d" at:screen-name="lefthandmade">
+                                    <a href="http://lefthandmade.vox.com/"><img src="http://up1.vox.com/6a00c2251d7891549d00c2251d7f47549d-50si"
+                                        alt="lefthandmade" at:delegate="people-connect" /></a>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="http://lefthandmade.vox.com/" title="View lefthandmade’s blog"
+                                        class="contact-name">lefthandmade</a><br /> 
+                                    <span class="contact-update-datetime"><abbr class="datetime" title="">Updated Jul 26, 2006</abbr></span> 
+                                </div>
+                            </li> 
+                            <li class="item">
+                                <div class="user-pic" at:user-id="6p00b8ea068321dece" at:screen-name="Team Vox">
+                                    <a href="http://team.vox.com/"><img src="http://up1.vox.com/6a00b8ea068321dece00b8ea0686e5dece-50si"
+                                        alt="Team Vox" at:delegate="people-connect" /></a>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="http://team.vox.com/" title="View Team Vox’s blog"
+                                        class="contact-name">Team Vox</a><br /> 
+                                    <span class="contact-update-datetime"><abbr class="datetime" title="">Updated Jul 26, 2006</abbr></span> 
+                                </div>
+                            </li> 
+                        </ul>  
+                        <p>Explore <a href="http://yogi.vox.com/explore/friends/">Friends</a>, <a href="http://yogi.vox.com/explore/family/">Family</a>, <a href="http://yogi.vox.com/explore/friends-and-family/">Friends &amp; Family</a>, or <a href="http://yogi.vox.com/explore/neighborhood/">Entire Neighborhood</a>.</p>
+                    </div>
+                    <div class="widget-footer"> 
+                        <p><a href="http://yogi.vox.com/profile/neighbors/" title="View Yogi’s Neighbors">View Yogi’s Neighbors</a></p> 
+                    </div> 
+                </div>
+            </div>     
+                 
+            <div class="audio-stream-widget media-stream-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header"> 
+                        <a href="http://yogi.vox.com/library/audio/" title="View all Audio">Audio</a>  
+                    </h3>
+                    <div class="widget-content">      
+                        <ul class="widget-list"> 
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/audio/6a00c2251c384b8fdb00c2251d421b549d.html"><img src="http://a3.vox.com/6a00c2251c384b8fdb00c2251d421b549d-75pi" class="asset-img-thumb"
+                        alt="Wolfmother - 03 - Woman" title="Wolfmother - 03 - Woman" /></a></li> 
+                        </ul>  
+                    </div>
+                    <div class="widget-footer"> 
+                        <p><a href="http://yogi.vox.com/library/audio/">View more of my audio</a></p> 
+                    </div> 
+                </div>
+            </div>     
+            <div class="book-stream-widget media-stream-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header"> 
+                        <a href="http://yogi.vox.com/library/books/" title="View all Books">Books</a>  
+                    </h3>
+                    <div class="widget-content">      
+                        <ul class="widget-list"> 
+                            <li class="item"><a class="asset-image" href="http://yogi.vox.com/library/book/6a00c2251c384b8fdb00c2251dbea0f219.html"><img src="http://a0.vox.com/6a00c2251c384b8fdb00c2251dbea0f219-75pi" class="asset-img-thumb"
+                        alt="Altered Carbon" title="Altered Carbon" /></a></li> 
+                        </ul>  
+                    </div>
+                    <div class="widget-footer"> 
+                        <p><a href="http://yogi.vox.com/library/books/">View more of my books</a></p> 
+                    </div> 
+                </div>
+            </div>     
+                 
+            <div class="archive-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header">Yogi's blog Archives</h3>
+                    <div class="widget-content">
+                        <ul class="widget-list"> 
+                            <li class="item last"><a href="http://yogi.vox.com/library/posts/2006/07/">July 2006</a> (20)</li> 
+                        </ul>
+                    </div>
+                    <div class="widget-footer"></div> 
+                </div>
+            </div>     
+            <div class="subscribe-widget widget">
+                <div class="widget-inner">         
+                    <h3 class="widget-header">Subscribe</h3>
+                    <div class="widget-content">
+                        <ul class="widget-list"> 
+                            <li class="item"><a href="http://yogi.vox.com/library/posts/atom.xml">Subscribe to a feed of these posts</a></li> 
+                        </ul>
+                    </div>
+                    <div class="widget-footer"></div> 
+                </div>
+            </div>     
+            <div class="powered-by-widget widget">
+                <div class="widget-inner">         
+                    <div class="widget-content">
+                        <p>Powered by <a href="http://www.vox.com/">Vox</a></p>
+                    </div> 
+                </div>
+            </div> 
+        <span id="beta-decor" class="decor"><b></b><u></u><s></s><i></i></span>
+        </div></div><!-- End Beta -->
+        <div id="gamma"><div id="gamma-inner"> 
+            <span id="gamma-decor" class="decor"><b></b><u></u><s></s><i></i></span>
+        </div></div>
+    </div><span id="content-decor" class="decor"><b></b><u></u><s></s><i></i></span></div><!-- End Content -->
+    <div id="footer"><div id="footer-inner"> 
+        <div id="footer-ad" class="ad">
+            <div id="footer-ad-inner">
+    <iframe id="" class=" ad-iframe" width="728" height="90" src="http://ads.vox.com/?channel=&amp;height=90&amp;interests=code%2Ccomputers%2Ceuropean%20football%2Cphotography&amp;search_term=&amp;type=content&amp;url=http%3A%2F%2Fyogi.vox.com%2F&amp;width=728" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+           </div>
+        </div> 
+    </div><span id="footer-decor" class="decor"><b></b><u></u><s></s><i></i></span></div><!-- End Footer -->
+</div><span id="page-decor" class="decor"><b></b><u></u><s></s><i></i></span></div><!-- End Page -->
+    <div id="people-connect" class="people-connect flyout autolayout-flyout hidden" at:delegate="people-connect-flyout">
+        <div class="flyout-inner pkg"> 
+        <div id="people-connect-content"></div> 
+        </div>
+    </div>
+    <div class="autolayout-height-parent dialog-login dialog-small hidden dialog" id="dialog-login">
+        <div class="opaque"></div>
+        <div class="dialog-outer">
+            <div class="dialog-inner">  <div class="pkg dialog-header">
+            <h1>Vox Login</h1> </div> <div class="pkg dialog-content">
+            <form method="post" action="#">
+                <p>You've been logged out, please sign in to Vox with your email and password to complete this action.</p>
+                <dl class="pkg">
+                    <dt>Email:</dt>
+                    <dd class="overflow-auto"><input name="username" id="username" class="username text" size="20" /></dd>
+                </dl>
+                <dl class="pkg">
+                    <dt class="password-title">Password:</dt>
+                    <dd class="password-description overflow-auto"><input type="password" name="password" class="password text" size="20" /></dd>
+                    <dt class="remember-title">&nbsp;</dt>
+                    <dd class="remember-description"><input type="checkbox" class="remember" id="remember" name="remember" value="1" /> <label for="remember">Keep me signed in on this computer.</label></dd>
+                </dl>
+            </form>
+            <div class="clr"></div>
+            <div class="dialog-login-footer"> <input type="submit" class="command-ok right default button-system" name="ArcheType Viewer" value="Sign In" /> <input type="submit" class="command-cancel right button-system" name="ArcheType Viewer" value="Cancel" />
+            </div> </div> 
+            </div>
+        </div>
+    </div> <div class="autolayout-height-parent dialog-thinker hidden dialog" id="dialog-thinker">
+        <div class="opaque"></div>
+        <div class="dialog-outer">
+            <div class="dialog-inner">  <div class="pkg dialog-header">
+            <h1>Processing...</h1> </div> <div class="pkg dialog-content">
+            <img src="http://static.vox.com/.shared:v0.8.3:comet-us/images/throbber.gif" alt="Processing" />
+            <div class="dialog-thinker-footer"> <input type="submit" class="command-cancel right default button-system" name="ArcheType Viewer" value="Cancel" />
+            </div> </div>
+            </div>
+        </div>
+    </div> <div class="autolayout-height-parent dialog-message dialog-x-small hidden dialog" id="dialog-message">
+        <div class="opaque"></div>
+        <div class="dialog-outer">
+            <div class="dialog-inner">  <div class="pkg dialog-header">
+            <h1>Message</h1> </div> <div class="pkg dialog-content">
+            <div id="dialog-message-message"></div>
+            <div class="dialog-message-footer"> <input type="submit" class="command-ok right default button-system" name="ArcheType Viewer" value="OK" />
+            </div> </div> 
+            </div>
+        </div>
+    </div> <div class="autolayout-height-parent dialog-confirm dialog-x-small hidden dialog" id="dialog-confirm">
+        <div class="opaque"></div>
+        <div class="dialog-outer">
+            <div class="dialog-inner">  <div class="pkg dialog-header">
+            <h1>Confirm</h1> </div> <div class="pkg dialog-content">
+            <div id="dialog-confirm-message" class="overflow-auto"></div>
+            <div class="dialog-confirm-footer"> <input type="submit" class="command-ok right default button-system" name="ArcheType Viewer" value="OK" /> <input type="submit" class="command-cancel right button-system" name="ArcheType Viewer" value="Cancel" />
+            </div> </div> 
+            </div>
+        </div>
+    </div> <div class="autolayout-height-parent dialog-error dialog-x-small hidden dialog" id="dialog-error">
+        <div class="opaque"></div>
+        <div class="dialog-outer">
+            <div class="dialog-inner">  <script type="text/javascript">
+        // <![CDATA[  
+        Template.templates.errorWord = "Error: ";     // ]]>
+    </script> <div class="pkg dialog-header">
+            <h1>Error</h1> </div> <div class="pkg dialog-content">
+            <div id="dialog-error-message"></div>
+            <div class="dialog-error-footer"> <input type="submit" class="command-ok right default button-system" name="ArcheType Viewer" value="OK" />
+            </div> </div> 
+            </div>
+        </div>
+    </div>
+<div id="edit-asset-tags-flyout" class="flyout autolayout-flyout hidden" at:delegate="edit-asset-tags-flyout"></div>
+<script type="text/javascript">
+    // <![CDATA[ 
+    /* deferred bootstrap onload by default */
+    DOM.addEventListener( window, "load", App.bootstrap ); 
+        if( window.controllers ) {
+            DOM.addEventListener( window, "DOMContentLoaded", App.bootstrap );
+        } else {
+            /* immediate construct */
+            window.app = App.initSingleton();
+        }      // ]]>
+</script>
+</div><!-- End Body-Inner -->
+</body>
+</html>

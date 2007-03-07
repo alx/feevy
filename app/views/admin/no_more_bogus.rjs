@@ -1,0 +1,1 @@
+page.replace "row_#{@feed.id}", :partial => 'feed_row', :locals => {:feed_row => @feed}

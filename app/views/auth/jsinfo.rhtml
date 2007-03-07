@@ -1,0 +1,20 @@
+<%
+	txt = render(:partial => 'remoteinfo')
+%>
+<% if user_logged_in? -%>
+var isident = 1;
+var groups = new Array();
+<% @user.domains.each {|key,val| %>groups['<%= key %>'] = <%= val %>;<% } %>
+<% else -%>
+var isident = 0;
+var groups = new Array();
+<% end -%>
+function displayAccountInfo() {<%
+	txt.each {|line|
+		line.chomp!
+		next if line.empty?
+		%>
+  document.write('<%= line.gsub(/'/) { '\\'+$& } %>');<%
+	}
+%>
+}
