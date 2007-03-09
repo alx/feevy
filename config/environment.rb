@@ -72,4 +72,4 @@ ActionMailer::Base.server_settings = {
 
 FEEVY_URL = "http://www.feevy.com/"
 #FeedTools.configurations[:feed_cache] = nil
-ActiveRecord::Base.allow_concurrency = true
+ActiveRecord::Base.verification_timeout = 14400
