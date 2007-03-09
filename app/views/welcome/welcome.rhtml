@@ -59,10 +59,16 @@
         
          </div>
         
-         <div class="box-1"> <div class="side-a"> <h3>Latest blogs first linked by a feevy</h3> <p> <% @feeds.each do |feed|
-        %> <%= "<a href='#{feed.href}'>#{feed.title}</a><br/>" %> <% end %> </p> </div> <div class="side-b"> <div
-        class="sin-salto"> <h3>Development news</h3> <% @rss.entries.each do |entry| %> <p><%=
-        "#{entry.pubDate.day}.#{entry.pubDate.month}.#{e ntry.pubDate.year}" %></p><br /> <h4><%= entry.title %></h4><br />
-        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> <% end %> </div>
+         <div class="box-1"> <div class="side-a"> <h3>Latest blogs first linked by a feevy</h3> <p> 
+         <% @feeds.each do |feed| -%> 
+           <%= "<a href='#{feed.href}'>#{feed.title}</a><br/>" %> 
+        <% end -%> 
+        </p> </div> <div class="side-b"> <div
+        class="sin-salto"> <h3>Development news</h3>
+          <% @rss.entries.each do |entry| %> 
+          <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
+          <h4><%= entry.title %></h4><br />
+        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
+        <% end %> </div>
         
          <a href="http://blog.feevy.com/">Read Feevy blog</a> </div> </div> </div>
