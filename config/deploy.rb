@@ -1,4 +1,5 @@
 require 'deprec/recipes'
+require 'deprec/recipes/cache_svn'
 
 # =============================================================================
 # ROLES
@@ -32,12 +33,19 @@ set :repository, "svn+ssh://#{user}@#{domain}#{deploy_to}/repos/trunk"
 set :rails_env, "production"
 
 # Automatically symlink these directories from current/public to shared/public.
-# set :app_symlinks, %w{photo, document, asset}
+set :app_symlinks, %w{images/avatars}
+
+desc "Link avatar directory"
+task :after_update do
+  symlink_public
+end
+
+set :repository_cache, "#{shared_path}/svn_trunk/"
 
 # =============================================================================
 # APACHE OPTIONS
 # =============================================================================
-set :apache_server_name, domain
+# set :apache_server_name, domain
 # set :apache_server_aliases, %w{alias1 alias2}
 # set :apache_default_vhost, true # force use of apache_default_vhost_config
 # set :apache_default_vhost_conf, "/etc/httpd/conf/default.conf"
@@ -57,7 +65,7 @@ set :apache_server_name, domain
 # =============================================================================
 # set :mongrel_servers, apache_proxy_servers
 # set :mongrel_port, apache_proxy_port
-set :mongrel_address, apache_proxy_address
+# set :mongrel_address, apache_proxy_address
 # set :mongrel_environment, "production"
 # set :mongrel_config, "/etc/mongrel_cluster/#{application}.conf"
 # set :mongrel_user, user
@@ -73,3 +81,19 @@ set :mongrel_address, apache_proxy_address
 # =============================================================================
 ssh_options[:keys] = %w(/Users/alx/.ssh/id_rsa)
 # ssh_options[:port] = 25
+
+# =============================================================================
+# AVATARS TASKS
+# =============================================================================
+
+desc "Install avatars from old platform"
+task :setup_avatars do
+  old_dir = "/home/wwwfeev/feevy/public/images/avatars/"
+  new_dir = "#{shared_path}/public/images/avatars"
+  run "mkdir -p #{new_dir}"
+  (1..9).each do |index|
+    run "cp #{old_dir}#{index}* #{new_dir}"
+  end
+end
+
+
