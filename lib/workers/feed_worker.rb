@@ -16,24 +16,9 @@ class FeedWorker < BackgrounDRb::Rails
     @progress = 0
     @feeds = Feed.find(:all, :order => 'RAND()')
     @feed_count = @feeds.size
-    @feeds.each {|feed| update(feed)}
-  end
-  
-  def update(feed)
-    begin
-      Timeout::timeout(@timeout) {
-        unless feed.bogus == true
-          feed.refresh
-        end
-      }
-    rescue Timeout::Error
-      unless feed.nil?
-        feed.raise_bug("timeout", Bug::WARNING)
-        puts "Time Error on feed #{feed.id}"
-      end
-    rescue => err
-      puts "Error on feed #{feed.id}: #{err}"
+    @feeds.each do |feed|
+      feed.refresh
+      @progress += 1
     end
-    @progress += 1
   end
 end
