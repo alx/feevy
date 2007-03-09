@@ -1,0 +1,136 @@
+set daemon 60
+set mailserver localhost
+set mail-format { from: monit@yourserver.com }
+set alert myemail@domain.com
+ 
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+
+##### mongrel 8000 #####
+check process mongrel-8000 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8000.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8000 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8000.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8000 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8000.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8000 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8001 #####
+check process mongrel-8001 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8001.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8001 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8001.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8001 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8001.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8001 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8003 #####
+check process mongrel-8003 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8003.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8003 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8003.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8003 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8003.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8003 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8004 #####
+check process mongrel-8004 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8004.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8004 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8004.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8004 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8004.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8004 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8005 #####
+check process mongrel-8005 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8005.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8005 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8005.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8005 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8005.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8005 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8006 #####
+check process mongrel-8006 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8006.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8006 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8006.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8006 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8006.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8006 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8007 #####
+check process mongrel-8007 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8007.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8007 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8007.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8007 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8007.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8007 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
+
+##### mongrel 8008 #####
+check process mongrel-8008 with pidfile /var/www/apps/feevy/shared/pids/mongrel.8008.pid
+    start program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails start -d -e production -p 8008 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8008.pid -c /var/www/apps/feevy/current -t 30"
+    stop program = "/usr/local/bin/ruby /usr/local/bin/mongrel_rails stop -d -e production -p 8008 -a 127.0.0.1 -P /var/www/apps/feevy/shared/pids/mongrel.8008.pid -c /var/www/apps/feevy/current -t 30"
+ 
+    if totalmem is greater than 60.0 MB for 5 cycles then restart       # eating up memory?
+    if cpu is greater than 50% for 2 cycles then alert                  # send an email to admin
+    if cpu is greater than 80% for 3 cycles then restart                # hung process?
+    if loadavg(5min) greater than 10 for 8 cycles then restart          # bad, bad, bad
+    if 3 restarts within 5 cycles then timeout                         # something is wrong, call the sys-admin
+ 
+    if failed port 8008 protocol http                   # check for response
+        with timeout 10 seconds
+        then restart
+    group mongrel
