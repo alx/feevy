@@ -96,4 +96,18 @@ task :setup_avatars do
   end
 end
 
+# =============================================================================
+# LOG TASKS
+# =============================================================================
 
+desc "Analyze Rails Log instantaneously" 
+task :pl_analyze, :roles => :app do
+  run "pl_analyze #{shared_path}/log/#{rails_env}.log" do |ch, st, data|
+    print data
+  end
+end
+
+desc "Run rails_stat" 
+task :rails_stat, :roles => :app do
+  stream "rails_stat #{shared_path}/log/#{rails_env}.log" 
+end
