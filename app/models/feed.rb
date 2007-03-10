@@ -149,40 +149,42 @@ class Feed < ActiveRecord::Base
     unless bogus == true
       begin
         # Get first item
-        Timeout::timeout(30) { doc = Hpricot(open(link), :xml => true) }
-        item = doc.search("item:first|entry:first")
-        # Get charset
-        charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/).to_s.downcase
-        unless item.nil?
-          # get item url
-          post_url = read_link(item)
-          # built Post from first item if different url
-          if (not post_url.nil?) and (forced or latest_post.nil? or post_url != latest_post.url)
+        Timeout::timeout(30) do
+          doc = Hpricot(open(link), :xml => true)
+          item = doc.search("item:first|entry:first")
+          # Get charset
+          charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/).to_s.downcase
+          unless item.nil?
+            # get item url
+            post_url = read_link(item)
+            # built Post from first item if different url
+            if (not post_url.nil?) and (forced or latest_post.nil? or post_url != latest_post.url)
         
-            # Get and format post title
-            title = Post.format_title(item.search("title").text, charset)
+              # Get and format post title
+              title = Post.format_title(item.search("title").text, charset)
         
-            # Test if picasa feed
-            if is_picasa?
-              description = Post.picasa_description(item, post_url)
-            # Test if picasa feed
-            elsif is_flickr?
-              description = Post.flickr_description(item, post_url)
-            # Else normal feed
-            else
-              description = Post.format_description(item.search("description|summary|content").text, charset)
+              # Test if picasa feed
+              if is_picasa?
+                description = Post.picasa_description(item, post_url)
+              # Test if picasa feed
+              elsif is_flickr?
+                description = Post.flickr_description(item, post_url)
+              # Else normal feed
+              else
+                description = Post.format_description(item.search("description|summary|content").text, charset)
+              end
+              logger.debug "description: #{description}"
+              # Delete existing post if forced update
+              if forced == true
+                post = Post.find(:first, :conditions => ["url LIKE ?", post_url])
+                post.destroy unless post.nil?
+              end
+              # Save new post
+              posts << Post.new(:url => post_url, 
+                                :title => title, 
+                                :description => description, 
+                                :feed_id => id)
             end
-            logger.debug "description: #{description}"
-            # Delete existing post if forced update
-            if forced == true
-              post = Post.find(:first, :conditions => ["url LIKE ?", post_url])
-              post.destroy unless post.nil?
-            end
-            # Save new post
-            posts << Post.new(:url => post_url, 
-                              :title => title, 
-                              :description => description, 
-                              :feed_id => id)
           end
         end
       rescue Timeout::Error
