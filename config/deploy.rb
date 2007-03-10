@@ -111,3 +111,17 @@ desc "Run rails_stat"
 task :rails_stat, :roles => :app do
   stream "rails_stat #{shared_path}/log/#{rails_env}.log" 
 end
+
+# =============================================================================
+# BACKROUNGDRB TASKS
+# =============================================================================
+
+desc "Start backgroundrb"
+task :start_backgroundrb do
+  sudo "backgroundrb start"
+end
+
+desc "stop backgroundrb"
+task :stop_backgroundrb do
+  sudo "backgroundrb stop"
+end
