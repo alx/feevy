@@ -112,6 +112,17 @@ task :rails_stat, :roles => :app do
   stream "rails_stat #{shared_path}/log/#{rails_env}.log" 
 end
 
+desc "Show monit summary"
+task :monit_summary do
+  sudo "monit summary" do |channel, stream, data|
+    puts data if stream == :out
+    if stream == :err
+      puts "[err: #{channel[:host]}] #{data}"
+      break
+    end
+  end
+end
+
 # =============================================================================
 # BACKROUNGDRB TASKS
 # =============================================================================
