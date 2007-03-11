@@ -4,7 +4,7 @@ class FeedWorker < BackgrounDRb::Rails
   attr_accessor :infinite
   
   def do_work(args)
-    @infinite = false
+    @infinite = true
     @timeout = 30
     process_all_feeds
     while @infinite
