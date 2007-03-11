@@ -26,7 +26,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'authadmin', :action => nil, :id => nil
   map.authadmin 'admin/:action/:id',
     :controller => 'admin', :action => nil, :id => nil
-
+    
+  map.connect '/code/:id/tag/:tags/style/:style', :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tag/:tags/:style', :controller => 'feevy', :action => 'show'
   map.connect '/code/:id/:style', :controller => 'feevy', :action => 'show'
   map.connect '/code/:id', :controller => 'feevy', :action => 'show'
   
