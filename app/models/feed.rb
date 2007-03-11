@@ -153,7 +153,10 @@ class Feed < ActiveRecord::Base
           doc = Hpricot(open(link), :xml => true)
           item = doc.search("item:first|entry:first")
           # Get charset
-          charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/).to_s.downcase
+          charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
+          charset = charset[0] if charset.is_a? Array
+          charset = charset.to_s.downcase
+          
           unless item.nil?
             # get item url
             post_url = read_link(item)
