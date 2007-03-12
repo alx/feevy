@@ -1026,3 +1026,26 @@ width: auto;
   background-color: #287B7E;
   padding-left: 5px;
 }
+
+/***
+* taglist
+***/
+
+.tag_list{
+  
+}
+
+.tag_list form{
+  display:inline;
+}
+
+.tag_list input{
+  display:inline;
+  height:14px;
+  font-size:12px;
+  vertical-align: middle;
+}
+
+.tag_list input.submit{
+  height:20px;
+}
