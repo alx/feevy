@@ -1,0 +1,13 @@
+if @tag_list
+  # Display tag list as text
+  page.replace_html("tag_list_#{@subscription.id}",
+                    "#{@subscription.tag_list} <a href='#' onclick=\"new Ajax.Request('/manage/tag_blog/#{@subscription.id}', {asynchronous:true, evalScripts:true}); return false;\">click to edit</a>")
+else
+  # Display tag list form
+  page.replace_html "tag_list_#{@subscription.id}",
+                    "<form action='/manage/tag_blog' method='post' onsubmit=\"new Ajax.Request('/manage/tag_blog', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;\">
+                    <input type='hidden' name='id' value='#{@subscription.id}'>
+                    <input type='text' name='tag_input' value='#{@subscription.tag_list}' id='tag_input' size='30'>
+                    <input type='submit' value='validate' class='submit'/>
+                    </form>"
+end

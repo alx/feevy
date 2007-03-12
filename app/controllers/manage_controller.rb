@@ -192,6 +192,17 @@ class ManageController < ApplicationController
     @user.update_attribute :opt_displayed_subscriptions, params[:display_feevy]
     render :nothing => true
   end
+
+  def tag_blog
+    check_user
+    @subscription = Subscription.find(params[:id])
+    if params[:tag_input]
+      @tag_list = params[:tag_input].gsub(/([^,])\s/, '\1, ')
+      @subscription.tag_list = @tag_list
+      @subscription.save
+      @subscription = @subscription.reload
+    end
+  end
   
   protected
   def check_user

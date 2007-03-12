@@ -4,8 +4,14 @@ class FeevyController < ApplicationController
     @entradas = []
     @user = User.find(params[:id])
     if not @user.nil?
-
-      @user.subscriptions.each do |subscription|
+      
+      if params[:tags]
+        tags = params[:tags].gsub("+", ", ")
+        subscriptions = @user.subscriptions.find_tagged_with(tags)
+      else
+        subscriptions = @user.subscriptions
+      end
+      subscriptions.each do |subscription|
         if (not subscription.feed.nil?) and (not subscription.feed.bogus == true) then
           feed = subscription.feed
           post = feed.latest_post
