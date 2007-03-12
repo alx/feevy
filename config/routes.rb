@@ -29,6 +29,10 @@ ActionController::Routing::Routes.draw do |map|
     
   map.connect '/code/:id/tag/:tags/style/:style', :controller => 'feevy', :action => 'show'
   map.connect '/code/:id/tag/:tags/:style', :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tag/:tags', :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags/style/:style', :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags/:style', :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags', :controller => 'feevy', :action => 'show'
   map.connect '/code/:id/:style', :controller => 'feevy', :action => 'show'
   map.connect '/code/:id', :controller => 'feevy', :action => 'show'
   
