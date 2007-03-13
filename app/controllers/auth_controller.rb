@@ -241,7 +241,6 @@ class AuthController < ApplicationController
   					@newuser.save
   				end  
           self.saveSession @newuser
-          flash[:message] = "Your account is confirmed. Please take some time to setup your preferences."
           redirect_to :controller => "manage"
   				#Notification.deliver_signup(@newuser, @app)
   				#cookies[:email] = { :value => @newuser.email, :expires => nil }
