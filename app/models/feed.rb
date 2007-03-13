@@ -111,10 +111,10 @@ class Feed < ActiveRecord::Base
     
     title = link = ""
     
-    title     = doc.search("//title:first").text
+    title = doc.search("//title:first").text
     
-    if is_google_video?
-      link = href << "&output=rss"
+    if self.href =~ /http:\/\/video\.google\.com/
+      link = self.href << "&output=rss"
     else
       link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
       link = rss_link[0].to_s if rss_link.is_a? Array
@@ -210,17 +210,17 @@ class Feed < ActiveRecord::Base
   
   # Return true if feed is a flickr feed
   def is_flickr?
-    href =~ /http:\/\/api\.flickr\.com/
+    link =~ /http:\/\/api\.flickr\.com/
   end
   
   # Return true if feed is a flickr feed
   def is_picasa?
-    href =~ /http:\/\/picasaweb\.google\.com/
+    link =~ /http:\/\/picasaweb\.google\.com/
   end
   
   # Return true if feed is a google video feed
   def is_google_video?
-    href =~ /http:\/\/video\.google\.com/
+    link =~ /http:\/\/video\.google\.com/
   end
   
   # Return the rss item link
