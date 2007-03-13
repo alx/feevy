@@ -210,17 +210,17 @@ class Feed < ActiveRecord::Base
   
   # Return true if feed is a flickr feed
   def is_flickr?
-    link =~ /http:\/\/api\.flickr\.com/
+    href =~ /http:\/\/api\.flickr\.com/
   end
   
   # Return true if feed is a flickr feed
   def is_picasa?
-    link =~ /http:\/\/picasaweb\.google\.com/
+    href =~ /http:\/\/picasaweb\.google\.com/
   end
   
   # Return true if feed is a google video feed
   def is_google_video?
-    link =~ /http:\/\/video\.google\.com/
+    href =~ /http:\/\/video\.google\.com/
   end
   
   # Return the rss item link
