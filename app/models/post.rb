@@ -41,7 +41,7 @@ class Post < ActiveRecord::Base
   
   def Post.google_video_description(item, post_url)
     # get url for thumbnail and remove URL encoding
-    image = item.search("media:thumbnail").to_s.scan(/url=['"]?([^'"]*)['" ]/).to_s.delete("amp;")
+    image = item.search("media:thumbnail").to_s.scan(/url=['"]?([^'"]*)['" ]/).to_s.gsub(/&amp;/, '&')
     logger.debug "google video: #{image}"
     "<a href='#{post_url}' class='image_link'><img src='#{image}' class='google_video_image' width='160px' height='160px'/></a><br/>"
   end
