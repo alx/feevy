@@ -116,7 +116,7 @@ class UserController < ApplicationController
       require_auth
       if @user.update_attributes(params[:user])
         flash[:notice] = "Changes made"
-        redirect_to :controller => 'manage'
+        redirect_to :action => 'edit'
       else  
         flash[:warning] = "Error while saving modifications:"
         @user.errors.each_full { |msg| flash[:warning] << "<br>" << msg }
