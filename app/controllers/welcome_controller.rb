@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   
   def index
+    redirect_to :action => "welcome"
   end
   
   def terms
@@ -14,7 +15,11 @@ class WelcomeController < ApplicationController
   
   def welcome
     @feeds = Feed.find(:all, :limit => 20, :order => "created_at DESC")
-    @rss = SimpleRSS.parse open('http://blog.feevy.com/feed/')
+    begin
+      @rss = SimpleRSS.parse open('http://blog.feevy.com/feed/')
+    rescue
+      @rss = []
+    end
     @nb_users = User.count
   end
   
