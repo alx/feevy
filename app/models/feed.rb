@@ -113,7 +113,7 @@ class Feed < ActiveRecord::Base
     
     title     = doc.search("//title:first").text
     
-    if is_google_video
+    if is_google_video?
       link = href << "&output=rss"
     else
       link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
