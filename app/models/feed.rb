@@ -172,6 +172,9 @@ class Feed < ActiveRecord::Base
               # Test if picasa feed
               elsif is_flickr?
                 description = Post.flickr_description(item, post_url)
+              # Test if google video feed
+              elsif is_google_video?
+                description = Post.google_video_description(item, post_url)
               # Else normal feed
               else
                 description = Post.format_description(item.search("description|summary|content").text, charset)
@@ -208,6 +211,11 @@ class Feed < ActiveRecord::Base
   # Return true if feed is a flickr feed
   def is_picasa?
     link =~ /http:\/\/picasaweb\.google\.com/
+  end
+  
+  # Return true if feed is a google video feed
+  def is_google_video?
+    link =~ /http:\/\/video\.google\.com/
   end
   
   # Return the rss item link

@@ -40,11 +40,9 @@ class Post < ActiveRecord::Base
   end
   
   def Post.google_video_description(item, post_url)
-    logger.debug "google video item: #{item.to_s}"
-    image = item.search("media:thumbnail").to_s.scan(/url=['"]?([^'"]*)['" ]/).to_s
-    logger.debug "google video image1: #{image}"
-    image = item.search("content|description").text.scan(/(http:\/\/farm.*_.\.jpg)/).to_s if image.nil? or image.empty?
-    logger.debug "google video image2: #{image}"
-    "<a href='#{post_url}' class='image_link'><img src='#{image.gsub!(/_.\.jpg/,"_t.jpg")}' class='google_video_image'/></a><br/>"
+    # get url for thumbnail and remove URL encoding
+    image = item.search("media:thumbnail").to_s.scan(/url=['"]?([^'"]*)['" ]/).to_s.delete("amp;")
+    logger.debug "google video: #{image}"
+    "<a href='#{post_url}' class='image_link'><img src='#{image}' class='google_video_image' width='160px' height='160px'/></a><br/>"
   end
 end
