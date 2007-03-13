@@ -114,18 +114,18 @@ class Feed < ActiveRecord::Base
     title = doc.search("//title:first").text
     
     if self.href =~ /http:\/\/video\.google\.com/
-      link = self.href << "&output=rss"
+      rss_link = self.href << "&output=rss"
     else
-      link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-      link = rss_link[0].to_s if rss_link.is_a? Array
+      rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
+      rss_link = rss_link[0].to_s if rss_link.is_a? Array
       
-      # Set link as atom link if rss is still blank  
-      if link.blank?
-        link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-        link = atom_link[0].to_s if atom_link.is_a? Array
-      end
+      atom_link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['"]/)
+      atom_link = atom_link[0].to_s if atom_link.is_a? Array
     end
     
+    # Set link as atom link if rss is still blank
+    link = rss_link
+    link = atom_link if link.blank?
     logger.debug "link: #{link}"
     
     # complete bogus link with website href
