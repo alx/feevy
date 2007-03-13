@@ -113,15 +113,19 @@ class Feed < ActiveRecord::Base
     
     title     = doc.search("//title:first").text
     
-    rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-    rss_link = rss_link[0].to_s if rss_link.is_a? Array
+    if is_google_video
+      link = href << "&output=rss"
+    else
+      link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
+      link = rss_link[0].to_s if rss_link.is_a? Array
+      
+      # Set link as atom link if rss is still blank  
+      if link.blank?
+        link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
+        link = atom_link[0].to_s if atom_link.is_a? Array
+      end
+    end
     
-    atom_link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-    atom_link = atom_link[0].to_s if atom_link.is_a? Array    
-    
-    # Set link as atom link if rss is still blank
-    link = rss_link
-    link = atom_link if link.blank?
     logger.debug "link: #{link}"
     
     # complete bogus link with website href
@@ -162,10 +166,11 @@ class Feed < ActiveRecord::Base
             post_url = read_link(item)
             # built Post from first item if different url
             if (not post_url.nil?) and (forced or latest_post.nil? or post_url != latest_post.url)
-        
+              
               # Get and format post title
               title = Post.format_title(item.search("title").text, charset)
-        
+              logger.debug "title: #{title}"
+              
               # Test if picasa feed
               if is_picasa?
                 description = Post.picasa_description(item, post_url)
