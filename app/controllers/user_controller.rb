@@ -63,8 +63,8 @@ class UserController < ApplicationController
         params[:password])
         
     if current_user
-      redirect_back_or_default(:controller => '/manage', :action => 'index')
       flash[:message] = "Logged in successfully"
+      redirect_to :controller => 'manage'
     end
   end
 
@@ -90,15 +90,15 @@ class UserController < ApplicationController
     return unless request.post?
     @user.registration_stage = 0
     if @user.save
-      redirect_back_or_default(:controller => '/manage', :action => 'index')
       flash[:message] = "Thanks for signing up!"
+      redirect_to :controller => 'manage'
     end
   end
   
   def logout
     self.current_user = nil
     flash[:message] = "You have been logged out"
-    redirect_back_or_default(:controller => '/welcome', :action => 'index')
+    redirect_to :controller => 'welcome'
   end
   
   # Invoked from email sent on user creation
@@ -106,8 +106,8 @@ class UserController < ApplicationController
     @user = User.find_by_activation_code(params[:id])
     if @user and @user.activate
       self.current_user = @user
-      redirect_back_or_default(:controller => '/manage', :action => 'index')
-      flash[:message] = "Your account has been activated" 
+      flash[:message] = "Your account has been activated"
+      redirect_to :controller => 'manage'
     end
   end
   
