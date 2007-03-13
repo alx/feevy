@@ -180,11 +180,7 @@ class AuthController < ApplicationController
 				if user
 					self.saveSession(user, @params[:post][:keepalive].to_i)
 					flash[:notice] = "Login successful."
-					if cookies[:return_to].nil?
-            flash[:actions] = [{:label => "back to home", :controller => "welcome", :action => "welcome"}]
-            flash[:actions] << {:label => "your feevy's", :controller => "manage"}
-          end
-					redirect_back_or_default :action => "welcome"
+					redirect_back_or_default :controller => "manage"
 				else
 					flash.now[:warning] = "Oops, unknown username or password. " \
 					"Have you signed up yet?" " If you've forgotten your password, we can email it to you."
@@ -268,6 +264,8 @@ class AuthController < ApplicationController
 			render :layout => false #, :text => "Thanks for your visit."
 		end
 		self.cancelSession()
+		flash['message'] = "Thanks for your visit."
+    redirect_to :controller => "welcome"
   end
 
   def confirm
