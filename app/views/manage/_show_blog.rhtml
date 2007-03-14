@@ -16,10 +16,10 @@
           <img src='<%= subscription.avatar.url %>' style='float:left;padding-right:5px;'/>
         <% end %>
         <h3><%= "#{index}. #{feed.title}" %></h3>
-        <h5><%= feed.href %></h5>
-        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "click to edit", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
+        <h5><%= truncate(feed.href, 50) %></h5>
+        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "edit tags", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
         <div id="blog_control_<%= subscription.id %>" class='right'>
-          <%= link_to_remote("edit", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
+          <%= link_to_remote("change avatar", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
           <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>
         </div>
         <br/>
@@ -52,11 +52,11 @@
           <img src='<%= subscription.avatar.url %>' style='float:left;padding-right:5px;'/>
         <% end %>
         <h3><%= "#{index}. #{feed.title}" %></h3>
-        <h5><%= feed.href %></h5>
-        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "click to edit", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
+        <h5><%= truncate(feed.href, 50) %></h5>
+        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "edit tags", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
         <div id="blog_control_<%= subscription.id %>" class='right'>
           <%= link_to_remote "tag", {:url => {:action => "tag_blog", :id => subscription.id }} %>
-          <%= link_to_remote("edit", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
+          <%= link_to_remote("change avatar", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
           <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>
         </div>
         <br/>
