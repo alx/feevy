@@ -114,7 +114,7 @@ class Feed < ActiveRecord::Base
     title = doc.search("//title:first").text
     
     if self.href =~ /http:\/\/video\.google\.com/
-      rss_link = self.href << "&output=rss"
+      rss_link = self.href << "&num=1&so=1&start=0&output=rss"
     else
       rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
       rss_link = rss_link[0].to_s if rss_link.is_a? Array
