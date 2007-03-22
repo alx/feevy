@@ -210,18 +210,19 @@ text-align: left;
 .caja1{
 width: 600px;
 height:auto;
-margin:auto auto 8px auto;
-padding:10px;
+margin: 2px 0px;
+padding:10px 10px 0px 10px;
 text-align: left;
+}
 
-	}
 .caja10{
 width: auto;
 height:auto;
 margin:auto auto 10px auto;
 padding:10px;
 text-align: left;
-	}		
+}
+
 /* caja setup3 */
 .cajacontent{
 width: 530px;
@@ -1048,4 +1049,15 @@ width: auto;
 
 .tag_list input.submit{
   height:20px;
+}
+
+/***
+* feevy list
+***/
+#feevy_list{
+  margin-bottom:50px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+  width:600px;
 }
