@@ -133,14 +133,15 @@ class Feed < ActiveRecord::Base
       link = self.href << link.gsub(/^\//,"")
     end
     
-    self.update_attributes :title => Feed.format_title(title, charset),
-                           :link => link
     
     # Bogus feed when link is not found
     if link.blank?
       bug_message = "RSS/Atom link not found on this website"
       raise_bug bug_message unless self.bogus == true
       raise bug_message
+    else
+      self.update_attributes :title => Feed.format_title(title, charset),
+                             :link => link
     end
     return self
   end
