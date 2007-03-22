@@ -1,8 +1,7 @@
 class FeevyController < ApplicationController
-
   def show
     @entradas = []
-    @user = User.find(params[:id])
+    @user = User.find(params[:id], :include => [:subscriptions])
     if not @user.nil?
       
       if params[:tags]
@@ -12,8 +11,8 @@ class FeevyController < ApplicationController
         subscriptions = @user.subscriptions
       end
       subscriptions.each do |subscription|
-        if (not subscription.feed.nil?) and (not subscription.feed.bogus == true) then
-          feed = subscription.feed
+        feed = subscription.feed
+        if (not feed.nil?) and (not feed.bogus == true) then
           post = feed.latest_post
           unless post.nil?
             entry = Hash.new
@@ -29,7 +28,7 @@ class FeevyController < ApplicationController
         end
       end
 
-      # Sort by date
+      # Sort by date to get latest posts first
       @entradas = @entradas.sort_by{|entrada| entrada[:date]}.reverse
 
       # Only get last displayed feeds depending on user choice
@@ -52,6 +51,7 @@ class FeevyController < ApplicationController
 
       @style =  render_to_string(:partial => partial_style, :locals => { :id => @user.id})
       @content = render_to_string(:partial => partial_badge, :locals => { :id => @user.id, :entradas => @entradas} )
+
     end
   end
 end
