@@ -123,6 +123,11 @@ task :monit_summary do
   end
 end
 
+desc "Restart the mongrel cluster via monit"  
+task :restart_mongrel_cluster, :roles => :app do    
+    sudo "monit -g mongrel restart all"  
+end
+
 # =============================================================================
 # BACKROUNGDRB TASKS
 # =============================================================================
