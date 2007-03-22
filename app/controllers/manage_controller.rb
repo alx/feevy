@@ -192,6 +192,13 @@ class ManageController < ApplicationController
     @user.update_attribute :opt_displayed_subscriptions, params[:display_feevy]
     render :nothing => true
   end
+  
+
+  def choose_user_lang
+    check_user
+    @user.update_attribute :opt_lang, params[:lang]
+    render :nothing => true
+  end
 
   def tag_blog
     check_user
