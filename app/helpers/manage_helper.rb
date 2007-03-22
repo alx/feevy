@@ -50,4 +50,22 @@ module ManageHelper
     selection = "SELECTED" if selected == true
     "<option value='#{value}' #{selection}>#{string}</option>"
   end
+  
+  def select_lang()
+    select = "<p>Choose displayed language: 
+      <select name='lang' id='lang'>
+        <option value='en-EN'>english</option>
+        <option value='eo-EO'>esperanto</option>
+        <option value='es-AR'>argentinian</option>
+        <option value='es-CAT'>catalonian</option>
+        <option value='es-EU'>basque euskara</option>
+        <option value='fr-FR'>french</option>
+        <option value='pt-PT'>portuguese</option>
+      </select>"
+    select << observe_field("lang",
+              :url => {:controller => "manage", :action => "choose_user_lang"},
+              :with => "'lang='+ escape($('lang').value)")
+    select << "</p>"
+    select
+  end
 end
