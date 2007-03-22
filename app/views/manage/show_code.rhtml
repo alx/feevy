@@ -35,13 +35,9 @@
     <%= observe_field "display_feevy", 
                       :url => {:controller => "manage", :action => "update_opt_display_sub"},
                       :with => "'display_feevy='+ escape($('display_feevy').value)" %>
-           
     <!-- add blog partial -->
     <%= render :partial => "add_blog", :locals => {:style => "display:none;"} %>
     
-    <div class="right">
-    <%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
-    </div>
     
     <% unless @subscriptions.nil? || @subscriptions.empty? %>
     <p>These are the blogs in your feevy</p>
@@ -52,11 +48,17 @@
 </div>
 
 <div id='feevy_list'>
+<div class="right">
+<%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
+</div>
 <% unless @subscriptions.nil? || @subscriptions.empty? %>
   <% index = 1  %>
   <% @subscriptions.each do |subscription| %>
     <%= render :partial => 'show_blog', :locals => {:index => index, :subscription => subscription } %>
     <% index = index + 1 %>
   <% end -%>
-<% end -%>  
+<% end -%>
+<div class="right">
+<%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
+</div>
 </div>

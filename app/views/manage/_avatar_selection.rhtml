@@ -18,7 +18,7 @@
         <div class="cajaleft-z">
           <% if subscription.avatar.nil? or subscription.avatar.is_common? %>
           <div id='user_avatar_<%= subscription.id %>' class="user_avatar" style='padding-top:10px;text-align:center'>
-            <%= link_to_remote "upload your avatar",
+            <%= link_to_remote "upload your image",
             {:url => {:action => "change_avatar", :id => subscription.id}} %>
           </div>
           <% else -%>

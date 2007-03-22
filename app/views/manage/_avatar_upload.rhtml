@@ -14,14 +14,14 @@
         <h5><%= feed.href %></h5>
         <br />
         
-        <h3>Choose a picture from your computer</h3>
-        <p>(it will be scaled down to 40x40)</p>
+        <h3>Select an image from your computer.</h3>
+        <p>Images will be reduced in size automatically.</p>
         <br/>
         <form action="/manage/upload_avatar" method="post" accept-charset="utf-8" enctype="multipart/form-data">
           <%= file_field "subscription", "picture", :size => 30 %>
           <input type="hidden" name="subscription[id]" value="<%= subscription.id %>">
           <br/><br/>
-          <input type="submit" value="Update &rarr;">
+          <input type="submit" value="Submit &rarr;">
         </form>
         <br/>
         <div class='right'>
