@@ -70,9 +70,8 @@ module ManageHelper
   end
   
   def add_blog_box(position='top')
-    insert = ""
-    result = "
-    <div style='display:none;' id='add_blog_box_#{position}' class='cajab'>
+    insert = "<p>blog address<br/><input type=text name=blogs[] size=27/></p>"
+    "<div style='display:none;' id='add_blog_box_#{position}' class='cajab'>
       <div class='caja10'>
         <div class='box'>
           <b class='spiffy'>
@@ -90,7 +89,7 @@ module ManageHelper
                 <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs[]'/></p>
               </div>
               <div class='ladoa'>
-                <a onclick='$(\"add_blog_form_#{position}\").innerHTML += \"<p>blog address<br/><input type=text name=blogs[] size=27/></p>\";' href=''>+ add more</a>
+                <a onclick='$(\"add_blog_form_#{position}\").innerHTML += \"#{insert}\";' href='#add_blog_box_#{position}'>+ add more</a>
                 <br/>
               </div>
               <div class='ladob'><input type='submit' class='submit' value='next >' id='boton2'/></div>
