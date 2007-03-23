@@ -36,7 +36,7 @@
                       :url => {:controller => "manage", :action => "update_opt_display_sub"},
                       :with => "'display_feevy='+ escape($('display_feevy').value)" %>
     <!-- add blog partial -->
-    <%= render :partial => "add_blog", :locals => {:style => "display:none;"} %>
+    <%= add_blog_box %>
     
     
     <% unless @subscriptions.nil? || @subscriptions.empty? %>
@@ -49,7 +49,7 @@
 
 <div id='feevy_list'>
 <div class="right">
-<%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
+<a href='#add_blog_box_top' onclick='$("add_blog_box_top").show()'>+ add another blog</a>
 </div>
 <% unless @subscriptions.nil? || @subscriptions.empty? %>
   <% index = 1  %>
@@ -59,6 +59,6 @@
   <% end -%>
 <% end -%>
 <div class="right">
-<%= link_to_remote "+ add another blog", {:url => {:action => "add_another_blog"}} %>
+<a href='#add_blog_box_top' onclick='$("add_blog_box_top").show()'>+ add another blog</a>
 </div>
 </div>
