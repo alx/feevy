@@ -36,7 +36,7 @@ class ManageController < ApplicationController
             # If feed exists, connect it to user using subscription
             unless feed.nil?
               logger.debug "feed #{feed.id}: #{feed.link}"
-              subscription = Subscription.create_default
+              subscription = Subscription.create
               feed.subscriptions << subscription
               @user.subscriptions << subscription
             end
@@ -130,7 +130,7 @@ class ManageController < ApplicationController
           feed = Feed.create_from_blog(blog)
           # If feed exists, connect it to user using subscription
           unless feed.nil?
-            subscription = Subscription.create_default
+            subscription = Subscription.create
             feed.subscriptions << subscription
             @user.subscriptions << subscription
           end
@@ -140,14 +140,6 @@ class ManageController < ApplicationController
         end
       end
     end
-  end
-
-  def add_another_blog
-    check_user
-  end
-
-  def add_more_blog
-    check_user
   end
 
   def delete_blog
