@@ -48,8 +48,11 @@ class Feed < ActiveRecord::Base
 
   def Feed.create_from_blog(url)
     # clean up the url
+    begin
     url = FeedTools::UriHelper.normalize_url(url)
-    
+    rescue => err
+      logger.debug "err: #{err}"
+    end
     if url.nil?
       return nil
     else
@@ -85,6 +88,22 @@ class Feed < ActiveRecord::Base
       
       return feed
     end
+  end
+  
+  def Feed.create_from_opml(opml)
+    doc = Hpricot(open(opml))
+    (doc/"outline[@htmlurl]").each do |url|
+      logger.debug "#{url.attributes['htmlurl']}"
+      Feed.create_from_url url.attributes['htmlurl']
+    end
+  end
+  
+  def Feed.create_from_rss(url)
+    # Open rss document
+    doc = Hpricot(open(url))
+    # Create feed with href, title and link
+    feed = Feed.new :href => doc.search("link").text, :title => doc.search("title").text, :link => url
+    feed.save
   end
   
   def has_error

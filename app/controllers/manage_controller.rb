@@ -33,12 +33,11 @@ class ManageController < ApplicationController
             # Create or find a feed using specified blog url
             logger.debug "create from blog: #{blog}"
             feed = Feed.create_from_blog(blog)
+            logger.debug "blog create: #{feed.id}"
             # If feed exists, connect it to user using subscription
             unless feed.nil?
               logger.debug "feed #{feed.id}: #{feed.link}"
-              subscription = Subscription.create
-              feed.subscriptions << subscription
-              @user.subscriptions << subscription
+              subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
             end
             flash[:message] = "Feeds has been added to your Feevy list."
           rescue => err
@@ -130,9 +129,7 @@ class ManageController < ApplicationController
           feed = Feed.create_from_blog(blog)
           # If feed exists, connect it to user using subscription
           unless feed.nil?
-            subscription = Subscription.create
-            feed.subscriptions << subscription
-            @user.subscriptions << subscription
+            subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
           end
           flash[:message] = "Se han a&ntilde;adido los feeds"
         rescue => err
