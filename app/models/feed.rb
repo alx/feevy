@@ -90,6 +90,27 @@ class Feed < ActiveRecord::Base
     end
   end
   
+  def Feed.is_rss?(url)
+    url =~ /\.xml$/ or
+    url =~ /\.rdf$/ or
+    url =~ /rss$/ or
+    url =~ /rss2$/ or
+    url =~ /atom$/ or
+    url =~ /^http:\/\/feeds\.feedburner\.com/ or
+    url =~ /\/?rss=1$/ or
+    url =~ /rss\.php/ or
+    url =~ /rss2\.php/ or
+    url =~ /\/rss\.html$/ or
+    url =~ /\?q=node\/feed$/ or
+    url =~ /\/rss\// or
+    url =~ /\/feed\// or
+    url =~ /\/feeds\//
+  end
+  
+  def Feed.is_opml?(url)
+    url =~ /\.opml$/
+  end
+  
   def Feed.create_from_opml(opml)
     doc = Hpricot(open(opml))
     (doc/"outline[@htmlurl]").each do |url|
