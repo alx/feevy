@@ -26,15 +26,19 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'authadmin', :action => nil, :id => nil
   map.authadmin 'admin/:action/:id',
     :controller => 'admin', :action => nil, :id => nil
-    
-  map.connect '/code/:id/tag/:tags/style/:style', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tag/:tags/:style', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tag/:tags', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags/style/:style', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags/:style', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/:style', :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id', :controller => 'feevy', :action => 'show'
+  
+  map.connect '/code/:id/tag/:tags/rss.xml',                :controller => 'feevy', :action => 'rss'
+  map.connect '/code/:id/tags/:tags/rss.xml',               :controller => 'feevy', :action => 'rss'
+  map.connect '/code/:id/rss.xml',                          :controller => 'feevy', :action => 'rss'
+  
+  map.connect '/code/:id/tag/:tags/style/:style',   :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tag/:tags/:style',         :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tag/:tags',                :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags/style/:style',  :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags/:style',        :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tags/:tags',               :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/:style',                   :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id',                          :controller => 'feevy', :action => 'show'
   
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'
