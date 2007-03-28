@@ -63,29 +63,35 @@ module TextyHelper
 
     def convertEncoding(text, encoding='utf-8')
       
-      logger.debug text
-      
       # Set encoding if nil
-      encoding = 'utf-8' if encoding.nil?
+      encoding = 'utf-8' if encoding.blank?
+      logger.debug "Encoding: #{encoding}"
+      
       # Pre-process encoding
       unless text.nil?
         if encoding == 'utf-8'
           # Some strange caracters to handle
           text.gsub!("\342\200\234", "\"") # Double quote, right
+          text.gsub!("\342\200\235", "\"") # Double quote, left
           text.gsub!("\342\200\242", ".")
           text.gsub!("\342\202\254", "&euro;"); # Euro symbol
           text.gsub!(/\S\200\S/, " ") # every strange character send to the moon
+          text.gsub!("\234", "\"") # Double quote, left
           text.gsub!("\235", "\"") # Double quote, left
           text.gsub!("\223", "-") # Long horizontal bar
-          
         elsif encoding == 'iso-8859-15'
           text.gsub!("&#8217;", "'") # Long horizontal bar
         end
       end
-      logger.debug "before conversion: #{text}"
-
-      text = Iconv.new('iso-8859-1', encoding).iconv(text)
-
+      logger.debug "Before conversion: #{text}"
+      
+      begin
+        text = Iconv.new('iso-8859-1', encoding).iconv(text)
+      rescue => err
+        logger.debug "Iconv error: #{err}}"
+        logger.debug "Iconv error: #{err.to_s.unpack('U*').each {|c| puts "\\#{c}"}}"
+      end
+      
       # Post-process encoding
       unless text.nil?
         if encoding == 'utf-8'
