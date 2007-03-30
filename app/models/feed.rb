@@ -358,6 +358,7 @@ class Feed < ActiveRecord::Base
   
   # Create a new bug with default level of Bug::ERROR
   def raise_bug(error, level=Bug::ERROR)
+    logger.debug error
     level = Bug::ERROR if level.nil?
     bug = Bug.new(:level => level, 
                   :description => error,
