@@ -24,6 +24,50 @@ class User < ActiveRecord::Base
       subscription.update_attribute 'just_added', 0
     end
   end
+  
+  def generate_feevy(tags)
+    @entries = []
+    unless @entries = CACHE.get("entries_#{self.id}")
+      if tags
+        # Manage multitags
+        tags = tags.gsub("+", ", ") if tags.include? '+'
+        subscriptions = self.subscriptions.find_tagged_with(tags)
+      else
+        subscriptions = self.subscriptions
+      end
+      subscriptions.each do |subscription|
+        feed = subscription.feed
+        if (not feed.nil?) and (not feed.bogus == true) then
+          post = feed.latest_post
+          unless post.nil?
+            entry = Hash.new
+            entry[:name]      = feed.title.nil? ? "" : feed.title
+            entry[:blog_url]  = feed.href.nil? ? "" : feed.href
+            entry[:title]     = post.title.nil? ? "" : post.title
+            entry[:date]      = post.created_at
+            entry[:texto]     = post.description.nil?  ? "" : post.description
+            entry[:post_url]  = post.url
+            entry[:img]       = feed.avatar_locked == 1 ? feed.avatar.url : subscription.avatar.url 
+            @entries << entry
+          end
+        end
+      end
+
+      # Sort by date to get latest posts first
+      @entries = @entries.sort_by{|entry| entry[:date]}.reverse
+
+      # Only get last displayed feeds depending on user choice
+      if self.opt_displayed_subscriptions != "all"
+        @entries = @entries[1..self.opt_displayed_subscriptions.to_i]
+      end
+      CACHE.set("entries_#{self.id}", @entries, 60*60*4)
+    end
+    return @entries
+  end
+  
+  def clean_cache
+    CACHE.delete("entries_#{self.id}")
+  end
 
   # Authenticate a user. 
   #
