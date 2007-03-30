@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
   
   def generate_feevy(tags)
-    unless @entries = CACHE.get("entries_#{self.id}")
+    #unless @entries = CACHE.get("entries_#{self.id}")
       @entries = []
       if tags
         # Manage multitags
@@ -60,8 +60,8 @@ class User < ActiveRecord::Base
       if self.opt_displayed_subscriptions != "all"
         @entries = @entries[1..self.opt_displayed_subscriptions.to_i]
       end
-      CACHE.set("entries_#{self.id}", @entries, 60*60*4)
-    end
+    # CACHE.set("entries_#{self.id}", @entries, 60*60*4)
+    #end
     return @entries
   end
   
