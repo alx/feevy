@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   end
   
   def generate_feevy(tags)
-    @entries = []
     unless @entries = CACHE.get("entries_#{self.id}")
+      @entries = []
       if tags
         # Manage multitags
         tags = tags.gsub("+", ", ") if tags.include? '+'
