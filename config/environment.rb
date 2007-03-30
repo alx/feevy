@@ -58,6 +58,7 @@ require 'hpricot'
 require 'simple-rss'
 require 'open-uri'
 require 'timeout'
+require 'cached_model'
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
@@ -73,3 +74,15 @@ ActionMailer::Base.server_settings = {
 FEEVY_URL = "http://www.feevy.com/"
 #FeedTools.configurations[:feed_cache] = nil
 ActiveRecord::Base.verification_timeout = 14400
+
+memcache_options = {
+  :c_threshold => 10_000,
+  :compression => true,
+  :debug => false,
+  :namespace => 'feevy',
+  :readonly => false,
+  :urlencode => false
+}
+
+CACHE = MemCache.new memcache_options
+CACHE.servers = 'localhost:11211'

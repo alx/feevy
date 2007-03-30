@@ -27,18 +27,18 @@ ActionController::Routing::Routes.draw do |map|
   map.authadmin 'admin/:action/:id',
     :controller => 'admin', :action => nil, :id => nil
   
-  map.connect '/code/:id/tag/:tags/rss.xml',                :controller => 'feevy', :action => 'rss'
-  map.connect '/code/:id/tags/:tags/rss.xml',               :controller => 'feevy', :action => 'rss'
-  map.connect '/code/:id/rss.xml',                          :controller => 'feevy', :action => 'rss'
+  map.connect '/code/:id/tag/:tags/rss.xml',                :controller => 'user', :action => 'feevy_rss'
+  map.connect '/code/:id/tags/:tags/rss.xml',               :controller => 'user', :action => 'feevy_rss'
+  map.connect '/code/:id/rss.xml',                          :controller => 'user', :action => 'feevy_rss'
   
-  map.connect '/code/:id/tag/:tags/style/:style',   :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tag/:tags/:style',         :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tag/:tags',                :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags/style/:style',  :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags/:style',        :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/tags/:tags',               :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id/:style',                   :controller => 'feevy', :action => 'show'
-  map.connect '/code/:id',                          :controller => 'feevy', :action => 'show'
+  map.connect '/code/:id/tag/:tags/style/:style',   :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/tag/:tags/:style',         :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/tag/:tags',                :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/tags/:tags/style/:style',  :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/tags/:tags/:style',        :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/tags/:tags',               :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id/:style',                   :controller => 'user', :action => 'feevy'
+  map.connect '/code/:id',                          :controller => 'user', :action => 'feevy'
   
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'
