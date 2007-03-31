@@ -88,8 +88,8 @@ module TextyHelper
       begin
         text = Iconv.new('iso-8859-1', encoding).iconv(text)
       rescue => err
-        logger.debug "Iconv error: #{err}}"
-        logger.debug "Iconv error: #{err.to_s.unpack('U*').each {|c| puts "\\#{c}"}}"
+        err.to_s.unpack('U*').each {|c| formatted << "\\#{c}"}
+        logger.debug "Iconv error: #{err} -- #{formatted}"
       end
       
       # Post-process encoding
