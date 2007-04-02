@@ -85,16 +85,10 @@ module TextyHelper
       end
       logger.debug "Before conversion: #{text}"
       
-      begin
-        text = Iconv.new('iso-8859-1', encoding).iconv(text)
-      rescue => err
-        @formatted = ""
-        err.to_s.unpack('U*').each {|c| @formatted << "\\#{c}"}
-        logger.debug "Iconv error: #{err} -- #{@formatted}"
-      end
+      text = Iconv.new('iso-8859-1', encoding).iconv(text)
       
       # Post-process encoding
-      unless text.nil?
+      unless text.nil? or text.kind_of? ArgumentError
         if encoding == 'utf-8'
           text.gsub!(/[\240-\377]/) { |c| "&#%d;" % c[0] }
         elsif encoding == 'iso-8859-15'
