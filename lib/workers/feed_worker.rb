@@ -17,7 +17,10 @@ class FeedWorker < BackgrounDRb::Rails
     @feeds = Feed.find(:all, :order => 'RAND()')
     @feed_count = @feeds.size
     @feeds.each do |feed|
-      feed.refresh
+      begin
+        Timeout::timeout(@timeout) { feed.refresh }
+      rescue Timeout::Error
+      end
       @progress += 1
     end
   end
