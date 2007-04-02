@@ -97,6 +97,7 @@ module TextyHelper
           end
         end
       rescue
+        text = ""
       end
       
       text
