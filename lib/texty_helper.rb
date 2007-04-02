@@ -84,17 +84,21 @@ module TextyHelper
         end
       end
       logger.debug "Before conversion: #{text}"
-      
-      text = Iconv.new('iso-8859-1', encoding).iconv(text)
-      
-      # Post-process encoding
-      unless text.nil? or text.kind_of? ArgumentError
-        if encoding == 'utf-8'
-          text.gsub!(/[\240-\377]/) { |c| "&#%d;" % c[0] }
-        elsif encoding == 'iso-8859-15'
-          text.gsub!("&#8217;", "'") # Long horizontal bar
+
+      begin
+        conversion = Iconv.new('iso-8859-1', encoding).iconv(text)
+        text = conversion
+        # Post-process encoding
+        unless text.nil? or text.blank? or text.kind_of? ArgumentError
+          if encoding == 'utf-8'
+            text.gsub!(/[\240-\377]/) { |c| "&#%d;" % c[0] }
+          elsif encoding == 'iso-8859-15'
+            text.gsub!("&#8217;", "'") # Long horizontal bar
+          end
         end
+      rescue
       end
+      
       text
     end
   end
