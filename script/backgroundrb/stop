@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/bin/ruby
 
 # We need to make our own RAILS_ROOT here because
 # this file is started outside of rails.

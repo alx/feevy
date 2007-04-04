@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/bin/ruby
 require 'drb/acl'
 require File.dirname(__FILE__) + "/../../config/boot.rb"
 require RAILS_ROOT + '/vendor/plugins/backgroundrb/backgroundrb.rb'
