@@ -168,18 +168,18 @@ class Feed < ActiveRecord::Base
     link = atom_link if link.blank?
     logger.debug "link: #{link}"
     
-    # complete bogus link with website href
-    if link !~ /^http:\/\// 
-      link = self.href << link.gsub(/^\//,"")
-    end
-    
-    
     # Bogus feed when link is not found
     if link.blank?
       bug_message = "RSS/Atom link not found on this website"
       raise_bug bug_message unless self.bogus == true
       raise bug_message
     else
+      
+      # complete bogus link with website href
+      if link !~ /^http:\/\// 
+        link = self.href << link.gsub(/^\//,"")
+      end
+      
       self.update_attributes :title => Feed.format_title(title, charset),
                              :link => link
     end
