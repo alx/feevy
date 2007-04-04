@@ -1,0 +1,19 @@
+xml.instruct!
+xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
+  xml.channel do
+    xml.title @feed_title
+    xml.link @feed_url
+    xml.description @feed_description
+    xml.language "en-gb"
+
+    for entry in @entries
+      xml.item do
+        xml.pubDate Time.parse(entry[:date].to_s).rfc822
+        xml.title h(entry[:title])
+        xml.link entry[:post_url]
+        xml.guid entry[:post_url]
+        xml.description entry[:texto]
+      end
+    end
+  end
+end
