@@ -20,6 +20,7 @@ class FeedWorker < BackgrounDRb::Rails
       begin
         Timeout::timeout(@timeout) { feed.refresh }
       rescue Timeout::Error
+      rescue
       end
       @progress += 1
     end
