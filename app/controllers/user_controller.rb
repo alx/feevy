@@ -139,7 +139,7 @@ class UserController < ApplicationController
     # Set the content type to the standard one for RSS
     response.headers['Content-Type'] = 'application/rss+xml'
     # Render the feed using an RXML template
-    render :action => 'rss', :layout => false
+    render :action => 'feevy_rss', :layout => false
   end
 
   
