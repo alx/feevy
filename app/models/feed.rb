@@ -62,8 +62,8 @@ class Feed < ActiveRecord::Base
       if feed.nil?
         begin
           # Create new Feed
-          feed = Feed.new :href => url, :avatar_id => 1
-          feed.save
+          feed = Feed.create(:href => url, :avatar_id => 1)
+          logger.debug "Feed ID: #{feed.id}"
           
           # Update feed header
           feed.update_feed_header
@@ -142,47 +142,50 @@ class Feed < ActiveRecord::Base
   end
 
   def update_feed_header(test=false)
-    # Get first item
-    doc = Hpricot(open(self.href))
-    # Get charset
-    charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
-    charset = charset[0] if charset.is_a? Array
-    charset = charset.to_s.downcase
+    begin
+      # Get first item
+      doc = Hpricot(open(self.href))
+      # Get charset
+      charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
+      charset = charset[0] if charset.is_a? Array
+      charset = charset.to_s.downcase
     
-    title = link = ""
+      title = link = ""
     
-    title = doc.search("//title:first").text
+      title = doc.search("//title:first").text
     
-    if self.href =~ /http:\/\/video\.google\.com/
-      rss_link = self.href << "&num=1&so=1&start=0&output=rss"
-    else
-      rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-      rss_link = rss_link[0].to_s if rss_link.is_a? Array
+      if self.href =~ /http:\/\/video\.google\.com/
+        rss_link = self.href << "&num=1&so=1&start=0&output=rss"
+      else
+        rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
+        rss_link = rss_link[0].to_s if rss_link.is_a? Array
       
-      atom_link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['"]/)
-      atom_link = atom_link[0].to_s if atom_link.is_a? Array
-    end
-    
-    # Set link as atom link if rss is still blank
-    link = rss_link
-    link = atom_link if link.blank?
-    logger.debug "link: #{link}"
-    
-    # Bogus feed when link is not found
-    if link.blank?
-      bug_message = "RSS/Atom link not found on this website"
-      raise_bug bug_message unless self.bogus == true
-      raise bug_message
-    else
-      
-      # complete bogus link with website href
-      if link !~ /^http:\/\// 
-        link = self.href << link.gsub(/^\//,"")
+        atom_link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['"]/)
+        atom_link = atom_link[0].to_s if atom_link.is_a? Array
       end
+    
+      # Set link as atom link if rss is still blank
+      link = rss_link
+      link = atom_link if link.blank?
+      logger.debug "link: #{link}"
+    
+      # Bogus feed when link is not found
+      if link.blank?
+        bug_message = "RSS/Atom link not found on this website"
+        Bug.raise_feed_bug(self, bug_message) unless self.bogus == true
+        raise bug_message
+      else
+        # complete bogus link with website href
+        if link !~ /^http:\/\// 
+          link = self.href << link.gsub(/^\//,"")
+        end
       
-      self.update_attributes :title => Feed.format_title(title, charset),
-                             :link => link
-    end
+        self.update_attributes :title => Feed.format_title(title, charset),
+                               :link => link
+      end
+    rescue => error
+      Bug.raise_feed_bug(self, error) unless self.bogus == true
+    end 
     return self
   end
   
@@ -240,9 +243,9 @@ class Feed < ActiveRecord::Base
           end
         end
       rescue Timeout::Error
-        raise_bug "timeout", Bug::WARNING
+        Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
       rescue => err
-        raise_bug err unless bogus == true
+        Bug.raise_feed_bug(self, err) unless bogus == true
       end
     end
   end
@@ -335,7 +338,7 @@ class Feed < ActiveRecord::Base
       
       return file
     rescue => error
-      raise_bug(error, Bug::WARNING)
+      Bug.raise_feed_bug(self, error, Bug::WARNING)
       return nil
     end
   end
@@ -352,18 +355,8 @@ class Feed < ActiveRecord::Base
                               :href => rss.channel.link
       end
     rescue => err
-      raise_bug(err)
+      Bug.raise_feed_bug(self, err)
     end
-  end
-  
-  # Create a new bug with default level of Bug::ERROR
-  def raise_bug(error, level=Bug::ERROR)
-    logger.debug error
-    level = Bug::ERROR if level.nil?
-    bug = Bug.new(:level => level, 
-                  :description => error,
-                  :feed_id => self.id)
-    bug.send_by_mail
   end
   
   def Feed.remove_duplicates

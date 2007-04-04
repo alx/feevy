@@ -23,6 +23,15 @@ class Bug < ActiveRecord::Base
     @bugs.each {|bug| bug.resolve}
   end
   
+  # Create a new bug with default level of Bug::ERROR
+  def Bug.raise_feed_bug(feed, error, level=Bug::ERROR)
+    logger.debug error
+    level = Bug::ERROR if level.nil?
+    Bug.create(:level => level, 
+               :description => error,
+               :feed_id => feed.id).send_by_mail
+  end
+  
   def resolve
     self.update_attribute :status, Bug::FIXED
   end
