@@ -6,7 +6,7 @@ xml.feevy do
       # RSS link to read
       xml.rss   feed.link
       # Post url to check update
-      xml.post  feed.posts.first.url
+      xml.post  feed.latest_post.url
     end
   end
 end
