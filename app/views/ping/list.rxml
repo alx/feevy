@@ -1,0 +1,12 @@
+xml.feevy do
+  for feed in @feeds
+    xml.feed do
+      # Feed ID to ping in case of update
+      xml.id    feed.id
+      # RSS link to read
+      xml.rss   feed.link
+      # Post url to check update
+      xml.post  feed.posts.first.url
+    end
+  end
+end

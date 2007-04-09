@@ -272,7 +272,7 @@ class Feed < ActiveRecord::Base
     link = item.search("link:first")
     unless link.nil?
       post_url = link.text
-      post_url = link.to_s.scan(/href=['"]?([^'"]*)['" ]/).to_s if (post_url.nil? or post_url.blank?)
+      post_url = link.to_s.scan(/href=['"]?([^'"]*)['" ]/).to_s if (post_url.nil? or post_url.empty?)
       return post_url
     else
       return nil

@@ -1,0 +1,2 @@
+page.show "display_feevy_validate"
+page.visual_effect :fade, "display_feevy_validate", :duration=>2
