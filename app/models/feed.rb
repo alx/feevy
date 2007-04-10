@@ -13,7 +13,7 @@ class Feed < ActiveRecord::Base
   has_many :users, :through => :subscriptions
   has_many :bugs
   has_many :posts, :order => 'created_at DESC'
-  has_one :latest_post, :class_name => "Post", :order => "created_at DESC"
+  has_one :latest_post, :class_name => 'Post', :order => 'id DESC'
   belongs_to :avatar
 
   validates_uniqueness_of :href
