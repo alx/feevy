@@ -13,6 +13,7 @@ class Feed < ActiveRecord::Base
   has_many :users, :through => :subscriptions
   has_many :bugs
   has_many :posts, :order => 'created_at DESC'
+  has_one :latest_post, :class_name => "Post", :order => "created_at DESC"
   belongs_to :avatar
 
   validates_uniqueness_of :href
@@ -135,10 +136,6 @@ class Feed < ActiveRecord::Base
   
   def has_warnings
     return Bug.feed_warnings(self).empty? ? false : true
-  end
-  
-  def latest_post
-    return self.posts.first
   end
 
   def update_feed_header(test=false)
