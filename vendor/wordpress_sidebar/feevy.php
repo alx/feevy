@@ -31,7 +31,7 @@ function widget_feevy_init() {
 				<div style="text-align:right">
 				<label for="feevy-title" style="line-height:35px;display:block;"><?php _e('Widget title:', 'widgets'); ?> <input type="text" id="feevy-title" name="feevy-title" value="<?php echo wp_specialchars($options['title'], true); ?>" /></label>
 				<label for="feevy-code" style="line-height:35px;display:block;"><?php _e('Your feevy ID:', 'widgets'); ?> <input type="text" id="feevy-code" name="feevy-code" value="<?php echo $options['code']; ?>" /></label>
-				<label for="feevy-tags" style="line-height:35px;display:block;"><?php _e('Select your feevy style:', 'widgets'); ?>
+				<label for="feevy-style" style="line-height:35px;display:block;"><?php _e('Select your feevy style:', 'widgets'); ?>
 				<select name="feevy-style" id="feevy-style">
 					<option value="dark" <?php if ($options['code'] == "dark") echo "SELECTED"; ?>>dark</option>
 					<option value="white" <?php if ($options['code'] == "white") echo "SELECTED"; ?>>white</option>
