@@ -36,9 +36,11 @@ while true
       rescue => err
         puts "Error while reading this feed: #{err}"
       end
-    end
-  rescue
-    "Error on this cycle"
+    end  
+  rescue Timeout::Error
+    puts "Timeout on this cycle"
+  rescue => err
+    puts "Error on this cycle: #{err}"
   end
   puts "Pinging cycle finished, restarting it"
   puts "===="
