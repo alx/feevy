@@ -1,4 +1,4 @@
-<div style='display:none;' id='add_blog_box_<%= position %>' class='cajab'>
+<div <% if display.nil? %> style='display:none;' <% end %> id='add_blog_box_<%= position %>' class='cajab'>
   <div class='caja10'>
     <div class='box'>
       <b class='spiffy'>
@@ -10,7 +10,7 @@
       </b> 
       <div class='spiffy_content'>
         <br/>
-        <a class='right' onclick='$("add_blog_box_<%= position %>").hide()' href='#'>close this box</a>
+        <a class='right' onclick='$("add_blog_box_<%= position %>").hide()' href='#' <% unless display.nil? %> style='display:none;' <% end %>>close this box</a>
         <form class='select_blogs' action='/manage/select_blogs' method='post'>
           <div id='add_blog_form_<%= position %>'>
             <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs[]'/></p>
