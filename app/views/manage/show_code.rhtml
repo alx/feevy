@@ -36,8 +36,7 @@
                       :url => {:controller => "manage", :action => "update_opt_display_sub"},
                       :with => "'display_feevy='+ escape($('display_feevy').value)" %>
     <!-- add blog partial -->
-    <%= add_blog_box %>
-    
+    <%= render :partial => 'add_blog', :locals => {:position => 'top'} %>
     
     <% unless @subscriptions.nil? || @subscriptions.empty? %>
     <p>These are the blogs in your feevy</p>

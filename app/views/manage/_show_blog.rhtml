@@ -17,7 +17,7 @@
         <% end %>
         <h3><%= "#{index}. #{feed.title}" %></h3>
         <h5><%= truncate(feed.href, 50) %></h5>
-        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "edit tags", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
+        <%= render :partial => 'tag_list', :locals => {:subscription => subscription } %>
         <div id="blog_control_<%= subscription.id %>" class='right'>
           <%= link_to_remote("change avatar", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
           <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>

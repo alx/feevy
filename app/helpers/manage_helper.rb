@@ -68,45 +68,4 @@ module ManageHelper
     select << "</p>"
     select
   end
-  
-  def add_blog_box(position='top')
-    insert = "<p>blog address<br/><input type=text name=blogs[] size=27/></p>"
-    "<div style='display:none;' id='add_blog_box_#{position}' class='cajab'>
-      <div class='caja10'>
-        <div class='box'>
-          <b class='spiffy'>
-            <b class='spiffy1'><b></b></b>
-            <b class='spiffy2'><b></b></b>
-            <b class='spiffy3'></b>
-            <b class='spiffy4'></b>
-            <b class='spiffy5'></b>
-          </b> 
-          <div class='spiffy_content'>
-            <br/>
-            <a class='right' onclick='$(\"add_blog_box_#{position}\").hide()' href='#'>close this box</a>
-            <form class='select_blogs' action='/manage/select_blogs' method='post'>
-              <div id='add_blog_form_#{position}'>
-                <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs[]'/></p>
-              </div>
-              <div class='ladoa'>
-                <a onclick='$(\"add_blog_form_#{position}\").innerHTML += \"#{insert}\";' href='#add_blog_box_#{position}'>+ add more</a>
-                <br/>
-              </div>
-              <div class='ladob'><input type='submit' class='submit' value='next >' id='boton2'/></div>
-              <br/>
-              <br/>
-            </form>
-            <br/>
-          </div>
-          <b class='spiffy'>
-            <b class='spiffy5'></b>
-            <b class='spiffy4'></b>
-            <b class='spiffy3'></b>
-            <b class='spiffy2'><b></b></b>
-            <b class='spiffy1'><b></b></b>
-          </b>
-        </div>
-      </div>
-    </div>"
-  end
 end

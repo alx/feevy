@@ -1,0 +1,14 @@
+<p>tags: 
+  <span id='tag_display_<%= subscription.id %>' class='tag_list'>
+    <span id='tag_list_<%= subscription.id %>'><%= subscription.tag_list %></span>
+    <a onclick='$("tag_display_<%= subscription.id %>").toggle();$("tag_form_<%= subscription.id %>").toggle();'>edit tags</a>
+  </span>
+  <span id='tag_form_<%= subscription.id %>' class='tag_list' style='display:none;'>
+    <form action='/manage/tag_blog' method='post' onsubmit="new Ajax.Request('/manage/tag_blog', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+      <input type='hidden' name='id' value='<%= subscription.id %>'>
+      <input type='text' name='tag_input' value='<%= subscription.tag_list %>' id='tag_input' size='30'>
+      <input type='submit' value='validate' class='submit'/>
+    </form>
+  </span>
+  </span>
+</p>
