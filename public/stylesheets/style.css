@@ -887,7 +887,8 @@ color: #FFF;
   float:left;
   position:relative;
   top:30px;
-  left:20px;
+  left:-180px;
+  height:0px;
   text-align:right;
 }
 
