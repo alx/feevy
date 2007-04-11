@@ -2,8 +2,8 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 
-SERVER = "localhost:3000"
-#SERVER = "www.feevy.com"
+#SERVER = "localhost:3000"
+SERVER = "www.feevy.com"
 
 puts "Starting updates..."
 while true
