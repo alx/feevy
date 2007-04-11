@@ -2,8 +2,8 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 
-#SERVER = "localhost:3000"
-SERVER = "www.feevy.com"
+SERVER = "localhost:3000"
+#SERVER = "www.feevy.com"
 
 puts "Starting updates..."
 while true
@@ -40,7 +40,8 @@ while true
   rescue Timeout::Error
     puts "Timeout on this cycle"
   rescue => err
-    puts "Error on this cycle: #{err}"
+    puts "Error on this cycle: #{err} - Waiting a minute"
+    sleep(60)
   end
   puts "Pinging cycle finished, restarting it"
   puts "===="
