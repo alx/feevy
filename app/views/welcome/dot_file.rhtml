@@ -2,7 +2,7 @@ graph feevy
 	{
 	  <% @subscriptions.each do |sub| -%>
 	    <% unless sub.user_id.nil? or sub.feed_id.nil? -%>
-	    "user_<%= sub.user_id %>" -- "feed_<%= sub.feed_id %>"
+	    "user_<%= sub.user_id.to_i + 32 %>" -- "feed_<%= sub.feed_id %>"
 	    <% end -%>
 	  <% end -%>
 	}
