@@ -38,7 +38,7 @@ class WelcomeController < ApplicationController
       @subscriptions.delete_if do |sub|
         sub.user_id.nil? or sub.feed_id.nil? or (sub.user.subscriptions.size == 1 and sub.feed.subscriptions.size == 1)
       end
-      CACHE.set(cache_key, @entries, 60*60*24)
+      CACHE.set(cache_key, @subscriptions, 60*60*24)
     end
     render :layout => false
   end
