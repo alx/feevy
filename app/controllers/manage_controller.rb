@@ -26,6 +26,7 @@ class ManageController < ApplicationController
   def select_blogs
     require_auth
     if request.post?
+      @user.update_attributes(:registration_stage => 1)
       params[:blogs].each do |blog|
         # Do not process this blog if it's empty
         unless blog.empty?
@@ -45,9 +46,6 @@ class ManageController < ApplicationController
           end
         end
       end
-
-      @user.update_attributes(:registration_stage => 1)
-
       redirect_to :action => 'index'
     end
   end
