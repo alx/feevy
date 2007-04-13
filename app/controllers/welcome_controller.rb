@@ -26,4 +26,9 @@ class WelcomeController < ApplicationController
   def coming_soon
     render :layout => false
   end
+  
+  def dot_file
+    @subscriptions = Subscription.find(:all)
+    render :layout => false
+  end
 end
