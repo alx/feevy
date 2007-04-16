@@ -1,6 +1,7 @@
 <?php
 /*
-Plugin Name: feevy widget
+Plugin Name: Feevy Widget
+Plugin URI: http://www.feevy.com
 Description: Adds a sidebar widget to display your feevy bar
 Author: Las Indias - Alexandre Girard
 Version: 1.0
