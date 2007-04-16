@@ -35,4 +35,14 @@ class PingController < ApplicationController
       render :layout => false
     end
   end
+  
+  def unlock_master_ping
+    redirect_to :action => "unlock_ping", :id => 1
+  end
+  
+  def unlock_ping
+    @ping = Ping.find(params[:id])
+    @ping.update_attribute("lock", 0) if @ping.lock == 1
+    render :nothing => true
+  end
 end
