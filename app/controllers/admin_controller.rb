@@ -9,8 +9,6 @@ class AdminController < ApplicationController
     @percent_error    = (@errors.size * 100.0) / @bugs.size
     @percent_warning  = (@warnings.size * 100.0) / @bugs.size
     @percent_working  = 100.0 - (@percent_warning + @percent_error)
-    
-    @workers = MiddleMan.jobs
   end
   
   def feeds
@@ -173,36 +171,5 @@ class AdminController < ApplicationController
     @feed = Feed.find params[:id]
     # resolve bugs
     Bug.resolve_feed(@feed)
-  end
-  
-  def background_task
-    MiddleMan.new_worker(:class => :feed_update_worker, :args => {})
-    redirect_to :action => 'index'
-  end
-  
-  def add_feed_worker
-    MiddleMan.new_worker(:class => :feed_worker, :args => {})
-    redirect_to :action => 'index'
-  end
-  
-  def stop_task
-    MiddleMan.delete_worker(params[:job_key])
-    redirect_to :action => 'index'
-  end
-  
-  def set_task_infinity
-    MiddleMan.get_worker(params[:job_key]).infinite = params[:infinite]
-    redirect_to :action => 'index'
-  end
-  
-  def task_progress
-    if request.xhr?
-      progress = MiddleMan.get_worker(params[:job_key]).progress
-      render :update do |page|
-        page.replace_html("progress_#{params[:job_key]}", progress)
-      end
-    else
-      redirect_to :action => 'index'   
-    end
   end
 end

@@ -28,26 +28,4 @@ Errors: <%= @errors.size %><br/>
 <ul>
   <li><%= link_to "Clean Empty Subscriptions", :action => "clean_empty_subscription" %></li>
 </ul>
-
-<h1>Update workers</h1>
-
-<%= link_to "Start a new worker", :action => "background_task" %>
-<%= link_to "Start a new hpricot worker", :action => "add_feed_worker" %>
-<br/>
-<table>
-  <tr><th>Description</th><th>Progress</th><th>Infinite</th><th>Action</th></tr>
-<% @workers.each do |job_key, worker| -%>
-  <tr>
-    <td>Job running: <%= job_key %></td>
-    <td><span id='progress_<%= job_key %>'><%= worker.progress %></span>/<%= worker.feed_count %>
-      <%= periodically_call_remote(
-          :frequency => 10,
-          :url => { :action => "task_progress", :job_key => job_key }) %></td>
-    <td><%= worker.infinite ? "yes" : "no" %>
-    <td>
-    <%= link_to "Stop worker", :action => "stop_task", :job_key => job_key %>
-    <%= worker.infinite ? link_to("Set limited", :action => "set_task_infinity", :job_key => job_key , :infinite => false) : link_to("Set infinite", :action => "set_task_infinity", :job_key => job_key , :infinite => true) %>
-    </td>
-  </tr>
-<% end -%>
 </table>
