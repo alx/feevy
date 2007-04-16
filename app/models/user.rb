@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :feeds, :through => :subscriptions
   
 	# Protecting the fields
-	attr_accessible :login, :email, :image, :firstname, :lastname, :registration_stage, :subscriptions, :feeds, :opt_displayed_subscriptions
+	attr_accessible :login, :email, :image, :firstname, :lastname, :registration_stage, :subscriptions, :feeds, :opt_displayed_subscriptions, :api_key
 
   # Please change the salt to something else, 
   # Every application should use a different one 
@@ -23,6 +23,14 @@ class User < ActiveRecord::Base
     self.just_added_subscriptions.each do |subscription|
       subscription.update_attribute 'just_added', 0
     end
+  end
+  
+  def generate_api_key
+    if self.validkey.nil?
+      self.update_attributes "validkey" => generate_validkey
+    end
+    self.update_attributes "api_key" => self.validkey
+    self.api_key
   end
   
   def generate_feevy(tags)
