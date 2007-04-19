@@ -16,7 +16,7 @@ This widget will help you to display your Feevy on your blog's sidebar.
 
 == Installation ==
 
-1. Unzip the downloaded package and drop the Feevy folder in your Wordpress plugins folder
+1. Unzip the downloaded package and drop the Feevy widget folder in your Wordpress plugins folder
 1. Log into your WordPress admin panel
 1. Go to Plugins and “Activate” the plugin
 1. Go to Presentation, Sidebar Widgets
