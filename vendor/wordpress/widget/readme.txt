@@ -1,5 +1,6 @@
 === Feevy Widget ===
 Contributors: feevy
+Donate link: http://blog.feevy.com
 Tags: feevy, sidebar, widget, blogroll
 Requires at least: 2.0.2
 Tested up to: 2.1
@@ -14,8 +15,6 @@ Display one or more Feevy widgets in your sidebar.
 This widget will help you to display your Feevy on your blog's sidebar.
 
 == Installation ==
-
-Widget Installation
 
 1. Unzip the downloaded package and drop the Feevy folder in your Wordpress plugins folder
 1. Log into your WordPress admin panel
