@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
         feed = subscription.feed
         if (not feed.nil?) and (not feed.bogus == true) then
           post = Post.from_google_api(feed) unless feed.link.nil?
-          unless post.nil?
+          unless post.nil? or post.created_at.nil?
             entry = Hash.new
             entry[:name]      = feed.title.nil? ? "" : feed.title
             entry[:blog_url]  = feed.href.nil? ? "" : feed.href
