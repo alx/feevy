@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
       subscriptions.each do |subscription|
         feed = subscription.feed
         if (not feed.nil?) and (not feed.bogus == true) then
-          post = feed.latest_post
+          post = Post.from_google_api(feed) unless feed.link.nil?
           unless post.nil?
             entry = Hash.new
             entry[:name]      = feed.title.nil? ? "" : feed.title
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       if self.opt_displayed_subscriptions != "all"
         @entries = @entries[1..self.opt_displayed_subscriptions.to_i]
       end
-     CACHE.set(cache_key, @entries, 60*5)
+      CACHE.set(cache_key, @entries, 60*5)
     end
     return @entries
   end
