@@ -1,0 +1,13 @@
+xml.instruct!
+xml.feevy("user" => @user.name, "api_key" => @user.api_key) do
+  for subscription in @subscriptions
+    unless subscription.feed.nil?
+      xml.feed do
+        xml.id subscription.id
+        xml.tags subscription.tags.join(", ") unless subscription.tags.empty?
+        xml.name subscription.feed.title
+        xml.url subscription.feed.href
+      end
+    end
+  end
+end
