@@ -51,7 +51,8 @@ class User < ActiveRecord::Base
       subscriptions.each do |subscription|
         feed = subscription.feed
         if (not feed.nil?) and (not feed.bogus == true) then
-          post = Post.from_google_api(feed) unless feed.link.nil?
+          #post = Post.from_google_api(feed) unless feed.link.nil?
+          post = feed.latest_post
           unless post.nil? or post.created_at.nil?
             entry = Hash.new
             entry[:name]      = feed.title.nil? ? "" : feed.title
