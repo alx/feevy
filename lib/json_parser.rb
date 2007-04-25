@@ -121,7 +121,6 @@ class JsonParser
     str = str.gsub(/\\(["\\\/bfnrt])/n) do
       $1.tr('"\\/bfnrt', "\"\\/\b\f\n\r\t")
     end.gsub(/(\\u[0-9a-fA-F]{4})/n) do |matched|
-      puts matched
       case matched
       when /\\u0022/ then seq = "\"" # Quotation mark
       when /\\u0026/ then seq = "&"  # ampersand
