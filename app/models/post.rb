@@ -26,31 +26,35 @@ class Post < ActiveRecord::Base
       url = "#{base_url}&key=#{api_key}&q=#{CGI::escape(feed.link)}"
 
       resp = Net::HTTP.get_response(URI.parse(url))
-      data = resp.body.sub!(/^.*\{/, '{').sub!(/\}.*$/, '}')
-      logger.debug "resp: #{resp.body}"
+      if resp.body.nil?
+        Bug.raise_feed_bug(feed, "impossible to read feed post")
+      else
+        data = resp.body.sub!(/^.*\{/, '{').sub!(/\}.*$/, '}')
+        logger.debug "resp: #{resp.body}"
 
-      # we convert the returned JSON data to native Ruby
-      # data structure - a hash
-      #result = JsonParser.new.parse(data, :options => {:surrogate => false})
-      result = JsonParser.new.parse(data)
+        # we convert the returned JSON data to native Ruby
+        # data structure - a hash
+        #result = JsonParser.new.parse(data, :options => {:surrogate => false})
+        result = JsonParser.new.parse(data)
 
-      # if the hash has 'Error' as a key, we raise an error
-      if result.has_key? 'Error'
-        raise "web service error"
-      end
+        # if the hash has 'Error' as a key, we raise an error
+        if result.has_key? 'Error'
+          raise "web service error"
+        end
     
-      @post = Post.new(:title => result['title'], :created_at => result['publishedDate'], :url => result['link'])
+        @post = Post.new(:title => result['title'], :created_at => result['publishedDate'], :url => result['link'])
     
-      if feed.link =~ /http:\/\/api\.flickr\.com/ # Flickr post
-        @post.description = Post.flickr_description(result['content'], result['link'])
-      elsif feed.link =~ /http:\/\/picasaweb\.google\.com/ # Picasa post
-        @post.description = Post.picasa_description(result['content'], result['link'])
-      elsif feed.link =~ /http:\/\/video\.google\.com/ # Google video post
-        @post.description = Post.google_video_description(result['content'], result['link'])
-      else # normal post
-        @post.description = result['contentSnippet']
+        if feed.link =~ /http:\/\/api\.flickr\.com/ # Flickr post
+          @post.description = Post.flickr_description(result['content'], result['link'])
+        elsif feed.link =~ /http:\/\/picasaweb\.google\.com/ # Picasa post
+          @post.description = Post.picasa_description(result['content'], result['link'])
+        elsif feed.link =~ /http:\/\/video\.google\.com/ # Google video post
+          @post.description = Post.google_video_description(result['content'], result['link'])
+        else # normal post
+          @post.description = result['contentSnippet']
+        end
+        CACHE.set(cache_key, @post, 60*3)
       end
-      CACHE.set(cache_key, @post, 60*3)
     end
     
     return @post
