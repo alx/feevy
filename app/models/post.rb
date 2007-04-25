@@ -26,9 +26,7 @@ class Post < ActiveRecord::Base
       url = "#{base_url}&key=#{api_key}&q=#{CGI::escape(feed.link)}"
 
       resp = Net::HTTP.get_response(URI.parse(url))
-      if resp.body.nil?
-        Bug.raise_feed_bug(feed, "impossible to read feed post")
-      else
+      begin
         data = resp.body.sub!(/^.*\{/, '{').sub!(/\}.*$/, '}')
 
         # we convert the returned JSON data to native Ruby
@@ -53,6 +51,8 @@ class Post < ActiveRecord::Base
           @post.description = result['contentSnippet']
         end
         CACHE.set(cache_key, @post, 60*3)
+      rescue => err
+         Bug.raise_feed_bug(feed, "impossible to read feed post: #{err}")
       end
     end
     
