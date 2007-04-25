@@ -30,7 +30,6 @@ class Post < ActiveRecord::Base
         Bug.raise_feed_bug(feed, "impossible to read feed post")
       else
         data = resp.body.sub!(/^.*\{/, '{').sub!(/\}.*$/, '}')
-        logger.debug "resp: #{resp.body}"
 
         # we convert the returned JSON data to native Ruby
         # data structure - a hash
