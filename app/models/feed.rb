@@ -76,6 +76,9 @@ class Feed < ActiveRecord::Base
             feed = @duplicates[0] 
           end
           
+          # Refresh feed to update content and avatar
+          feed.refresh
+          
           # Discover avatar
           feed.discover_avatar_txt
         rescue => error
@@ -185,6 +188,80 @@ class Feed < ActiveRecord::Base
   
   def Feed.format_title(title, charset='utf-8')
     clean(convertEncoding(title, charset)).downcase
+  end
+  
+  def update_content_hpricot(forced=false)
+    unless bogus == true
+      begin
+        # Get first item
+        Timeout::timeout(30) do
+          doc = Hpricot(open(link), :xml => true)
+          item = doc.search("item:first|entry:first")
+          # Get charset
+          charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
+          charset = charset[0] if charset.is_a? Array
+          charset = charset.to_s.downcase
+          
+          unless item.nil?
+            # get item url
+            post_url = read_link(item)
+            # built Post from first item if different url
+            if (not post_url.nil?) and (forced or latest_post.nil? or post_url != latest_post.url)
+              
+              # Get and format post title
+              title = Post.format_title(item.search("title").text, charset)
+              logger.debug "title: #{title}"
+              
+              # Test if picasa feed
+              if is_picasa?
+                description = Post.picasa_description(item, post_url)
+              # Test if picasa feed
+              elsif is_flickr?
+                description = Post.flickr_description(item, post_url)
+              # Test if google video feed
+              elsif is_google_video?
+                description = Post.google_video_description(item, post_url)
+              # Else normal feed
+              else
+                description = Post.format_description(item.search("description|summary|content").text, charset)
+              end
+              logger.debug "description: #{description}"
+              # Delete existing post if forced update
+              if forced == true
+                post = Post.find(:first, :conditions => ["url LIKE ?", post_url])
+                post.destroy unless post.nil?
+              end
+              # Save new post
+              posts << Post.new(:url => post_url, 
+                                :title => title, 
+                                :description => description, 
+                                :feed_id => id)
+            end
+          end
+        end
+      rescue Timeout::Error
+        Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
+      rescue => err
+        Bug.raise_feed_bug(self, err) unless bogus == true
+      end
+    end
+  end
+  
+  alias refresh update_content_hpricot
+  
+  # Return true if feed is a flickr feed
+  def is_flickr?
+    link =~ /http:\/\/api\.flickr\.com/
+  end
+  
+  # Return true if feed is a flickr feed
+  def is_picasa?
+    link =~ /http:\/\/picasaweb\.google\.com/
+  end
+  
+  # Return true if feed is a google video feed
+  def is_google_video?
+    link =~ /http:\/\/video\.google\.com/
   end
   
   # Return the rss item link
