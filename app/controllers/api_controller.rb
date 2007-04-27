@@ -11,7 +11,7 @@ class ApiController < ApplicationController
   def view_key
     
     # retrieve user
-    if params[:user_password].nil? || params[:user_email].nil?
+    if !(params[:user_password].nil?) || !(params[:user_email].nil?)
       @user = User.find(:first, :conditions => ["email LIKE ? AND password LIKE ?", params[:user_email], params[:user_password]])
     else
       require_auth
