@@ -201,7 +201,7 @@ class feevySoup {
 	}
 
 
-	// ============= Fetches the data over http from Technorati
+	// ============= Fetches the data over http from Feevy
 	function fetch_content() {
 
 			// =========== Fetch the data
@@ -246,7 +246,7 @@ class feevySoup {
 
 
 
-	// ============= The core function that processes technorati data
+	// ============= The core function that processes Feevy data
 	function get_content() {
 
 		// == No API type has been specified
@@ -255,7 +255,7 @@ class feevySoup {
 		}
 
 		$this->prepare_query();	// Prepare the query with all necessary variables
-		$data=$this->fetch_content();	// get data from Technorati
+		$data=$this->fetch_content();	// get data from Feevy
 		if(!$data) return false;
 
 		$xml_array=$this->xml2array($data);
