@@ -1,7 +1,7 @@
 class ApiController < ApplicationController
   
   # Display API help
-  def help
+  def index
   end
   
   # ***
