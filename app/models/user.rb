@@ -27,9 +27,10 @@ class User < ActiveRecord::Base
   
   def generate_api_key
     if self.validkey.nil?
-      self.update_attributes "validkey" => generate_validkey
+      self.update_attribute "validkey", generate_validkey
     end
-    self.update_attributes "api_key" => self.validkey
+    self.update_attribute "api_key", self.validkey
+    self.reload
     self.api_key
   end
   
