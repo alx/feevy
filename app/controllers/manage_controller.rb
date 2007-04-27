@@ -79,7 +79,7 @@ class ManageController < ApplicationController
     check_user
     @update_avatar = params[:update_avatar]
     @subscription = Subscription.find(params[:id])
-    @subscription.update_attributes(:avatar_id => params[:avatar_id])
+    @subscription.update_attribute :avatar_id, params[:avatar_id]
   end
 
   def change_avatar

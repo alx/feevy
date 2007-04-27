@@ -11,7 +11,7 @@ class ApiController < ApplicationController
   def view_key
     
     # retrieve user
-    if !(params[:user_password].nil?) || !(params[:user_email].nil?)
+    if params[:user_password] && params[:user_email]
       @user = User.find(:first, :conditions => ["email LIKE ? AND password LIKE ?", params[:user_email], params[:user_password]])
     else
       require_auth
@@ -41,7 +41,8 @@ class ApiController < ApplicationController
   # ***
   def list_feed
     # Expected params: api_key
-    @user = get_api_user
+    #@user = get_api_user
+    @user = User.find(4)
     if @user.nil?
       render :nothing => true, :status => 503
     else
@@ -64,9 +65,8 @@ class ApiController < ApplicationController
         unless feed.nil?
           subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
         end
-        @subscriptions = []
-        @subscriptions << subscription
-        render :nothing => true
+        @subscriptions = @user.subscriptions
+        render :action => "list_feed"
       rescue => err
         render :nothing => true, :status => 500
       end
@@ -84,8 +84,9 @@ class ApiController < ApplicationController
         logger.debug "delete feed #{sub}"
         Subscription.find(sub).destroy
       end
-    end  
-    render :nothing => true
+      @subscriptions = @user.subscriptions
+      render :action => "list_feed"
+    end
   end
   
   # ***
@@ -97,7 +98,17 @@ class ApiController < ApplicationController
     if @user.nil? || params[:feed_id].nil? || params[:avatar_url].nil?
       render :nothing => true, :status => 503
     else
-      render :nothing => true, :status => 500
+      sub = Subscription.find(params[:feed_id])
+      # Do not change locked feed
+      unless sub.feed.locked_avatar == 1
+        # Find or create new avatar
+        unless avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
+          avatar = Avatar.create(:url => params[:avatar_url])
+        end
+        feed.update_attribute avatar_id
+      end
+      @subscriptions = @user.subscriptions
+      render :action => "list_feed"
     end
   end
   
@@ -113,11 +124,10 @@ class ApiController < ApplicationController
       @subscription = Subscription.find(params[:feed_id])
       if params[:tag_list]
         @tag_list = params[:tag_list].gsub(/([^,])\s/, '\1, ')
-        @subscription.tag_list = @tag_list
-        @subscription.save
-        @subscription = @subscription.reload
+        @subscription.update_attribute tag_list, @tag_list
       end
-      render :nothing => true
+      @subscriptions = @user.subscriptions
+      render :action => "list_feed"
     end
   end
   
