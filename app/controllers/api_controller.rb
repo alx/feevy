@@ -41,8 +41,7 @@ class ApiController < ApplicationController
   # ***
   def list_feed
     # Expected params: api_key
-    #@user = get_api_user
-    @user = User.find(4)
+    @user = get_api_user
     if @user.nil?
       render :nothing => true, :status => 503
     else
