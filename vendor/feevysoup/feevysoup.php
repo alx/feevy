@@ -69,125 +69,63 @@ class feevySoup {
 			}
 		}
 
-			// These routine prepares the query for each API type
+			// These routine prepares the query for each API call
 			switch($this->type) {
-
-				// ============== Cosmos api
-				case 'cosmos':
-
-						// == Prepare the parameters for the cosmos api
-						$cosmos['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
-						$cosmos['type']=(!isset($this->params['type'])) ? '' :"&type=".$this->params['type'];
-						$cosmos['limit']=(!isset($this->params['limit'])) ? '' : "&limit=".$this->params['limit'];
-						$cosmos['start']=(!isset($this->params['start'])) ? '' : "&start=".$this->params['start'];
-						$cosmos['current']=(!isset($this->params['current'])) ? '' : "&current=".$this->params['current'];
-						//$cosmos['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-						$cosmos['claim']=(!isset($this->params['claim'])) ? '' : "&claim=".$this->params['claim'];
-						$cosmos['highlight']=(!isset($this->params['highlight'])) ? '' : "&highlight=".$this->params['highlight'];
-
-						// == Prepare the url for cosmos api query
-						$query="/cosmos?key={$this->api_key}{$cosmos['url']}";
-						$url.="{$cosmos['type']}{$cosmos['limit']}{$cosmos['start']}";
-						$url.="{$cosmos['current']}{$cosmos['claim']}{$cosmos['highlight']}";
+			  
+				// ============== register_user api call
+				case 'register_user':
 				break;
 
-
-				// ============== Search api
-				case 'search':
-
-						// == Prepare the parameters for the search api
-						$search['query']=(!isset($this->params['query'])) ? '' : "&query=".$this->params['query'];
-						$search['start']=(!isset($this->params['start'])) ? '' : "&start=".$this->params['start'];
-						$search['limit']=(!isset($this->params['limit'])) ? '' : "&limit=".$this->params['limit'];
-						//$search['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-						$search['claim']=(!isset($this->params['claim'])) ? '' : "&claim=".$this->params['claim'];
-						$search['language']=(!isset($this->params['language'])) ? '' : "&claim=".$this->params['language'];
-						$search['authority']=(!isset($this->params['authority'])) ? '' : "&authority=".$this->params['authority'];
-
-						// == Prepare the url for search api query
-						$query="/search?key={$this->api_key}{$search['query']}";
-						$query.="{$search['limit']}{$search['start']}{$search['claim']}{$search['language']}{$search['authority']}";
+				// ============== verify_key api call
+				case 'verify_key':
+						// == Prepare the url for verify_key api query
+						$query="/verify_key?key={$this->api_key}";
 				break;
-
-
-				// ============== getinfo api
-				case 'getinfo':
-
-						// == Prepare the parameters for the getinfo api
-						$getinfo['username']=(!isset($this->params['username'])) ? '' : "&username=".$this->params['username'];
-						//$getinfo['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-
-						// == Prepare the url for getinfo api query
-						$query="/getinfo?key={$this->api_key}{$getinfo['username']}";
+				
+				// ============== view_key api call
+				case 'view_key':
+						$view_key['email']=(!isset($this->params['email'])) ? '' : "&email=".$this->params['email'];
+						$view_key['password']=(!isset($this->params['password'])) ? '' : "&password=".$this->params['password'];
+						// == Prepare the url for view_key api query
+						$query="/view_key?key={$this->api_key}{$view_key['email']}{$view_key['password']}";
 				break;
-
-
-				// ============== outbound api
-				case 'outbound':
-
-						// == Prepare the parameters for the getinfo api
-						$outbound['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
-						//$outbound['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-						$outbound['start']=(!isset($this->params['start'])) ? '' : "&start=".$this->params['start'];
-
-						// == Prepare the url for getinfo api query
-						$query="/outbound?key={$this->api_key}{$outbound['url']}{$outbound['start']}";
+				
+				// ============== list_feeds api call
+				case 'list_feeds':
+						// == Prepare the url for list_feeds api query
+						$query="/blogposttags?key={$this->api_key}{$list_feeds['limit']}";
 				break;
-
-
-				// ============== bloginfo api
-				case 'bloginfo':
-
-						// == Prepare the parameters for the getinfo api
-						$bloginfo['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
-						//$bloginfo['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-
-						// == Prepare the url for getinfo api query
-						$query="/bloginfo?key={$this->api_key}{$bloginfo['url']}";
+        
+				// ============== add_feed api call
+				case 'add_feed':
+				  $add_feed['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
+				  // == Prepare the url for add_feed api query
+				  $query="/add_feed?key={$this->api_key}{$add_feed['url']}";
 				break;
-
-
-				// ============== taginfo api
-				case 'taginfo':
-
-						// == Prepare the parameters for the getinfo api
-						$taginfo['tag']=(!isset($this->params['tag'])) ? '' : "&tag=".$this->params['tag'];
-						$taginfo['limit']=(!isset($this->params['limit'])) ? '' : "&limit=".$this->params['limit'];
-						$taginfo['start']=(!isset($this->params['start'])) ? '' : "&start=".$this->params['start'];
-						//$taginfo['format']=(!isset($this->params['format'])) ? '' : "&format=".$this->params['format'];
-						$taginfo['excerptsize']=(!isset($this->params['excerptsize'])) ? '' : "&excerptsize=".$this->params['excerptsize'];
-						$taginfo['topexcerptsize']=(!isset($this->params['topexcerptsize'])) ? '' : "&topexcerptsize=".$this->params['topexcerptsize'];
-
-						// == Prepare the url for getinfo api query
-						$query="/tag?key={$this->api_key}{$taginfo['tag']}{$taginfo['limit']}";
-						$query.="{$taginfo['start']}{$taginfo['excerptsize']}{$taginfo['topexcerptsize']}";
+				
+				// ============== delete_feeds api call
+				case 'delete_feeds':
+				  $delete_feeds['feeds_id']=(!isset($this->params['feeds_id'])) ? '' : "&feeds_id=".$this->params['feeds_id'];
+				  // == Prepare the url for delete_feeds api query
+				  $query="/delete_feeds?key={$this->api_key}{$delete_feeds['feeds_id']}";
 				break;
-
-
-				// ============== toptags api
-				case 'toptags':
-						// == Prepare the url for getinfo api query
-						$toptags['limit']=(!isset($this->params['limit'])) ? '' : "&limit=".$this->params['limit'];
-						$query="/toptags?key={$this->api_key}{$toptags['limit']}";
+				
+				// ============== edit_tags api call
+				case 'edit_tags':
+				  $edit_tags['feed_id']=(!isset($this->params['feed_id'])) ? '' : "&feed_id=".$this->params['feed_id'];
+  				$edit_tags['tag_list']=(!isset($this->params['tag_list'])) ? '' : "&tag_list=".$this->params['tag_list'];
+				  // == Prepare the url for edit_tags api query
+				  $query="/edit_tags?key={$this->api_key}{$edit_tags['feed_id']}{$edit_tags['tag_list']}";
 				break;
-
-
-				// ============== keyinfo api
-				case 'keyinfo':
-						// == Prepare the url for getinfo api query
-						$query="/keyinfo?key={$this->api_key}";
+				
+				// ============== edit_avatar api call
+				case 'edit_avatar':
+				  $edit_avatar['feed_id']=(!isset($this->params['feed_id'])) ? '' : "&feed_id=".$this->params['feed_id'];
+  				$edit_avatar['avatar_url']=(!isset($this->params['avatar_url'])) ? '' : "&avatar_url=".$this->params['avatar_url'];
+				  // == Prepare the url for edit_avatar api query
+				  $query="/edit_avatar?key={$this->api_key}{$edit_avatar['feed_id']}{$edit_avatar['avatar_url']}";
 				break;
-
-				// ============== blogPostTags api
-				case 'blogposttags':
-						$blogposttags['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
-						$blogposttags['limit']=(!isset($this->params['limit'])) ? '' : "&limit=".$this->params['limit'];
-
-						// == Prepare the url for blogPostTags api query
-						$query="/blogposttags?key={$this->api_key}{$blogposttags['url']}{$blogposttags['limit']}";
-				break;
-
-
+				
 				// ============== No proper type ?
 				default:
 					return false;
