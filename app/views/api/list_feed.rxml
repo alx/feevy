@@ -6,7 +6,7 @@ xml.feevy("user" => @user.name, "api_key" => @user.api_key) do
         xml.id subscription.id
         xml.tags subscription.tags.join(", ") unless subscription.tags.empty?
         xml.name subscription.feed.title
-        xml.url subscription.feed.href
+        xml.url CGI::escape(subscription.feed.href)
       end
     end
   end
