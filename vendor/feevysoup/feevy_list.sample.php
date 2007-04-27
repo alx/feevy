@@ -36,7 +36,7 @@
 <br />
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="query" /> <input type="submit" value="Search" />
+API Key: <input type="text" name="api_key" value="2355b917730426f967baa0b388b8b86340ff809e" size='40' /> <input type="submit" value="Search" />
 </form>
 
 
@@ -45,13 +45,13 @@
 <?php
 
 
-	if(!empty($_REQUEST['query'])) {
+	if(!empty($_REQUEST['api_key'])) {
 
 		include "feevySoup.php";
 
 		$api = new feevySoup;	// create a new object
 
-		$api->api_key = "dfe71294d89ebbca982c98ecd73c96d5";	// your API key
+		$api->api_key = "2355b917730426f967baa0b388b8b86340ff809e";	// your API key
 
 		$api->type = 'list_feeds';	// what API method to call?
 
@@ -59,16 +59,13 @@
 
 		$content=$api->get_content();	// get the content
 
-print_r($content); exit;
-
+    print_r($content); exit;
 
 		echo "<strong>{$content['result']['querycount']}</strong> results found<br /><br />\n";
 
 		// Go through the array and print the contents
-		foreach($content['item'] as $item) {
-			echo "<a href=\"{$item['permalink']}\"><strong>{$item['title']}</strong></a><br />\n";
-			echo  html_entity_decode($item['excerpt'])."<br />\n";
-			echo "<small>Posted on {$item['created']} in</small> <a href=\"{$item['weblog']['url']}\"><strong><small>{$item['weblog']['name']}</small></strong></a><br /><br /><br />\n";
+		foreach($content['feed'] as $feed) {
+			echo "<a href=\"{$feed['url']}\"><strong>{$item['name']}</strong></a><br />\n";
 		}
 	}
 
@@ -81,7 +78,7 @@ print_r($content); exit;
 <br /><br /><br />
 --------------------------------
 <br />
-<small>Duck Soup API library by</small> <a href="http://kailashnadh.name/ducksoup"><small>Kailash Nadh</small></a>
+<small>FeevySoup API library</a>
 </div>
 </body>
 </html>
