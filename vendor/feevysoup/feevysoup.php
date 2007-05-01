@@ -47,7 +47,7 @@ class feevySoup {
 	   echo "text: $text\n";
 	   print_r($text);
 	   preg_match_all($reg_exp, $text, $match);
-		   foreach ($match[1] as $key=>$val) {
+		   foreach ($match[1] as $api_key=>$val) {
 	       if ( preg_match($reg_exp, $match[2][$key]) ) {
     	       $array[$val][] = $this->xml2array($match[2][$key]);
 	       } else {
@@ -84,7 +84,7 @@ class feevySoup {
 				case 'verify_key':
 						// == Prepare the url for verify_key api query
 						$path   = "/api/verify_key";
-						$query  = "key={$this->api_key}";
+						$query  = "api_key={$this->api_key}";
 				break;
 				
 				// ============== view_key api call
@@ -93,14 +93,14 @@ class feevySoup {
 						$view_key['password']=(!isset($this->params['password'])) ? '' : "&password=".$this->params['password'];
 						// == Prepare the url for view_key api query
 						$path   = "/api/view_key";
-						$query  = "key={$this->api_key}{$view_key['email']}{$view_key['password']}";
+						$query  = "api_key={$this->api_key}{$view_key['email']}{$view_key['password']}";
 				break;
 				
 				// ============== list_feed api call
 				case 'list_feed':
 						// == Prepare the url for list_feed api query
 						$path   = "/api/list_feed";
-						$query  = "key={$this->api_key}";
+						$query  = "api_key={$this->api_key}";
 				break;
         
 				// ============== add_feed api call
@@ -108,7 +108,7 @@ class feevySoup {
 				  $add_feed['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
 				  // == Prepare the url for add_feed api query
 					$path   = "/api/add_feed";
-				  $query  = "key={$this->api_key}{$add_feed['url']}";
+				  $query  = "api_key={$this->api_key}{$add_feed['url']}";
 				break;
 				
 				// ============== delete_feeds api call
@@ -116,7 +116,7 @@ class feevySoup {
 				  $delete_feeds['feeds_id']=(!isset($this->params['feeds_id'])) ? '' : "&feeds_id=".$this->params['feeds_id'];
 				  // == Prepare the url for delete_feeds api query
 					$path   = "/api/delete_feeds";
-				  $query  = "key={$this->api_key}{$delete_feeds['feeds_id']}";
+				  $query  = "api_key={$this->api_key}{$delete_feeds['feeds_id']}";
 				break;
 				
 				// ============== edit_tags api call
@@ -125,7 +125,7 @@ class feevySoup {
   				$edit_tags['tag_list']=(!isset($this->params['tag_list'])) ? '' : "&tag_list=".$this->params['tag_list'];
 				  // == Prepare the url for edit_tags api query
 					$path   = "/api/edit_tags";
-				  $query  = "key={$this->api_key}{$edit_tags['feed_id']}{$edit_tags['tag_list']}";
+				  $query  = "api_key={$this->api_key}{$edit_tags['feed_id']}{$edit_tags['tag_list']}";
 				break;
 				
 				// ============== edit_avatar api call
@@ -134,7 +134,7 @@ class feevySoup {
   				$edit_avatar['avatar_url']=(!isset($this->params['avatar_url'])) ? '' : "&avatar_url=".$this->params['avatar_url'];
 				  // == Prepare the url for edit_avatar api query
 					$path   = "/api/edit_avatar";
-				  $query  = "key={$this->api_key}{$edit_avatar['feed_id']}{$edit_avatar['avatar_url']}";
+				  $query  = "api_key={$this->api_key}{$edit_avatar['feed_id']}{$edit_avatar['avatar_url']}";
 				break;
 				
 				// ============== No proper type ?
