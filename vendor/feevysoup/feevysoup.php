@@ -30,18 +30,22 @@
 
 class feevySoup {
 
-	var $api_fqdn="www.feevy.com/api/";	// Feevy API server (no http:// and no trailing slash)
+	var $host = "localhost";  // Feevy API server host (no http:// and no trailing slash)
+	var $port = 3000;	        // Feevy API server port
 
 	var $api_key;
 	var $type;
 	var $params;
 
-	var $query = "";
+  var $path   = "";
+	var $query  = "";
 
 
 	// ============= creates a tree (array) from the given xml data (only for internal use)
 	function xml2array($text) {
 	   $reg_exp = '/<(\w+)[^>]*>(.*?)<\/\\1>/s';
+	   echo "text: $text\n";
+	   print_r($text);
 	   preg_match_all($reg_exp, $text, $match);
 		   foreach ($match[1] as $key=>$val) {
 	       if ( preg_match($reg_exp, $match[2][$key]) ) {
@@ -79,7 +83,8 @@ class feevySoup {
 				// ============== verify_key api call
 				case 'verify_key':
 						// == Prepare the url for verify_key api query
-						$query="/verify_key?key={$this->api_key}";
+						$path   = "/api/verify_key";
+						$query  = "key={$this->api_key}";
 				break;
 				
 				// ============== view_key api call
@@ -87,27 +92,31 @@ class feevySoup {
 						$view_key['email']=(!isset($this->params['email'])) ? '' : "&email=".$this->params['email'];
 						$view_key['password']=(!isset($this->params['password'])) ? '' : "&password=".$this->params['password'];
 						// == Prepare the url for view_key api query
-						$query="/view_key?key={$this->api_key}{$view_key['email']}{$view_key['password']}";
+						$path   = "/api/view_key";
+						$query  = "key={$this->api_key}{$view_key['email']}{$view_key['password']}";
 				break;
 				
-				// ============== list_feeds api call
-				case 'list_feeds':
-						// == Prepare the url for list_feeds api query
-						$query="/blogposttags?key={$this->api_key}{$list_feeds['limit']}";
+				// ============== list_feed api call
+				case 'list_feed':
+						// == Prepare the url for list_feed api query
+						$path   = "/api/list_feed";
+						$query  = "key={$this->api_key}";
 				break;
         
 				// ============== add_feed api call
 				case 'add_feed':
 				  $add_feed['url']=(!isset($this->params['url'])) ? '' : "&url=".$this->params['url'];
 				  // == Prepare the url for add_feed api query
-				  $query="/add_feed?key={$this->api_key}{$add_feed['url']}";
+					$path   = "/api/add_feed";
+				  $query  = "key={$this->api_key}{$add_feed['url']}";
 				break;
 				
 				// ============== delete_feeds api call
 				case 'delete_feeds':
 				  $delete_feeds['feeds_id']=(!isset($this->params['feeds_id'])) ? '' : "&feeds_id=".$this->params['feeds_id'];
 				  // == Prepare the url for delete_feeds api query
-				  $query="/delete_feeds?key={$this->api_key}{$delete_feeds['feeds_id']}";
+					$path   = "/api/delete_feeds";
+				  $query  = "key={$this->api_key}{$delete_feeds['feeds_id']}";
 				break;
 				
 				// ============== edit_tags api call
@@ -115,7 +124,8 @@ class feevySoup {
 				  $edit_tags['feed_id']=(!isset($this->params['feed_id'])) ? '' : "&feed_id=".$this->params['feed_id'];
   				$edit_tags['tag_list']=(!isset($this->params['tag_list'])) ? '' : "&tag_list=".$this->params['tag_list'];
 				  // == Prepare the url for edit_tags api query
-				  $query="/edit_tags?key={$this->api_key}{$edit_tags['feed_id']}{$edit_tags['tag_list']}";
+					$path   = "/api/edit_tags";
+				  $query  = "key={$this->api_key}{$edit_tags['feed_id']}{$edit_tags['tag_list']}";
 				break;
 				
 				// ============== edit_avatar api call
@@ -123,7 +133,8 @@ class feevySoup {
 				  $edit_avatar['feed_id']=(!isset($this->params['feed_id'])) ? '' : "&feed_id=".$this->params['feed_id'];
   				$edit_avatar['avatar_url']=(!isset($this->params['avatar_url'])) ? '' : "&avatar_url=".$this->params['avatar_url'];
 				  // == Prepare the url for edit_avatar api query
-				  $query="/edit_avatar?key={$this->api_key}{$edit_avatar['feed_id']}{$edit_avatar['avatar_url']}";
+					$path   = "/api/edit_avatar";
+				  $query  = "key={$this->api_key}{$edit_avatar['feed_id']}{$edit_avatar['avatar_url']}";
 				break;
 				
 				// ============== No proper type ?
@@ -134,6 +145,7 @@ class feevySoup {
 			}
 
 		$this->query=$query;
+		$this->path=$path;
 		print "\nQuery: [$query]\n\n";
 
 	}
@@ -141,46 +153,30 @@ class feevySoup {
 
 	// ============= Fetches the data over http from Feevy
 	function fetch_content() {
+    
+		// =========== Fetch the data
+		$data="";
+		
+  	$http_request  = "POST {$this->path} HTTP/1.0\r\n";
+  	$http_request .= "Host: {$this->host}\r\n";
+  	$http_request .= "Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n";
+  	$http_request .= "Content-Length: " . strlen($this->query) . "\r\n";
+  	$http_request .= "User-Agent: Feevy Soup\r\n";
+  	$http_request .= "\r\n";
+  	$http_request .= $this->query;
+    
+  	if( false != ( $fs = @fsockopen($this->host, $this->port, $errno, $errstr, 10) ) ) {
+  		fwrite($fs, $http_request);
 
-			// =========== Fetch the data
-			$data="";
-
-
-			// Get data by opening a socket connection. If this doesnt work, uncomment and use the routine below
-			$fp = @fsockopen($this->api_fqdn, 80, $errnum, $errstr, 15); // Open a socket connection
-				if($fp) { 
-					$fp_data="GET {$this->query} HTTP/1.0\r\n";
-					$fp_data.="Host: {$this->api_fqdn}\r\n"; 
-					$fp_data.="User-Agent: FeevySoup client\r\n";
-					$fp_data.="Connection: Close\r\n\r\n";
-					fputs($fp, $fp_data);
-						while(!feof($fp)) {
-							$data.=fgets($fp, 512);
-						}
-
-					fclose($fp);
-				} else {
-					return false;
-				}
-
-			// Clean up the data by removing the http headers
-			$data=substr($data, strpos($data, "\r\n\r\n"), strlen($data));
-
-			/* =============================
-			$url="http://".$this->api_fqdn.$this->query;
-			$fp=@fopen($url, "r");
-			if($fp) {
-				while(!feof($fp)) {
-					$data.=fgets($fp, 512);
-				}
-				fclose($fp);
-			} else {
-				return false;	// connection failed
-			}
-			================================ */
-
-		return $data;
-	}
+  		while ( !feof($fs) )
+  			$data .= fgets($fs, 1160); // One TCP-IP packet
+  		fclose($fs);
+  		$data = explode("\r\n\r\n", $data, 2);
+  	}
+  	
+  	return $data;
+  }
+  
 
 
 
@@ -194,18 +190,89 @@ class feevySoup {
 
 		$this->prepare_query();	// Prepare the query with all necessary variables
 		$data=$this->fetch_content();	// get data from Feevy
+		
 		if(!$data) return false;
 
 		$xml_array=$this->xml2array($data);
 		if(!$xml_array) return false;
-
-		$parent=$xml_array['tapi'][0]['document']['0'];
-
-
+		print_r($xml_array);
+		//$parent=$xml_array['tapi'][0]['document']['0'];
 
 			// parses and formats data for each API
 			switch($this->type) {
+			  
+				// ============== register_user api call
+				case 'register_user':
+					$result['result']=$parent['result'][0];
 
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+
+				// ============== verify_key api call
+				case 'verify_key':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
+				// ============== view_key api call
+				case 'view_key':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
+				// ============== list_feed api call
+				case 'list_feed':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+        
+				// ============== add_feed api call
+				case 'add_feed':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
+				// ============== delete_feeds api call
+				case 'delete_feeds':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
+				// ============== edit_tags api call
+				case 'edit_tags':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
+				// ============== edit_avatar api call
+				case 'edit_avatar':
+					$result['result']=$parent['result'][0];
+
+					if(!isset($result['error'])) {
+						$result['result']['weblog']=$result['result']['weblog'][0];
+					}
+				break;
+				
 				// ============= format the cosmos data
 				case 'cosmos':
 					$cosmos_result=$parent['result'][0];
@@ -239,118 +306,6 @@ class feevySoup {
 						}
 					}
 				break;
-
-				// ============= format search data
-				case 'search':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])  && isset($parent['item']) && is_array($parent['item'])) {
-						$n=0;
-						foreach($parent['item'] as $item) {
-							$item['weblog']=$item['weblog'][0];
-							$result['item'][$n]['weblog']=$item['weblog']; //$result['item'][$n]['weblog']=$item['weblog'][0];
-
-							// === Author data if present (when claim=1)
-							if(isset($item['weblog']['author']) && is_array($item['weblog']['author'])) {
-								$item['weblog']['author']=$item['weblog']['author'][0];
-							}
-
-							$result['item'][$n]=$item;
-
-							$n++;
-						}
-					}
-				break;
-
-				// ============= format getinfo data
-				case 'getinfo':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error']) && isset($result['item']) && is_array($result['item'])) {
-						$n=0;
-						foreach($parent['item'] as $item) {
-							$item['weblog']=$item['weblog'][0];
-							$result['item'][$n]['weblog']=$item['weblog'][0];
-							$result['item'][$n]=$item;
-							$n++;
-						}
-					}
-				break;
-
-				// ============= format outbound data
-				case 'outbound':
-					$outbound_result=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$outbound_result['weblog']=$outbound_result['weblog'][0];
-						$result['result']=$outbound_result;
-
-						if(isset($parent['item']) && is_array($parent['item'])) {
-							$n=0;
-							foreach($parent['item'] as $item) {
-								$item['weblog']=$item['weblog'][0];
-								$result['item'][$n]['weblog']=$item['weblog'][0];
-								$result['item'][$n]=$item;
-								$n++;
-							}
-						}
-					}
-				break;
-
-				// ============= format bloginfo data
-				case 'bloginfo':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
-					}
-				break;
-
-				// ============= format taginfo data
-				case 'taginfo':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error']) && isset($parent['item']) && is_array($parent['item'])) {
-						$n=0;
-						foreach($parent['item'] as $item) {
-							$item['weblog']=$item['weblog'][0];
-							$result['item'][$n]['weblog']=$item['weblog'][0];
-							$result['item'][$n]=$item;
-							$n++;
-						}
-					}
-				break;
-
-				// ============= format toptags data
-				case 'toptags':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error']) && isset($parent['item']) && is_array($parent['item'])) {
-						$n=0;
-						foreach($parent['item'] as $item) {
-							$result['item'][$n]=$item;
-							$n++;
-						}
-					}
-				break;
-
-				// ============= the keyinfo data
-				case 'keyinfo':
-					$result['result']=$parent['result'][0];
-				break;
-
-				// ============= the blogposttags data
-				case 'blogposttags':
-				$result['result']=$parent['result'][0];
-					if(!isset($result['error']) && isset($parent['item']) && is_array($parent['item'])) {
-						$n=0;
-						foreach($parent['item'] as $item) {
-							$result['item'][$n]=$item;
-							$n++;
-						}
-					}
-				break;
-
 			}
 
 		return $result;
