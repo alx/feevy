@@ -36,7 +36,7 @@
 <br />
 dev api_key: ce2827565b9410316713848c32dd354355efb2ba<br />
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="submit" value="Get Feed List" />
+API Key: <input type="text" name="api_key" value="ce2827565b9410316713848c32dd354355efb2ba" size='40' /> <input type="submit" value="Search" />
 </form>
 
 
@@ -51,7 +51,7 @@ dev api_key: ce2827565b9410316713848c32dd354355efb2ba<br />
 
 		$api = new feevySoup;	// create a new object
 
-		$api->api_key = "ce2827565b9410316713848c32dd354355efb2ba";	// your API key
+		$api->api_key = $_REQUEST['api_key'];	// your API key
 
 		$api->type = 'list_feed';	// what API method to call?
 
