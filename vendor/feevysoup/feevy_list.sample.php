@@ -34,9 +34,20 @@
 <div id="main">
 <h1>FeevySoup (Feed List api)</h1>
 <br />
-dev api_key: ce2827565b9410316713848c32dd354355efb2ba<br />
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-API Key: <input type="text" name="api_key" value="ce2827565b9410316713848c32dd354355efb2ba" size='40' /> <input type="submit" value="Search" />
+dev api_key: ce2827565b9410316713848c32dd354355efb2ba<br /><br />
+
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="action" value="add_feed" />
+<input type="hidden" name="api_key" value="ce2827565b9410316713848c32dd354355efb2ba" />
+Blog url:<input type="text" name="url" value="" id="url">
+<input type="submit" value="Add Feed" />
+</form>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="action" value="list_feed" />
+<input type="hidden" name="api_key" value="ce2827565b9410316713848c32dd354355efb2ba" />
+<input type="submit" value="Get Feed List" />
 </form>
 
 
@@ -45,17 +56,21 @@ API Key: <input type="text" name="api_key" value="ce2827565b9410316713848c32dd35
 <?php
 
 
-	if(!empty($_REQUEST['api_key'])) {
+	if(!empty($_POST['action'])) {
 
 		include "feevySoup.php";
 
 		$api = new feevySoup;	// create a new object
 
-		$api->api_key = $_REQUEST['api_key'];	// your API key
+		$api->api_key = $_POST['api_key'];	// your API key
+    
+		$api->type = $_POST['action'];	// what API method to call?
 
-		$api->type = 'list_feed';	// what API method to call?
-
-		$api->params = array();	// the parameters
+		switch($_POST['action']) {
+			case 'add_feed':
+			  $api->params = array('url' => $_POST['url']);
+			break;
+		}
 
 		$content = $api->get_content();	// get the content
 
