@@ -65,10 +65,10 @@ API Key: <input type="text" name="api_key" value="ce2827565b9410316713848c32dd35
 
 		// Go through the array and print the contents
 		foreach($content['result']['feed'] as $feed) {
-		  echo "<img src=\"".urldecode($feed['avatar'])."\" width=40 height=40 align=middle/><strong>Feed #{$feed['id']}</strong><br />\n";
+		  echo "<img src=\"{$feed['avatar']}\" width=40 height=40 align=middle/><strong>Feed #{$feed['id']}</strong><br />\n";
   		echo "<ul>\n";
   		echo "<li>name: {$feed['name']}</li>\n";
-  		echo "<li>url: <a href=\"".urldecode($feed['url'])."\">".urldecode($feed['url'])."</a></li>\n";
+  		echo "<li>url: <a href=\"{$feed['url']}\">{$feed['url']}</a></li>\n";
   		echo "<li>tags: {$feed['tags']}</li>\n";
   		echo "</ul>\n";
 		}

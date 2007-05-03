@@ -110,14 +110,14 @@ class feevySoup {
         } elseif($type == "complete") { //Tags that ends in 1 line '<tag />'
             //See if the key is already taken.
             if(!isset($current[$tag])) { //New Key
-                $current[$tag] = $result;
+                $current[$tag] = urldecode($result);
 
             } else { //If taken, put all things inside a list(array)
                 if((is_array($current[$tag]) and $this->get_attributes == 0)//If it is already an array...
                         or (isset($current[$tag][0]) and is_array($current[$tag][0]) and $this->get_attributes == 1)) {
-                    array_push($current[$tag],$result); // ...push the new element into that array.
+                    array_push($current[$tag],urldecode($result)); // ...push the new element into that array.
                 } else { //If it is not an array...
-                    $current[$tag] = array($current[$tag],$result); //...Make it an array using using the existing value and the new value
+                    $current[$tag] = array($current[$tag],urldecode($result)); //...Make it an array using using the existing value and the new value
                 }
             }
 
@@ -125,6 +125,7 @@ class feevySoup {
             $current = &$parent[$level-1];
         }
     }
+    
     return($xml_array);
 	}
 
