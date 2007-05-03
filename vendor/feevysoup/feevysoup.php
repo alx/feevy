@@ -44,19 +44,23 @@ class feevySoup {
 	// ============= creates a tree (array) from the given xml data (only for internal use)
 	function xml2array($text) {
 	   $reg_exp = '/<(\w+)[^>]*>(.*?)<\/\\1>/s';
-	   echo "text: $text\n";
-	   print_r($text);
 	   preg_match_all($reg_exp, $text, $match);
-		   foreach ($match[1] as $api_key=>$val) {
+		   foreach ($match[1] as $key=>$val) {
+		     //echo "key: $key - value: $val<br/>";
+		     //echo "{$match[2][$key]}<br/>";
 	       if ( preg_match($reg_exp, $match[2][$key]) ) {
     	       $array[$val][] = $this->xml2array($match[2][$key]);
 	       } else {
+	          if($val == 'url' || $val == 'avatar') {
+	            $array[$val] = urldecode($match[2][$key]);
+	          }
+	          else {
     	       $array[$val] = $match[2][$key];
+  	       }
 	       }
 	   }
 	   return $array;
 	}
-
 
 	// ============= Prepares the query based on the given api/parameters
 	function prepare_query() {
@@ -146,8 +150,6 @@ class feevySoup {
 
 		$this->query=$query;
 		$this->path=$path;
-		print "\nQuery: [$query]\n\n";
-
 	}
 
 
@@ -174,7 +176,7 @@ class feevySoup {
   		$data = explode("\r\n\r\n", $data, 2);
   	}
   	
-  	return $data;
+  	return $data[1];
   }
   
 
@@ -195,115 +197,84 @@ class feevySoup {
 
 		$xml_array=$this->xml2array($data);
 		if(!$xml_array) return false;
-		print_r($xml_array);
-		//$parent=$xml_array['tapi'][0]['document']['0'];
 
 			// parses and formats data for each API
 			switch($this->type) {
 			  
 				// ============== register_user api call
 				case 'register_user':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
-					}
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+					  $result['result']=$xml_array['feevy'];
+				  }else{
+				    $result['error'] = "An error occured while registering this user";
+				  }
 				break;
 
 				// ============== verify_key api call
 				case 'verify_key':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
-					}
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+					  $result['result']=$xml_array['feevy'];
+				  }else{
+				    $result['error'] = "An error occured while verifying this api key: {$this->api_key}";
+				  }
 				break;
 				
 				// ============== view_key api call
 				case 'view_key':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
-					}
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+					  $result['result']=$xml_array['feevy'];
+				  }else{
+				    $result['error'] = "An error occured while viewing this user api key";
+				  }
 				break;
 				
 				// ============== list_feed api call
 				case 'list_feed':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+				    $result['result']=$xml_array['feevy'][0];
+				  }
+					else {
+					  $result['error'] = "An error occured while retrieving list of feeds with {$this->api_key}";
 					}
 				break;
         
 				// ============== add_feed api call
 				case 'add_feed':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+				    $result['result']=$xml_array['feevy'][0];
+				  }
+					else {
+					  $result['error'] = "An error occured while adding feed";
 					}
 				break;
 				
 				// ============== delete_feeds api call
 				case 'delete_feeds':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+				    $result['result']=$xml_array['feevy'][0];
+				  }
+					else {
+					  $result['error'] = "An error occured while deleting feeds";
 					}
 				break;
 				
 				// ============== edit_tags api call
 				case 'edit_tags':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+				    $result['result']=$xml_array['feevy'][0];
+				  }
+					else {
+					  $result['error'] = "An error occured while editing tags";
 					}
 				break;
 				
 				// ============== edit_avatar api call
 				case 'edit_avatar':
-					$result['result']=$parent['result'][0];
-
-					if(!isset($result['error'])) {
-						$result['result']['weblog']=$result['result']['weblog'][0];
-					}
-				break;
-				
-				// ============= format the cosmos data
-				case 'cosmos':
-					$cosmos_result=$parent['result'][0];
-
-					if(!isset($cosmos_result['error'])) {
-						// === the base weblog
-						$cosmos_result['weblog']=$cosmos_result['weblog'][0];
-
-						// ==== Author data if present (when claim=1)
-						if(isset($cosmos_result['weblog']['author']) && is_array($cosmos_result['weblog']['author'])) {
-							$cosmos_result['weblog']['author']=$cosmos_result['weblog']['author'][0];
-						}
-
-						$result['result']=$cosmos_result;
-
-						// === linked weblogs
-						if(isset($parent['item']) && is_array($parent['item'])) {
-							$n=0;
-							foreach($parent['item'] as $item) {
-								$item['weblog']=$item['weblog'][0];
-								$result['item'][$n]['weblog']=$item['weblog'][0];
-
-								// ==== Author data if present (when claim=1)		
-								if(isset($item['weblog']['author']) && is_array($item['weblog']['author'])) {
-									$item['weblog']['author']=$item['weblog']['author'][0];
-								}
-
-								$result['item'][$n]=$item;
-								$n++;
-							}
-						}
+				  if(isset($xml_array['feevy'][0]) && is_array($xml_array['feevy'][0])) {
+				    $result['result']=$xml_array['feevy'][0];
+				  }
+					else {
+					  $result['error'] = "An error occured while editing avatar";
 					}
 				break;
 			}

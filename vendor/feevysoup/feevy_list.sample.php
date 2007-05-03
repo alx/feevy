@@ -57,15 +57,20 @@ API Key: <input type="text" name="api_key" value="ce2827565b9410316713848c32dd35
 
 		$api->params = array();	// the parameters
 
-		$content=$api->get_content();	// get the content
+		$content = $api->get_content();	// get the content
 
-    print_r($content); exit;
-
-		echo "<strong>{$content['result']['querycount']}</strong> results found<br /><br />\n";
+    if(isset($content['error'])){
+      echo "<strong color=\"red\">{$content['error']}</strong>";
+    }
 
 		// Go through the array and print the contents
-		foreach($content['feed'] as $feed) {
-			echo "<a href=\"{$feed['url']}\"><strong>{$item['name']}</strong></a><br />\n";
+		foreach($content['result']['feed'] as $feed) {
+		  echo "<img src=\"{$feed['avatar']}\" width=40 height=40 align=middle/><strong>Feed #{$feed['id']}</strong><br />\n";
+  		echo "<ul>\n";
+  		echo "<li>name: {$feed['name']}</li>\n";
+  		echo "<li>url: <a href=\"{$feed['url']}\">{$feed['url']}</a></li>\n";
+  		echo "<li>tags: {$feed['tags']}</li>\n";
+  		echo "</ul>\n";
 		}
 	}
 
