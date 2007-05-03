@@ -1,12 +1,14 @@
 xml.feevy do
   for feed in @feeds
-    xml.feed do
-      # Feed ID to ping in case of update
-      xml.id    feed.id
-      # RSS link to read
-      xml.rss   feed.link
-      # Post url to check update
-      xml.post  feed.latest_post.url
+    unless feed.nil?
+      xml.feed do
+        # Feed ID to ping in case of update
+        xml.id    feed.id
+        # RSS link to read
+        xml.rss   feed.link
+        # Post url to check update
+        xml.post  feed.latest_post.url
+      end
     end
   end
 end
