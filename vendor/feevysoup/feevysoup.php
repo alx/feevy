@@ -30,6 +30,11 @@
 
 class feevySoup {
 
+  // Prod settings
+	var $host = "www.feevy.com";  // Feevy API server host (no http:// and no trailing slash)
+	var $port = 80;	        // Feevy API server port
+
+  // Dev settings -- to comment if Feevy is not installed locally
 	var $host = "localhost";  // Feevy API server host (no http:// and no trailing slash)
 	var $port = 3000;	        // Feevy API server port
 
