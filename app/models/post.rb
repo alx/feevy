@@ -4,7 +4,6 @@ class Post < ActiveRecord::Base
   belongs_to :feed
   
   validates_presence_of :url
-  validates_uniqueness_of :url
   
   def Post.remove_orphelin
     Post.find(:all).each do |post|
