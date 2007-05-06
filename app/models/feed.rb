@@ -221,6 +221,9 @@ class Feed < ActiveRecord::Base
               # Test if google video feed
               elsif is_google_video?
                 description = Post.google_video_description(item, post_url)
+              # Test if jumpcut feed
+              elsif is_jumpcut?
+                description = Post.jumpcut_description(item, post_url)
               # Else normal feed
               else
                 description = Post.format_description(item.search("description|summary|content").text, charset)
@@ -262,6 +265,11 @@ class Feed < ActiveRecord::Base
   # Return true if feed is a google video feed
   def is_google_video?
     link =~ /http:\/\/video\.google\.com/
+  end
+  
+  # Return true if feed is a jumpcut feed
+  def is_jumpcut?
+    link =~ /http:\/\/rss\.jumpcut\.com/
   end
   
   # Return the rss item link

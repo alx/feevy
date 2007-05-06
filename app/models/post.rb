@@ -45,6 +45,13 @@ class Post < ActiveRecord::Base
     "<a href='#{post_url}' class='image_link'><img src='#{image}' class='google_video_image' width='160px' height='160px'/></a><br/>"
   end
   
+  def Post.jumpcut_description(item, post_url)
+    # get url for thumbnail and remove URL encoding
+    image = item.search("description").to_s.scan(/src=['"]?([^'"]*)['" ]/).to_s
+    logger.debug "jumpcut video: #{image}"
+    "<a href='#{post_url}' class='image_link'><img src='#{image}' class='jumpcut_image' width='160px' height='120px'/></a><br/>"
+  end
+  
   def Post.from_google_api(feed)
     
     cache_key = "feed_post_#{feed.id}"
