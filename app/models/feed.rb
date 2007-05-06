@@ -395,6 +395,17 @@ class Feed < ActiveRecord::Base
     # Delete merged feed
     @merged_feed.destroy
   end
+
+  def Feed.keep_unique_post
+    Feed.find(:all).each {|feed|
+      unless feed.nil?
+        post = feed.latest_post
+        unless post.nil?
+          Post.find(:all, :conditions => ["id != ? AND feed_id = ?", post.id, feed.id]).each {|object| object.destroy}
+        end
+      end
+    }
+  end
   
   private
   def destroy_relationship
