@@ -231,7 +231,7 @@ class Feed < ActiveRecord::Base
               logger.debug "description: #{description}"
               # Delete existing post if forced update
               if forced == true
-                post = Post.find(:first, :conditions => ["url LIKE ?", post_url])
+                post = Post.find(:first, :conditions => ["url LIKE ? AND feed_id = ?", post_url, self.id])
                 post.destroy unless post.nil?
               end
               # Save new post
