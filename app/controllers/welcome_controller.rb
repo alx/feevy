@@ -21,6 +21,7 @@ class WelcomeController < ApplicationController
       @rss = []
     end
     @nb_users = User.count
+    @nb_feeds = Feed.count
   end
   
   def coming_soon

@@ -13,9 +13,9 @@
         <br />
         <br />
         <% if user_logged_in? -%>
-          <%= link_to(image_tag("getfeevy.png"), url_for(:controller => 'manage')) %> 
+          <a href="/manage"><img alt="Get Feevy" src="/images/getfeevy.png" /></a>
         <% else -%> 
-          <%= link_to(image_tag("getfeevy.png"), url_for(:controller =>'auth', :action => 'signup')) %>
+          <a href="/auth/signup"><img alt="Get Feevy" src="/images/getfeevy.png" /></a>
         <% end -%>
       </div>
     </div>
@@ -46,7 +46,11 @@
           <div class="side-an">
             <h3>People may be feeving you right now </h3>
             <br />
-            <h5>Right now, people may be using feev y to display your posts at their blogs. Learn who is feeving your blog at this time. There are more than <%= @nb_users %> feevied blogs right now</h5>
+            <h5>Right now, people may be using feevy to display your posts at their
+            blogs. There are more than <%= @nb_users %> blogs and blogsportals using feevy
+            right now. And what is better, they are linking more than <%= @nb_feeds %>
+            different sources. One of them could be your blog, your flickr or
+            picasa pictures or your movies in jumpcut or google video<h5>
           </div> 
           <div class="side-bn"></div>
         </div>
