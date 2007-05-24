@@ -10,7 +10,7 @@ require 'deprec/recipes/cache_svn'
 # be used to single out a specific subset of boxes in a particular role, like
 # :primary => true.
 
-set :domain, "www.feevy.com"
+set :domain, "64.22.96.6"
 role :web, domain
 role :app, domain
 role :db,  domain, :primary => true
@@ -28,7 +28,7 @@ set :application, "feevy"
 set :deploy_to, "/var/www/apps/#{application}"
 
 # XXX we may not need this - it doesn't work on windows
-set :user, "feevy"
+set :user, "wwwfeev"
 set :repository, "svn+ssh://#{user}@#{domain}#{deploy_to}/repos/trunk"
 set :rails_env, "production"
 
