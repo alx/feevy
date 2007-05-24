@@ -63,7 +63,7 @@ require 'cached_model'
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.server_settings = {
-  :address  => "localhost",
+  :address  => "64.22.96.6",
   :port  => 25, 
   :domain  => 'www.feevy.com',
   :authentication => :login,
