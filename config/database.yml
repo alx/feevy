@@ -29,7 +29,7 @@ test:
   
 production:
   adapter: mysql
-  database: wwwfeev_prod
-  username: wwwfeev_feevy
+  database: feevy_feevy
+  username: feevy
   password: feevy2323
-  host: localhost
+  host: 64.22.96.6
