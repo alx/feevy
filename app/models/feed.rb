@@ -287,31 +287,30 @@ class Feed < ActiveRecord::Base
   def discover_avatar_txt
     begin
       #open avatar url
-      avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
-      
-      unless avatar_link.nil?
-        avatar_url = avatar_link.readline
-        avatar_link.close
+      Timeout::timeout(30) do
+        avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
 
-        logger.debug "avatar_url #{avatar_url}"
+        unless avatar_link.nil?
+          avatar_url = avatar_link.readline
+          avatar_link.close
 
-        if (not avatar_url.blank?) and (avatar_url =~ /^http:\/\//)
-          tempfile = Tempfile.new('tmp')
-          tempfile.write open(avatar_url).read
-          tempfile.flush
-          tempfile.close
+          logger.debug "avatar_url #{avatar_url}"
 
-          # Guess file format
-          md = avatar_url.match /\.([^.]+)\z/
-          format = md ? md[1].downcase : nil
+          if (not avatar_url.blank?) and (avatar_url =~ /^http:\/\//)
+            tempfile = Tempfile.new('tmp')
+            tempfile.write open(avatar_url).read
+            tempfile.flush
+            tempfile.close
 
-          logger.debug "format: #{format}"
+            # Guess file format
+            md = avatar_url.match /\.([^.]+)\z/
+            format = md ? md[1].downcase : nil
 
-          unless format.nil?
-            avatar = Avatar.create_from_file(tempfile, format.strip)
-            unless avatar.nil?
-              self.update_attributes :avatar_id => avatar.id,
-                                     :avatar_locked => true
+            logger.debug "format: #{format}"
+
+            unless format.nil?
+              avatar = Avatar.create_from_file(tempfile, format.strip)
+              self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
             end
           end
         end
