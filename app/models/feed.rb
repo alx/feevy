@@ -315,6 +315,8 @@ class Feed < ActiveRecord::Base
           end
         end
       end
+    rescue Timeout::Error
+      puts "Timeout on this feed"
     rescue
       self.update_attribute :avatar_locked, false
       return nil
