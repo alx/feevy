@@ -5,7 +5,8 @@
   <tr><td>Feed <small>(<a href='<%= @feed.link %>'>url</a>)</small></td><td><%= text_field "feed", "link", :size => 50 %></td></tr>
   <tr><td></td><td><input type="hidden" name="id" value="<%= @feed.id %>" id="id">
   <input type="submit" value="Update feed attributes &#187;"/>
-  <%= link_to "Update feed content", :action => "update_feed", :id => @feed.id %></td></tr>
+  <%= link_to "Update feed content", :action => "update_feed", :id => @feed.id %>
+  <%= link_to "Update avatar.txt", :action => "update_avatar", :id => @feed.id %></td></tr>
 </form>
 </table>
 

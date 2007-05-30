@@ -69,6 +69,13 @@ class AdminController < ApplicationController
     render :action => 'edit_feed'
   end
   
+  def update_avatar
+    require_auth 'admin'
+    @feed = Feed.find params[:id]
+    @feed.discover_avatar_txt
+    render :action => 'edit_feed'
+  end
+  
   def remove_duplicate_feeds
     require_auth 'admin'
     @duplicates = Feed.remove_duplicates
