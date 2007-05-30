@@ -441,13 +441,6 @@ class Feed < ActiveRecord::Base
     }
   end
   
-  private
-  def destroy_relationship
-    Bug.destroy_all "feed_id = #{self.id}"
-    Post.destroy_all "feed_id = #{self.id}"
-    Subscription.destroy_all "feed_id = #{self.id}"
-  end
-  
   def is_rss?(url)
     url =~ /\.xml$/ or
     url =~ /\.rdf$/ or
@@ -463,5 +456,12 @@ class Feed < ActiveRecord::Base
     url =~ /\/rss\// or
     url =~ /\/feed\// or
     url =~ /\/feeds\//
+  end
+  
+  private
+  def destroy_relationship
+    Bug.destroy_all "feed_id = #{self.id}"
+    Post.destroy_all "feed_id = #{self.id}"
+    Subscription.destroy_all "feed_id = #{self.id}"
   end
 end
