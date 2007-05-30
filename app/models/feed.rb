@@ -55,49 +55,49 @@ class Feed < ActiveRecord::Base
     end
     if input_url.nil?
       return nil
-    elsif is_rss?(input_url)
-      # Client send rss url
-      doc = Hpricot(open(input_url))
-      doc_link = doc.search("//link:first")
-      # check href in link attribute
-      if !doc_link.text.nil? or !doc_link.text.empty?
-        url_from_rss = doc_link.text
-      else
-        url_from_rss = doc_link.attributes['href'].to_s
-      end
-      # Register new blog if href has been found
-      if !url_from_rss.nil? or !url_from_rss.empty?
-        title = doc.search("//title:first").text
-        # Get charset
-        charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
-        charset = charset[0] if charset.is_a? Array
-        charset = charset.to_s.downcase
-        
-        feed = Feed.find :first, :conditions => ["link LIKE ?", url_from_rss]
-        if feed.nil?
-          begin
-            feed = Feed.create(:href => input_url, 
-                               :link => url_from_rss, 
-                               :title => Feed.format_title(title, charset), 
-                               :avatar_id => 1)
-            # Find duplicate
-            @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
-            if @duplicates.size > 1
-              feed.destroy
-              feed = @duplicates[0] 
-            end
-
-            # Refresh feed to update content and avatar
-            feed.refresh
-
-            # Discover avatar
-            feed.discover_avatar_txt
-          rescue => error
-            logger.error "Error while creating a feed from rss: #{error.message}"
-            return error
-          end
-        end
-      end
+    # elsif is_rss?(input_url)
+    #   # Client send rss url
+    #   doc = Hpricot(open(input_url))
+    #   doc_link = doc.search("//link:first")
+    #   # check href in link attribute
+    #   if !doc_link.text.nil? or !doc_link.text.empty?
+    #     url_from_rss = doc_link.text
+    #   else
+    #     url_from_rss = doc_link.attributes['href'].to_s
+    #   end
+    #   # Register new blog if href has been found
+    #   if !url_from_rss.nil? or !url_from_rss.empty?
+    #     title = doc.search("//title:first").text
+    #     # Get charset
+    #     charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
+    #     charset = charset[0] if charset.is_a? Array
+    #     charset = charset.to_s.downcase
+    #     
+    #     feed = Feed.find :first, :conditions => ["link LIKE ?", url_from_rss]
+    #     if feed.nil?
+    #       begin
+    #         feed = Feed.create(:href => input_url, 
+    #                            :link => url_from_rss, 
+    #                            :title => Feed.format_title(title, charset), 
+    #                            :avatar_id => 1)
+    #         # Find duplicate
+    #         @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
+    #         if @duplicates.size > 1
+    #           feed.destroy
+    #           feed = @duplicates[0] 
+    #         end
+    # 
+    #         # Refresh feed to update content and avatar
+    #         feed.refresh
+    # 
+    #         # Discover avatar
+    #         feed.discover_avatar_txt
+    #       rescue => error
+    #         logger.error "Error while creating a feed from rss: #{error.message}"
+    #         return error
+    #       end
+    #     end
+    #   end
     else
       # find existing feed
       feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
