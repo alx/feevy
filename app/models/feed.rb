@@ -441,7 +441,7 @@ class Feed < ActiveRecord::Base
     }
   end
   
-  def is_rss?(url)
+  def Feed.is_rss?(url)
     url =~ /\.xml$/ or
     url =~ /\.rdf$/ or
     url =~ /rss$/ or
