@@ -16,7 +16,6 @@ class Feed < ActiveRecord::Base
   has_one :latest_post, :class_name => 'Post', :order => 'id DESC'
   belongs_to :avatar
 
-  validates_uniqueness_of :href
   validates_presence_of :link, :title, :href
   
   before_destroy :destroy_relationship
@@ -47,23 +46,66 @@ class Feed < ActiveRecord::Base
     }
   end
 
-  def Feed.create_from_blog(url)
+  def Feed.create_from_blog(input_url)
     # clean up the url
     begin
-    url = FeedTools::UriHelper.normalize_url(url)
+    input_url = FeedTools::UriHelper.normalize_url(input_url)
     rescue => err
       logger.debug "err: #{err}"
     end
-    if url.nil?
+    if input_url.nil?
       return nil
+    elsif is_rss?(input_url)
+      # Client send rss url
+      doc = Hpricot(open(input_url))
+      doc_link = doc.search("//link:first")
+      # check href in link attribute
+      if !doc_link.text.nil? or !doc_link.text.empty?
+        url_from_rss = doc_link.text
+      else
+        url_from_rss = doc_link.attributes['href'].to_s
+      end
+      # Register new blog if href has been found
+      if !url_from_rss.nil? or !url_from_rss.empty?
+        title = doc.search("//title:first").text
+        # Get charset
+        charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
+        charset = charset[0] if charset.is_a? Array
+        charset = charset.to_s.downcase
+        
+        feed = Feed.find :first, :conditions => ["link LIKE ?", url_from_rss]
+        if feed.nil?
+          begin
+            feed = Feed.create(:href => input_url, 
+                               :link => url_from_rss, 
+                               :title => Feed.format_title(title, charset), 
+                               :avatar_id => 1)
+            # Find duplicate
+            @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
+            if @duplicates.size > 1
+              feed.destroy
+              feed = @duplicates[0] 
+            end
+
+            # Refresh feed to update content and avatar
+            feed.refresh
+
+            # Discover avatar
+            feed.discover_avatar_txt
+          rescue => error
+            logger.error "Error while creating a feed from rss: #{error.message}"
+            return error
+          end
+        end
+      end
     else
       # find existing feed
-      feed = Feed.find :first, :conditions => ["href LIKE ?", url]
+      feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
       
       if feed.nil?
         begin
           # Create new Feed
-          feed = Feed.create(:href => url, :avatar_id => 1)
+          feed = Feed.create(:href => input_url, :avatar_id => 1)
           logger.debug "Feed ID: #{feed.id}"
           
           # Update feed header
@@ -89,23 +131,6 @@ class Feed < ActiveRecord::Base
       
       return feed
     end
-  end
-  
-  def Feed.is_rss?(url)
-    url =~ /\.xml$/ or
-    url =~ /\.rdf$/ or
-    url =~ /rss$/ or
-    url =~ /rss2$/ or
-    url =~ /atom$/ or
-    url =~ /^http:\/\/feeds\.feedburner\.com/ or
-    url =~ /\/?rss=1$/ or
-    url =~ /rss\.php/ or
-    url =~ /rss2\.php/ or
-    url =~ /\/rss\.html$/ or
-    url =~ /\?q=node\/feed$/ or
-    url =~ /\/rss\// or
-    url =~ /\/feed\// or
-    url =~ /\/feeds\//
   end
   
   def Feed.is_opml?(url)
@@ -291,7 +316,7 @@ class Feed < ActiveRecord::Base
         avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
 
         unless avatar_link.nil?
-          avatar_url = avatar_link.readline
+          avatar_url = avatar_link.readline.strip
           avatar_link.close
 
           logger.debug "avatar_url #{avatar_url}"
@@ -421,5 +446,22 @@ class Feed < ActiveRecord::Base
     Bug.destroy_all "feed_id = #{self.id}"
     Post.destroy_all "feed_id = #{self.id}"
     Subscription.destroy_all "feed_id = #{self.id}"
+  end
+  
+  def is_rss?(url)
+    url =~ /\.xml$/ or
+    url =~ /\.rdf$/ or
+    url =~ /rss$/ or
+    url =~ /rss2$/ or
+    url =~ /atom$/ or
+    url =~ /^http:\/\/feeds\.feedburner\.com/ or
+    url =~ /\/?rss=1$/ or
+    url =~ /rss\.php/ or
+    url =~ /rss2\.php/ or
+    url =~ /\/rss\.html$/ or
+    url =~ /\?q=node\/feed$/ or
+    url =~ /\/rss\// or
+    url =~ /\/feed\// or
+    url =~ /\/feeds\//
   end
 end
