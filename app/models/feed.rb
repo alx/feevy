@@ -229,6 +229,7 @@ class Feed < ActiveRecord::Base
           charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
           charset = charset[0] if charset.is_a? Array
           charset = charset.to_s.downcase
+          logger.debug "charset: #{charset}"
           
           unless item.nil?
             # get item url
@@ -254,7 +255,7 @@ class Feed < ActiveRecord::Base
                 description = Post.jumpcut_description(item, post_url)
               # Else normal feed
               else
-                description = Post.format_description(item.search("description|summary|content").text, charset)
+                description = Post.format_description(item.search("description|summary|content|[@type='text']").text, charset)
               end
               logger.debug "description: #{description}"
               # Delete existing post if forced update
