@@ -70,6 +70,24 @@ module TextyHelper
       # Pre-process encoding
       unless text.nil?
         if encoding == 'utf-8'
+          
+          # Some strange caracters to handle
+          text.gsub!("\342\200\176", "\'") # single quote
+          text.gsub!("\342\200\177", "\'") # single quote
+          text.gsub!("\342\200\230", "\'") # single quote
+          text.gsub!("\342\200\231", "\'") # single quote
+          text.gsub!("\342\200\234", "\"") # Double quote, right
+          text.gsub!("\342\200\235", "\"") # Double quote, left
+          text.gsub!("\342\200\242", ".")
+          text.gsub!("\342\202\254", "&euro;"); # Euro symbol
+          text.gsub!(/\S\200\S/, " ") # every strange character send to the moon
+          text.gsub!("\176", "\'") # single quote
+          text.gsub!("\177", "\'") # single quote
+          text.gsub!("\230", "\'") # single quote
+          text.gsub!("\231", "\'") # single quote
+          text.gsub!("\234", "\"") # Double quote
+          text.gsub!("\235", "\"") # Double quote
+          text.gsub!("\223", "-") # Long horizontal bar
           ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
           text = ic.iconv(text + ' ')[0..-2]
         elsif encoding == 'iso-8859-15'
