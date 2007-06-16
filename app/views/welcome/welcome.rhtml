@@ -69,13 +69,22 @@
     <div class="side-b">
       <div class="sin-salto">
         <h3>Development news</h3>
-        <% @rss.entries.each do |entry| -%>
+        <% unless @rss_english.entries[0].nil? -%>
+        <% entry = @rss_english.entries[0] -%>
+        <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
+        <h4><%= entry.title %></h4><br />
+        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
+        <% end -%>
+        
+        <% unless @rss_spanish.entries[0].nil? -%>
+        <% entry = @rss_spanish.entries[0] -%>
         <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
         <h4><%= entry.title %></h4><br />
         <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
         <% end -%>
       </div>
-      <a href="http://blog.feevy.com/">Read Feevy blog</a>
+      <a href="http://blog.feevy.com/">Read Feevy blog in English</a><br/>
+      <a href="http://bitacora.feevy.com/">Read Feevy blog in Spanish</a>
     </div>
   </div>
 </div>
