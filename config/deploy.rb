@@ -125,7 +125,11 @@ end
 
 desc "Restart the mongrel cluster via monit"  
 task :restart_mongrel_cluster, :roles => :app do    
-    sudo "monit -g mongrel restart all"  
+    sudo "/etc/init.d/mongrel_cluser stop"
+    sleep 3
+    sudo "/etc/init.d/mongrel_cluser start"
+    sleep 3
+    sudo "/etc/init.d/httpd restart"
 end
 
 # =============================================================================
