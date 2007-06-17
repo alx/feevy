@@ -23,7 +23,7 @@ class WelcomeController < ApplicationController
     # Get english rss from cache or from net
     unless @rss_english = CACHE.get("rss_english")
       begin
-        @rss_english = SimpleRSS.parse open('http://blog.feevy.com/feed/')
+        @rss_english = SimpleRSS.parse(open('http://blog.feevy.com/feed/')).entries.first
         CACHE.set("rss_english", @rss_english, 60*60)
       rescue
         @rss_english = []
@@ -33,7 +33,7 @@ class WelcomeController < ApplicationController
     # Get spanish rss from cache or from net
     unless @rss_spanish = CACHE.get("rss_spanish")
       begin
-        @rss_spanish = SimpleRSS.parse open('http://bitacora.feevy.com/feed/')
+        @rss_spanish = SimpleRSS.parse(open('http://bitacora.feevy.com/feed/')).entries.first
         CACHE.set("rss_spanish", @rss_spanish, 60*60)
       rescue
         @rss_spanish = []

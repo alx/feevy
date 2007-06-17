@@ -69,18 +69,16 @@
     <div class="side-b">
       <div class="sin-salto">
         <h3>Development news</h3>
-        <% unless @rss_english.entries[0].nil? -%>
-        <% entry = @rss_english.entries[0] -%>
-        <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
-        <h4><%= entry.title %></h4><br />
-        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
+        <% unless @rss_english.nil? -%>
+        <p><%= "#{@rss_english.pubDate.day}.#{@rss_english.pubDate.month}.#{@rss_english.pubDate.year}" %></p><br /> 
+        <h4><%= @rss_english.title %></h4><br />
+        <h5><%= @rss_english.description %> <a href="<%= @rss_english.link %> ">continue</a>.</h5><br /><br /> 
         <% end -%>
         
-        <% unless @rss_spanish.entries[0].nil? -%>
-        <% entry = @rss_spanish.entries[0] -%>
-        <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
-        <h4><%= entry.title %></h4><br />
-        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
+        <% unless @rss_spanish.nil? -%>
+        <p><%= "#{@rss_spanish.pubDate.day}.#{@rss_spanish.pubDate.month}.#{@rss_spanish.pubDate.year}" %></p><br /> 
+        <h4><%= @rss_spanish.title %></h4><br />
+        <h5><%= @rss_spanish.description %> <a href="<%= @rss_spanish.link %> ">continue</a>.</h5><br /><br /> 
         <% end -%>
       </div>
       <a href="http://blog.feevy.com/">Read Feevy blog in English</a><br/>
