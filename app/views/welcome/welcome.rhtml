@@ -70,15 +70,15 @@
       <div class="sin-salto">
         <h3>Development news</h3>
         <% @rss_english.entries.each do |entry| -%>
-        <p><%= "#{@entry.pubDate.day}.#{@entry.pubDate.month}.#{@entry.pubDate.year}" %></p><br /> 
-        <h4><%= @entry.title %></h4><br />
-        <h5><%= @entry.description %> <a href="<%= @entry.link %> ">continue</a>.</h5><br /><br /> 
+        <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
+        <h4><%= entry.title %></h4><br />
+        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
         <% end -%>
         
         <% @rss_spanish.entries.each do |entry| -%>
-        <p><%= "#{@entry.pubDate.day}.#{@entry.pubDate.month}.#{@entry.pubDate.year}" %></p><br /> 
-        <h4><%= @entry.title %></h4><br />
-        <h5><%= @entry.description %> <a href="<%= @entry.link %> ">continue</a>.</h5><br /><br /> 
+        <p><%= "#{entry.pubDate.day}.#{entry.pubDate.month}.#{entry.pubDate.year}" %></p><br /> 
+        <h4><%= entry.title %></h4><br />
+        <h5><%= entry.description %> <a href="<%= entry.link %> ">continue</a>.</h5><br /><br /> 
         <% end -%>
       </div>
       <a href="http://blog.feevy.com/">Read Feevy blog in English</a><br/>
