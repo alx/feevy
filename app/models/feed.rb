@@ -328,12 +328,12 @@ class Feed < ActiveRecord::Base
     begin
       #open avatar url
       Timeout::timeout(30) do
-        if self.href =~ /lacomunidad\.elpais\.com\/.*/
-          elpais_user = self.href.scan(/^.*\.elpais\.com\/(.[^\/]*)/)[0]
-          avatar = Avatar.create(:name => elpais_user, 
-                                 :url => "http://lacomunidad.elpais.com/userfiles/#{elpais_user}/avatar48x48.png")
-          self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
-        else
+        # if self.href =~ /lacomunidad\.elpais\.com\/.*/
+        #   elpais_user = self.href.scan(/^.*\.elpais\.com\/(.[^\/]*)/)[0]
+        #   avatar = Avatar.create(:name => elpais_user, 
+        #                          :url => "http://lacomunidad.elpais.com/userfiles/#{elpais_user}/avatar48x48.png")
+        #   self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
+        # else
           avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
 
           unless avatar_link.nil?
@@ -359,7 +359,7 @@ class Feed < ActiveRecord::Base
                 self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
               end
             end
-          end
+          # end
         end
       end
     rescue Timeout::Error
