@@ -97,14 +97,14 @@ class ApiController < ApplicationController
     if @user.nil? || params[:feed_id].nil? || params[:avatar_url].nil?
       render :nothing => true, :status => 503
     else
-      sub = Subscription.find(params[:feed_id])
+      @sub = Subscription.find(params[:feed_id])
       # Do not change locked feed
-      unless sub.feed.locked_avatar == 1
+      if @sub.feed.avatar_locked != 1
         # Find or create new avatar
-        unless avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
-          avatar = Avatar.create(:url => params[:avatar_url])
+        unless @avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
+          @avatar = Avatar.create(:url => params[:avatar_url])
         end
-        feed.update_attribute avatar_id
+        @sub.update_attribute(:avatar_id, @avatar.id)
       end
       @subscriptions = @user.subscriptions
       render :action => "list_feed"
