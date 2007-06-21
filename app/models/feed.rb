@@ -226,7 +226,7 @@ class Feed < ActiveRecord::Base
         # Get first item
         Timeout::timeout(30) do
           doc = Hpricot(open(link), :xml => true)
-          item = doc.search("item:first|entry:first")
+          item = (doc/"item:first|entry:first")
           # Get charset
           charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
           charset = charset[0] if charset.is_a? Array
@@ -255,9 +255,12 @@ class Feed < ActiveRecord::Base
               # Test if jumpcut feed
               elsif is_jumpcut?
                 description = Post.jumpcut_description(item, post_url)
+              # Test if el pais feed
+              elsif self.href =~ /\.elpais\.com/
+                description = Post.format_description((item/"content:encoded").text, charset)
               # Else normal feed
               else
-                description = Post.format_description(item.search("description|summary|content|[@type='text']").text, charset)
+                description = Post.format_description((item/"description|summary|content|[@type='text']").text, charset)
               end
               logger.debug "description: #{description}"
               # Delete existing post if forced update
