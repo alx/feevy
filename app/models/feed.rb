@@ -181,7 +181,7 @@ class Feed < ActiveRecord::Base
       elsif self.href =~ /\.blogsome\.com/
         rss_link  = doc.search("//link[@type='text/xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
         rss_link = rss_link[0].to_s if rss_link.is_a? Array
-      elsif self.href =~ /\.elpais\.com/
+      elsif self.href =~ /lacomunidad\.elpais\.com/
         if self.href =~ /posts$/
           rss_link = self.href << ".rss"
         elsif self.href =~ /\/$/
@@ -262,7 +262,7 @@ class Feed < ActiveRecord::Base
               elsif is_jumpcut?
                 description = Post.jumpcut_description(item, post_url)
               # Test if el pais feed
-              elsif self.href =~ /\.elpais\.com/
+              elsif self.href =~ /lacomunidad\.elpais\.com/
                 description = Post.format_description((item/"content:encoded").text, charset)
               # Else normal feed
               else
@@ -328,7 +328,7 @@ class Feed < ActiveRecord::Base
     begin
       #open avatar url
       Timeout::timeout(30) do
-        if self.href =~ /\.elpais\.com\/.*/
+        if self.href =~ /lacomunidad\.elpais\.com\/.*/
           elpais_user = self.href.scan(/^.*\.elpais\.com\/(.[^\/]*)/)[0]
           avatar = Avatar.create(:name => elpais_user, 
                                  :url => "http://lacomunidad.elpais.com/userfiles/#{elpais_user}/avatar48x48.png")
