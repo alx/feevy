@@ -114,7 +114,7 @@ class ApiController < ApplicationController
   # ***
   # Tag API
   # ***
-  def edit_tag
+  def edit_tags
     # Expected params: api_key, feed_id, tag_list
     @user = get_api_user
     if @user.nil? || params[:feed_id].nil? || params[:tag_list].nil?
@@ -123,7 +123,7 @@ class ApiController < ApplicationController
       @subscription = Subscription.find(params[:feed_id])
       if params[:tag_list]
         @tag_list = params[:tag_list].gsub(/([^,])\s/, '\1, ')
-        @subscription.update_attribute tag_list, @tag_list
+        @subscription.update_attribute(:tag_list, @tag_list)
       end
       @subscriptions = @user.subscriptions
       render :action => "list_feed"
