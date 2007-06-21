@@ -322,29 +322,36 @@ class Feed < ActiveRecord::Base
     begin
       #open avatar url
       Timeout::timeout(30) do
-        avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
+        if self.href =~ /\.elpais\.com\/.*/
+          elpais_user = self.href.scan(/^.*\.elpais\.com\/(.[^\/]*)/)[0]
+          avatar = Avatar.create(:name => elpais_user, 
+                                 :url => "http://lacomunidad.elpais.com/userfiles/#{elpais_user}/avatar48x48.png")
+          self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
+        else
+          avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
 
-        unless avatar_link.nil?
-          avatar_url = avatar_link.readline.strip
-          avatar_link.close
+          unless avatar_link.nil?
+            avatar_url = avatar_link.readline.strip
+            avatar_link.close
 
-          logger.debug "avatar_url #{avatar_url}"
+            logger.debug "avatar_url #{avatar_url}"
 
-          if (not avatar_url.blank?) and (avatar_url =~ /^http:\/\//)
-            tempfile = Tempfile.new('tmp')
-            tempfile.write open(avatar_url).read
-            tempfile.flush
-            tempfile.close
+            if (not avatar_url.blank?) and (avatar_url =~ /^http:\/\//)
+              tempfile = Tempfile.new('tmp')
+              tempfile.write open(avatar_url).read
+              tempfile.flush
+              tempfile.close
 
-            # Guess file format
-            md = avatar_url.match /\.([^.]+)\z/
-            format = md ? md[1].downcase : nil
+              # Guess file format
+              md = avatar_url.match /\.([^.]+)\z/
+              format = md ? md[1].downcase : nil
 
-            logger.debug "format: #{format}"
+              logger.debug "format: #{format}"
 
-            unless format.nil?
-              avatar = Avatar.create_from_file(tempfile, format.strip)
-              self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
+              unless format.nil?
+                avatar = Avatar.create_from_file(tempfile, format.strip)
+                self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
+              end
             end
           end
         end
