@@ -5,10 +5,13 @@ require 'open-uri'
 #SERVER = "localhost:3000"
 SERVER = "www.feevy.com"
 
+# Set your id for update service stats
+ID = ""
+
 puts "Starting updates..."
 while true
   begin
-    doc = Hpricot(open("http://#{SERVER}/ping/list"), :xml => true)
+    doc = Hpricot(open("http://#{SERVER}/ping/list/#{ID}"), :xml => true)
     (doc/:feed).each do |feed|
       feed_id   = feed.at('id').innerHTML
       feed_rss  = feed.at('rss').innerHTML
@@ -24,8 +27,8 @@ while true
           post_url = link.text
           post_url = link.to_s.scan(/href=['"]?([^'"]*)['" ]/).to_s if (post_url.nil? or post_url.empty?)
         end
-        puts "Old: #{feed_post}"
-        puts "New: #{post_url}"
+        # puts "Old: #{feed_post}"
+        # puts "New: #{post_url}"
         # If url not the same, ping server
         if post_url != feed_post then
           puts "pinging #{feed_id}..."
