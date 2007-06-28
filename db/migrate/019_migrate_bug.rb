@@ -10,8 +10,8 @@ class MigrateBug < ActiveRecord::Migration
       end
     end
     
-    remove_column :feeds, :bogus
-    remove_column :feeds, :bogus_description
+    # remove_column :feeds, :bogus
+    # remove_column :feeds, :bogus_description
   end
 
   def self.down

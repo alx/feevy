@@ -9,10 +9,10 @@ class MigratePost < ActiveRecord::Migration
                   :feed_id => feed.id
     end
     
-    remove_column :feeds, :latest_post_title
-    remove_column :feeds, :latest_post_link
-    remove_column :feeds, :latest_post_description
-    remove_column :feeds, :latest_post_timestamp
+    # remove_column :feeds, :latest_post_title
+    #     remove_column :feeds, :latest_post_link
+    #     remove_column :feeds, :latest_post_description
+    #     remove_column :feeds, :latest_post_timestamp
   end
 
   def self.down

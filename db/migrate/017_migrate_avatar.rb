@@ -31,8 +31,8 @@ class MigrateAvatar < ActiveRecord::Migration
       end
     end
     
-    remove_column :subscriptions, :avatar_url
-    remove_column :subscriptions, :avatar_by_user
+    #remove_column :subscriptions, :avatar_url
+    #remove_column :subscriptions, :avatar_by_user
   end
 
   def self.down
