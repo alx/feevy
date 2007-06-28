@@ -68,8 +68,8 @@ set :repository_cache, "#{shared_path}/svn_trunk/"
 # set :mongrel_address, apache_proxy_address
 # set :mongrel_environment, "production"
 # set :mongrel_config, "/etc/mongrel_cluster/#{application}.conf"
-# set :mongrel_user, user
-# set :mongrel_group, group
+set :mongrel_user, "wwwfeev"
+set :mongrel_group, "wwwfeev"
 
 # =============================================================================
 # MYSQL OPTIONS
