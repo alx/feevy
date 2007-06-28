@@ -232,7 +232,7 @@ class Feed < ActiveRecord::Base
         # Get first item
         Timeout::timeout(30) do
           doc = Hpricot(open(link), :xml => true)
-          item = (doc/"item:first|entry:first")
+          item = (doc/"item|entry").first
           # Get charset
           charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
           charset = charset[0] if charset.is_a? Array
