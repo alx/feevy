@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
   end
   
   def Post.format_title(title, charset='utf-8')
-    clean(convertEncoding(title, charset)).downcase
+    convertEncoding(title, charset).downcase
   end
   
   def Post.format_description(description, charset='utf-8')
