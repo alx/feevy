@@ -17,7 +17,7 @@ while true
       # Read feed rss
       begin
         dist = Hpricot(open(feed.at('rss').innerHTML), :xml => true)
-        item = dist.search("item:first|entry:first")
+        item = dist.search("item|entry").first
         # Get first post url
         link = item.search("link:first")
         unless link.nil?
