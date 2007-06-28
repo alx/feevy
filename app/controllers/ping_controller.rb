@@ -8,8 +8,23 @@ class PingController < ApplicationController
   
   def list
     # Get master Ping offset or create it if nil
-    @ping = Ping.find(:first)
+    @ping = Ping.find(:first, :conditions => ["name like ?", "Master Ping"])
     @ping = Ping.create(:name => "Master Ping", :current_offset => 0) if @ping.nil?
+    
+    # Get user pinger id for satistic purpose
+    pinger_name = params[:id]
+    if !pinger_name.nil? or !pinger_name.empty?
+      unless @pinger = Ping.find(:first, :conditions => ["name = ?", pinger_name])
+        @pinger = Ping.create(:name => pinger_name, :total_count => 1)
+      end
+      @pinger.update_attribute :total_count, @pinger.total_count + 1
+    # If pinger has not specified ID, declare it as unknown
+    else
+      unless @pinger = Ping.find(:first, :conditions => ["name = ?", "unknown"])
+        @pinger = Ping.create(:name => "unknown")
+      end
+      @pinger.update_attribute :total_count, @pinger.total_count + 1
+    end
     
     # If ping server is locked, tell client to wait
     if @ping.lock == 1 then
