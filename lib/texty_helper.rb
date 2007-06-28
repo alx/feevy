@@ -86,10 +86,6 @@ module TextyHelper
           text.gsub!(/\S\200\S/, " ") # every strange character send to the moon
           text.gsub!("\176", "\'") # single quote
           text.gsub!("\177", "\'") # single quote
-          text.gsub!("\230", "\'") # single quote
-          text.gsub!("\231", "\'") # single quote
-          text.gsub!("\234", "\"") # Double quote
-          text.gsub!("\235", "\"") # Double quote
           text.gsub!("\205", "-");		# ISO-Latin1 horizontal elipses (0x85)
           text.gsub!("\221", "\'");	# ISO-Latin1 left single-quote
           text.gsub!("\222", "\'");	# ISO-Latin1 right single-quote
@@ -98,8 +94,11 @@ module TextyHelper
           text.gsub!("\225", "\*");	# ISO-Latin1 bullet
           text.gsub!("\226", "-");		# ISO-Latin1 en-dash (0x96)
           text.gsub!("\227", "-");		# ISO-Latin1 em-dash (0x97)
-          text.gsub!("\230", "~");		# ISO-Latin1 small tilde
+          text.gsub!("\230", "\'") # single quote
+          text.gsub!("\231", "\'") # single quote
           text.gsub!("\233", ">");		# ISO-Latin1 single right angle quote
+          text.gsub!("\234", "\"") # Double quote
+          text.gsub!("\235", "\"") # Double quote
           text.gsub!("\240", " ");		# ISO-Latin1 nonbreaking space
           text.gsub!("\246", "\|");	# ISO-Latin1 broken vertical bar
           text.gsub!("\255", "");		# ISO-Latin1 soft hyphen (0xAD)
@@ -121,13 +120,14 @@ module TextyHelper
           if encoding == 'utf-8'
             text.gsub!(/[\240-\377]/) { |c| "&#%d;" % c[0] }
           elsif encoding == 'iso-8859-15'
-            text.gsub!("&#8217;", "'") # Long horizontal bar
+            text.gsub!("&#8217;", "'")
           end
         end
       rescue  => err
         logger.debug "problem while converting: #{err}"
         text = ""
       end
+      logger.debug "After conversion: #{text}"
       
       text
     end
