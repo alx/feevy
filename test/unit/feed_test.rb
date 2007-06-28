@@ -31,6 +31,12 @@ class FeedTest < Test::Unit::TestCase
   
   def test_create_feed_with_utf8_problems
     test_creation "http://organizandolaesperanza.blogspot.com"
+    test_creation "http://rss.jumpcut.com/rss/user?u_id=DB9EC418FDAF11DB8198000423CEF5F6"
+    test_creation "http://bitacora.feevy.com"
+  end
+  
+  def test_create_feed_with_description_problems
+    test_creation "http://skblackburn.blogspot.com/"
   end
   
   def test_create_feed_from_ianasagasti
@@ -40,7 +46,29 @@ class FeedTest < Test::Unit::TestCase
   end
   
   def test_create_feed_from_pablomancini
-    feed = test_creation "pablomancini.com.ar"
+    feed = test_creation "http://nadapersonal.blogspot.com"
+  end
+  
+  def test_create_feed_from_elpais
+    feed = test_creation "http://lacomunidad.elpais.com/krismontesinos/"
+    feed = test_creation "http://lacomunidad.elpais.com/krismontesinos/posts"
+    feed = test_creation "http://lacomunidad.elpais.com/krismontesinos"
+  end
+  
+  def test_create_feed_with_ecoperiodico
+    test_creation "http://www.ecoperiodico.com/"
+  end
+  
+  def test_create_feed_with_jumpcut
+    test_creation "http://www.jumpcut.com/myhome/?u_id=DB9EC418FDAF11DB8198000423CEF5F6"
+  end
+  
+  def test_create_feed_with_rss
+    test_creation "http://rss.jumpcut.com/rss/user?u_id=DB9EC418FDAF11DB8198000423CEF5F6"
+  end
+  
+  def test_create_feed_from_minijoan
+    feed = test_creation "http://minijoan.vox.com/"
   end
   
   def test_create_feed_from_sombra
