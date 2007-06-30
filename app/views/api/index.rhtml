@@ -5,6 +5,17 @@
 
 <p>IMPORTANT: you need to use POST method to send parameters to API</p>
 
+
+<h3>view_key</h3>
+<p>Display the key of the requested user
+  <ul>
+    <li>URL: <em>http://www.feevy.com/api/view_key</em></li>
+    <li>parameters: <em>user_email</em>; <em>user_password</em></li>
+    <li>returns: <em>api_key</em></li>
+    <li>errors: <em>500</em> when user_email/user_password is not valid</li>
+  </ul>
+</p>
+
 <h3>verify_key</h3>
 <p>You'll need a valid API key to use the API methods, you can use this method to verify the API key and fetch the username associated to this key
   <ul>
@@ -29,7 +40,7 @@
 <p>Use this method to add a blog in your Feevy
 <ul>
   <li>URL: <em>http://www.feevy.com/api/add_feed</em></li>
-  <li>parameters: <em>api_key</em>; <em>url</em> <- blog url</li>
+  <li>parameters: <em>api_key</em>; <em>url</em> &lt;- blog url</li>
   <li>returns:</li>
   <li>errors: <em>500</em> when api_key is not valid</li>
 </ul>
