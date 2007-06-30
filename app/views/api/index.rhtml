@@ -51,17 +51,41 @@
 <p>Use this method to delete a feed from your Feevy
 <ul>
   <li>URL: <em>http://www.feevy.com/api/delete_feeds</em></li>
-  <li>parameters: <em>api_key</em>; <em>feeds_id</em> <- one or many feed id separated by a '+' symbol</li>
+  <li>parameters: <em>api_key</em>; <em>feeds_id</em> &lt;- one or many feed id separated by a '+' symbol</li>
   <li>returns:</li>
   <li>errors: <em>500</em> when api_key is not valid</li>
 </ul>
 </p>
 
 <h3>edit_tags</h3>
+<p>Modify tag list of selected subscription
+<ul>
+  <li>URL: <em>http://www.feevy.com/api/edit_tags</em></li>
+  <li>parameters: <em>api_key</em>; <em>feed_id</em>; <em>tag_list</em> &lt;- one or many feed id separated by a '+' symbol</li>
+  <li>returns:</li>
+  <li>errors: <em>500</em> when api_key is not valid</li>
+</ul>
+</p>
 
 <h3>edit_avatar</h3>
+<p>Modify avatar url of selected subscription
+<ul>
+  <li>URL: <em>http://www.feevy.com/api/edit_avatar</em></li>
+  <li>parameters: <em>api_key</em>; <em>feed_id</em>; <em>avatar_url</em></li>
+  <li>returns:</li>
+  <li>errors: <em>500</em> when api_key is not valid</li>
+</ul>
+</p>
 
 <h3>register_user</h3>
+<p>Register a new user
+<ul>
+  <li>URL: <em>http://www.feevy.com/api/register_user</em></li>
+  <li>parameters: <em>api_key</em>; <em>user_email</em>; <em>user_password</em></li>
+  <li>returns:</li>
+  <li>errors: <em>500</em> when api_key is not valid</li>
+</ul>
+</p>
 
 <h2 id='xml_description'>Feevy xml desription</h2>
 
