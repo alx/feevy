@@ -244,7 +244,10 @@ class Feed < ActiveRecord::Base
               # Test if picasa feed
               if is_picasa?
                 description = Post.picasa_description(item, post_url)
-              # Test if picasa feed
+              # Test if fotolog feed
+              elsif is_fotolog?
+                description = Post.fotolog_description(item, post_url)
+              # Test if flickr feed
               elsif is_flickr?
                 description = Post.flickr_description(item, post_url)
               # Test if google video feed
@@ -289,9 +292,14 @@ class Feed < ActiveRecord::Base
     link =~ /http:\/\/api\.flickr\.com/
   end
   
-  # Return true if feed is a flickr feed
+  # Return true if feed is a picasa feed
   def is_picasa?
     link =~ /http:\/\/picasaweb\.google\.com/
+  end
+  
+  # Return true if feed is a fotolog feed
+  def is_fotolog?
+    link =~ /\.fotolog\.com/
   end
   
   # Return true if feed is a google video feed
