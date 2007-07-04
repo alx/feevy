@@ -56,6 +56,7 @@ class Feed < ActiveRecord::Base
     if input_url.nil?
       return nil
     elsif is_rss?(input_url)
+      logger.debug "is_rss"
       # Client send rss url
       doc = Hpricot(open(input_url), :xml => true)
       doc_link = (doc/"link").first
@@ -483,7 +484,8 @@ class Feed < ActiveRecord::Base
     url =~ /\?q=node\/feed$/ or
     url =~ /\/rss\// or
     url =~ /\/feed\// or
-    url =~ /\/feeds\//
+    url =~ /\/feeds\// or
+    url =~ /\/feed$/
   end
   
   private
