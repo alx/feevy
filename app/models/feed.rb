@@ -427,6 +427,7 @@ class Feed < ActiveRecord::Base
       @duplicates.each do |duplicate|
         Subscription.find(:all, :conditions => ["feed_id = ?", duplicate.id]).each {|sub| sub.update_attribute :feed_id, feed.id}
         Post.find(:all, :conditions => ["feed_id = ?", duplicate.id]).each {|post| post.update_attribute :feed_id, feed.id}
+        @feeds.delete(duplicate)
         deleted_feeds << duplicate.link
         duplicate.destroy
       end
