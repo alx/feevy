@@ -177,6 +177,12 @@ class Feed < ActiveRecord::Base
           rss_link = rss_link << "/"
         end
         rss_link = rss_link << "feed/main/rss20"
+      elsif self.href =~ /\.bloger\.hr/ and self.href !~ /rss/
+        rss_link = self.href
+        if rss_link !~ /\/$/
+          rss_link = rss_link << "/"
+        end
+        rss_link = rss_link << "rss/"
       elsif self.href =~ /\.blogsome\.com/
         rss_link  = doc.search("//link[@type='text/xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
         rss_link = rss_link[0].to_s if rss_link.is_a? Array
