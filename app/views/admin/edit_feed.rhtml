@@ -11,6 +11,14 @@
 </table>
 
 <p>
+	<h3>Latest post:</h3>
+	<ul>
+		<li>Title: <%= @feed.latest_post.title %></li>
+		<li>Description: <%= @feed.latest_post.description %></li>
+		<li>Url: <a href="<%= @feed.latest_post.url %>"><%= @feed.latest_post.url %></a></li>
+	</ul>
+</p>
+<p>
   Errors: <%= @feed.bugs.count %><br/>
   <% @feed.bugs.each do |bug| -%>
     <%= bug.description %> at <b><%= bug.created_at %></b><br/><br/>
