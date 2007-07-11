@@ -59,6 +59,7 @@ require 'simple-rss'
 require 'open-uri'
 require 'timeout'
 require 'cached_model'
+include Globalize
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
@@ -68,7 +69,7 @@ ActionMailer::Base.server_settings = {
   :domain  => 'www.feevy.com',
   :authentication => :login,
   :user_name => 'error+feevy.com',
-  :password => 'feevy'
+  :password => 'error'
 }
 
 FEEVY_URL = "http://www.feevy.com/"
