@@ -44,6 +44,53 @@ Rails::Initializer.run do |config|
   config.logger = Hodel3000CompliantLogger.new(config.log_path)
 end
 
+# configure Globalize plugin with default language
+include Globalize
+# eo-EO lang
+Locale.set('eo-EO')
+Locale.set_translation 'read more',               'legu pli'
+Locale.set_translation 'Feevy is a free service', 'Feevy estas senpaga servo'
+Locale.set_translation 'Get yours',               'Obtenu vian'
+# es-BA lang
+Locale.set('es-BA')
+Locale.set_translation 'read more',               'gehiago irakurri'
+Locale.set_translation 'Feevy is a free service', 'Feevy zerbitzu librea da'
+Locale.set_translation 'Get yours',               'eskuratu zure iturriak'
+# es-CAT lang
+Locale.set('es-CAT')
+Locale.set_translation 'read more',               'llegeix m&eacute;s'
+Locale.set_translation 'Feevy is a free service', 'Feevy &eacute;s un servei gratu&iuml;t'
+Locale.set_translation 'Get yours',               'Aconsegueix el teu'
+# es-ES lang
+Locale.set('es-ES')
+Locale.set_translation 'read more',               'leer mas'
+Locale.set_translation 'Feevy is a free service', 'Feevy is a free service'
+Locale.set_translation 'Get yours',               'Get yours'
+# es-EU lang
+Locale.set('es-EU')
+Locale.set_translation 'read more',               'irakurri gehiago'
+Locale.set_translation 'Feevy is a free service', 'Feevy doan da'
+Locale.set_translation 'Get yours',               'egin zurea'
+# es-AR lang
+Locale.set('es-AR')
+Locale.set_translation 'read more',               'segu&iacute; leyendo'
+Locale.set_translation 'Feevy is a free service', 'Feevy es un servicio gratuito'
+Locale.set_translation 'Get yours',               'consegu&iacute; el tuyo'
+# fr-FR lang
+Locale.set('fr-FR')
+Locale.set_translation 'read more',               'lire plus'
+Locale.set_translation 'Feevy is a free service', 'Feevy est un service gratuit'
+Locale.set_translation 'Get yours',               'cr&eacute;e le tiens'
+# pt-PT lang
+Locale.set('pt-PT')
+Locale.set_translation 'read more',               'leia mais'
+Locale.set_translation 'Feevy is a free service', 'Feevy &eacute; um serviço livre'
+Locale.set_translation 'Get yours',               'tenha tamb&eacute;m o seu!'
+# Set default language
+Locale.set_base_language('en-US')
+
+include HTMLEntities
+
 # Add new inflection rules using the following format 
 # (all these examples are active by default):
 # Inflector.inflections do |inflect|
@@ -59,7 +106,6 @@ require 'simple-rss'
 require 'open-uri'
 require 'timeout'
 require 'cached_model'
-include Globalize
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
