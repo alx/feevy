@@ -18,7 +18,11 @@ class Post < ActiveRecord::Base
   end
   
   def Post.format_description(description, charset='utf-8')
-    description = HTMLEntities.decode_entities(description) if description.include? "&lt;"
+    if description.include? "&lt;"
+      description = HTMLEntities.decode_entities(description)
+    else
+      description = HTMLEntities.encode_entities(description, :basic, :named, :decimal)
+    end
     description = clean(convertEncoding(description, charset), 200) unless description.blank?
     description.gsub!(/((https?:\/\/)?www\.[^\s]*)/, '[<a href=\'\1\'>link</a>]') unless description.blank?
     description.strip
