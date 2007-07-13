@@ -56,9 +56,9 @@ module ManageHelper
             ["eo-EO",   "esperanto"], 
             ["es-AR",   "argentinian"], 
             ["es-CAT",  "catalan"],
-            ["es-EU",   "euskera"],
-            ["es-BA",   "basque"],
             ["es-ES",   "spanish"],
+            ["es-EU",   "euskera"],
+            ["eu-BA",   "basque"],
             ["fr-FR",   "french"],
             ["pt-PT",   "portuguese"]]
             

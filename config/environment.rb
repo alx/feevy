@@ -52,7 +52,7 @@ Locale.set_translation 'read more',               'legu pli'
 Locale.set_translation 'Feevy is a free service', 'Feevy estas senpaga servo'
 Locale.set_translation 'Get yours',               'Obtenu vian'
 # es-BA lang
-Locale.set('es-BA')
+Locale.set('eu-BA')
 Locale.set_translation 'read more',               'gehiago irakurri'
 Locale.set_translation 'Feevy is a free service', 'Feevy zerbitzu librea da'
 Locale.set_translation 'Get yours',               'eskuratu zure iturriak'
