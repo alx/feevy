@@ -56,7 +56,7 @@ module ManageHelper
             ["eo-EO",   "esperanto"], 
             ["es-AR",   "argentinian"], 
             ["es-CAT",  "catalan"],
-            ["es-EU",   "euskara"],
+            ["es-EU",   "euskera"],
             ["es-BA",   "basque"],
             ["fr-FR",   "french"],
             ["pt-PT",   "portuguese"]]
@@ -65,7 +65,7 @@ module ManageHelper
     select <<  "<select name='lang' id='lang'>"
     lang.each do |code, description|
       selected = true if current == code
-      select << option_lang(code, description, selected)
+      select << option_lang(code, code, selected)
     end
     select <<  "</select>"
     select << observe_field("lang",
