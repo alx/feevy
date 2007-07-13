@@ -52,21 +52,21 @@ module ManageHelper
   end
   
   def select_lang(current)
-    lang = [["en-EN",   "english"],
-            ["eo-EO",   "esperanto"], 
-            ["es-AR",   "argentinian"], 
-            ["es-CAT",  "catalan"],
-            ["es-ES",   "spanish"],
-            ["es-EU",   "euskera"],
-            ["eu-BA",   "basque"],
-            ["fr-FR",   "french"],
-            ["pt-PT",   "portuguese"]]
+    lang = [["en-EN",   "English"],
+            ["eo-EO",   "Esperanto"], 
+            ["es-AR",   "Spanish (Argentina)"], 
+            ["es-ES",   "Spanish (Spain)"],
+            ["es-CAT",  "Catalonian"],
+            ["eu-BA",   "Euskera (BA)"],
+            ["es-EU",   "Euskera (EU)"],
+            ["fr-FR",   "French"],
+            ["pt-PT",   "Portuguese"]]
             
-    select = "Choose language:"
+    select = "Choose language:&nbsp;"
     select <<  "<select name='lang' id='lang'>"
     lang.each do |code, description|
       selected = true if current == code
-      select << option_lang(code, code, selected)
+      select << option_lang(code, description, selected)
     end
     select <<  "</select>"
     select << observe_field("lang",
