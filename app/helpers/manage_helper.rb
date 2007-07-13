@@ -58,6 +58,7 @@ module ManageHelper
             ["es-CAT",  "catalan"],
             ["es-EU",   "euskera"],
             ["es-BA",   "basque"],
+            ["es-ES",   "spanish"],
             ["fr-FR",   "french"],
             ["pt-PT",   "portuguese"]]
             
