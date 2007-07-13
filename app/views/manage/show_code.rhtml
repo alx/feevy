@@ -25,7 +25,11 @@
                :url => {:controller => "manage", :action => "display_feevy_code"},
                :with => "'style='+ escape($('style').value)",
                :update => "feevy_code" %>
-        </p><p></p>
+        </p>
+		<p class='code_control'>
+			<%= select_lang(@user.opt_lang) %>
+		</p>
+		<p></p>
         <p></p>
       </div>
       <b class="xbottom"><b class="xb4z"></b><b class="xb3z"></b><b class="xb2z"></b><b class="xb1z"></b></b>

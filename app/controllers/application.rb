@@ -4,7 +4,7 @@ require 'auth_system'
 class ApplicationController < ActionController::Base
     include AuthSystem
     helper :auth
-    before_filter :app_config, :ident
+    before_filter :app_config, :ident, :set_charset
     service :notification
 
     # Used to be able to leave out the action
@@ -19,4 +19,11 @@ class ApplicationController < ActionController::Base
       @app
     end
     helper_method :this_auth
+    
+    def set_charset
+        content_type = headers["Content-Type"] || "text/html" 
+        if /^text\//.match(content_type)
+          headers["Content-Type"] = "#{content_type}; charset=utf-8" 
+        end
+    end
 end

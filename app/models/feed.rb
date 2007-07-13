@@ -49,9 +49,10 @@ class Feed < ActiveRecord::Base
   def Feed.create_from_blog(input_url)
     # clean up the url
     begin
-    input_url = FeedTools::UriHelper.normalize_url(input_url)
+      logger.debug "input_url: #{input_url}"
+      input_url = FeedTools::UriHelper.normalize_url(input_url)
     rescue => err
-      logger.debug "err: #{err}"
+      logger.debug "error on input_url: #{err.class}: #{err.message}#$/\n#{err.backtrace.join($/)}"
     end
     if input_url.nil?
       return nil

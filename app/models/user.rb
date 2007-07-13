@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
     cache_key = "entries_#{self.id}"
     cache_key << "_#{tags}" if tags
     
+    logger.debug "language: #{self.opt_lang}"
+    Locale.clear_cache
+    Locale.set self.opt_lang
+    
     # Get entries from cache or generate entries if not found
     unless @entries = CACHE.get(cache_key)
       @entries = []

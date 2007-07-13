@@ -51,21 +51,34 @@ module ManageHelper
     "<option value='#{value}' #{selection}>#{string}</option>"
   end
   
-  def select_lang()
-    select = "<p>Choose displayed language: 
-      <select name='lang' id='lang'>
-        <option value='en-EN'>english</option>
-        <option value='eo-EO'>esperanto</option>
-        <option value='es-AR'>argentinian</option>
-        <option value='es-CAT'>catalonian</option>
-        <option value='es-EU'>basque euskara</option>
-        <option value='fr-FR'>french</option>
-        <option value='pt-PT'>portuguese</option>
-      </select>"
+  def select_lang(current)
+    lang = [["en-EN",   "english"],
+            ["eo-EO",   "esperanto"], 
+            ["es-AR",   "argentinian"], 
+            ["es-CAT",  "catalan"],
+            ["es-EU",   "euskara"],
+            ["es-BA",   "basque"],
+            ["fr-FR",   "french"],
+            ["pt-PT",   "portuguese"]]
+            
+    select = "Choose language:"
+    select <<  "<select name='lang' id='lang'>"
+    lang.each do |code, description|
+      selected = true if current == code
+      select << option_lang(code, description, selected)
+    end
+    select <<  "</select>"
     select << observe_field("lang",
               :url => {:controller => "manage", :action => "choose_user_lang"},
               :with => "'lang='+ escape($('lang').value)")
-    select << "</p>"
     select
+  end
+  
+  def option_lang(code, description, selected = false)
+    option = "<option value='#{code}' "
+    if selected
+      option << "selected"
+    end
+    option << ">#{description}</option>"
   end
 end
