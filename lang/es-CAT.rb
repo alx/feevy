@@ -1,6 +1,5 @@
 # es-CAT lang file
-Localization.define('es-CAT') do |l|
-  l.store "read_more",    "llegeix més"
-  l.store "free_service", "Feevy és un servei gratuït"
-  l.store "get_yours",    "Aconsegueix el teu"
-end
+Locale.set('es-CAT')
+Locale.set_translation 'read more',               'llegeix m&eacute;s'
+Locale.set_translation 'Feevy is a free service', 'Feevy &eacute;s un servei gratu&iuml;t'
+Locale.set_translation 'Get yours',               'Aconsegueix el teu'

@@ -1,6 +1,5 @@
 # eo-EO lang file
-Localization.define('eo-EO') do |l|
-  l.store "read_more",    "legu pli"
-  l.store "free_service", "Feevy estas senpaga servo"
-  l.store "get_yours",    "Obtenu vian"
-end
+Locale.set('eo-EO')
+Locale.set_translation 'read more',               'legu pli'
+Locale.set_translation 'Feevy is a free service', 'Feevy estas senpaga servo'
+Locale.set_translation 'Get yours',               'Obtenu vian'

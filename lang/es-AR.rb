@@ -1,6 +1,5 @@
 # es-AR lang file
-Localization.define('es-AR') do |l|
-  l.store "read_more",    "seguí leyendo"
-  l.store "free_service", "Feevy es un servicio gratuito"
-  l.store "get_yours",    "conseguí el tuyo"
-end
+Locale.set('es-AR')
+Locale.set_translation 'read more',               'seguí leyendo'
+Locale.set_translation 'Feevy is a free service', 'Feevy es un servicio gratuito'
+Locale.set_translation 'Get yours',               'conseguí el tuyo'

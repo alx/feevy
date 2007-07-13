@@ -1,6 +1,5 @@
 # pt-PT lang file
-Localization.define('pt-PT') do |l|
-  l.store "read_more",    "leia mais"
-  l.store "free_service", "Feevy é um serviço livre"
-  l.store "get_yours",    "tenha também o seu!"
-end
+Locale.set('pt-PT')
+Locale.set_translation 'read more',               'leia mais'
+Locale.set_translation 'Feevy is a free service', 'Feevy é um serviço livre'
+Locale.set_translation 'Get yours',               'tenha também o seu!'

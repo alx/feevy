@@ -1,6 +1,5 @@
 # es-ES lang file
-Localization.define('es-ES') do |l|
-  l.store "read_more",    "Read More"
-  l.store "free_service", "Feevy is a free service"
-  l.store "get_yours",    "Get yours"
-end
+Locale.set('es-ES')
+Locale.set_translation 'read more',               'leer mas'
+Locale.set_translation 'Feevy is a free service', 'Feevy is a free service'
+Locale.set_translation 'Get yours',               'Get yours'
