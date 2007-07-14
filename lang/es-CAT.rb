@@ -1,5 +1,5 @@
 # es-CAT lang file
 Locale.set('es-CAT')
-Locale.set_translation 'read more',               'Llegeix m&eacute;s'
-Locale.set_translation 'Feevy is a free service', 'Feevy &eacute;s un servei lliure i gratu&iuml;t'
-Locale.set_translation 'Get yours',               'Aconsegueix el teu'
+Locale.set_translation 'read more',               'Segueix llegint'
+Locale.set_translation 'Feevy is a free service', 'Feevy es un servei lliure i gratuït'
+Locale.set_translation 'Get yours',               'Fes el teu'
