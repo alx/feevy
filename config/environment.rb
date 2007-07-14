@@ -64,7 +64,7 @@ Locale.set_translation 'Get yours',               'Aconsegueix el teu'
 # es-ES lang
 Locale.set('es-ES')
 Locale.set_translation 'read more',               'segu&iacute; leyendo'
-Locale.set_translation 'Feevy is a free service', 'Feevy es un servicio gratuito'
+Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Haz el tuyo'
 # es-EU lang
 Locale.set('es-EU')
@@ -74,7 +74,7 @@ Locale.set_translation 'Get yours',               'egin zurea'
 # es-AR lang
 Locale.set('es-AR')
 Locale.set_translation 'read more',               'Leer m&aacute;s'
-Locale.set_translation 'Feevy is a free service', 'Feevy es un servicio gratuito'
+Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Hac&eacute; el tuyo'
 # fr-FR lang
 Locale.set('fr-FR')
