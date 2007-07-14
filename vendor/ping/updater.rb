@@ -6,7 +6,7 @@ require 'open-uri'
 SERVER = "www.feevy.com"
 
 # Set your id for update service stats
-ID = ""
+ID = "david"
 
 puts "Starting updates..."
 while true
