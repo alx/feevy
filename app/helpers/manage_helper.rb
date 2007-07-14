@@ -53,14 +53,14 @@ module ManageHelper
   
   def select_lang(current)
     lang = [["en-EN",   "English"],
-            ["eo-EO",   "Esperanto"], 
-            ["es-AR",   "Spanish (Argentina)"], 
-            ["es-ES",   "Spanish (Spain)"],
-            ["es-CAT",  "Catalan"],
-            ["eu-BA",   "Euskera (BA)"],
-            ["es-EU",   "Euskera (EU)"],
-            ["fr-FR",   "French"],
-            ["pt-PT",   "Portuguese"]]
+            ["esperanto",   "Esperanto"], 
+            ["espanol-tu",   "Espa&ntilde;ol (de t&uacute;)"], 
+            ["espanol-vos",   "Espa&ntilde;ol (de vos)"],
+	    ["espanol-vd",   "Espa&ntilde;ol (de usted)"],
+            ["catala",  "Catal&agrave;"],
+            ["euskara",   "Euskara"],
+            ["francais",   "Fran&ccedil;ais"],
+            ["portugues",   "Portugu&ecirc;s"]]
             
     select = "Choose language:&nbsp;"
     select <<  "<select name='lang' id='lang'>"
