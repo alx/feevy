@@ -60,7 +60,7 @@ module HTMLEntities
       'sbquo'     => 8218,      'ldquo'     => 8220,      'rdquo'     => 8221,
       'bdquo'     => 8222,      'dagger'    => 8224,      'Dagger'    => 8225,
       'hellip'    => 8230,      'permil'    => 8240,      'lsaquo'    => 8249,
-      'rsaquo'    => 8250,      'euro'      => 8364 
+      'rsaquo'    => 8250,      'euro'      => 8364,      'rsaquo'    => 8243
     }
 
     MIN_LENGTH = MAP.keys.map{ |a| a.length }.min
