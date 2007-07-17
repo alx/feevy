@@ -1,4 +1,4 @@
-# Be sure to restart your web server when you modify this file.
+ #Be sure to restart your web server when you modify this file.
 
 # Uncomment below to force Rails into production mode when 
 # you don't control web/app server and can't set it the proper way
@@ -46,46 +46,51 @@ end
 
 # configure Globalize plugin with default language
 include Globalize
-# esperantolang file
-Locale.set('esperanto')
-Locale.set_translation 'read more',               'Legu pli'
+# eo-EO lang
+Locale.set('eo-EO')
+Locale.set_translation 'read more',               'legu pli'
 Locale.set_translation 'Feevy is a free service', 'Feevy estas senpaga servo'
-Locale.set_translation 'Get yours',               'Akiru vian'
-# euskara lang file
-Locale.set('euskara')
-Locale.set_translation 'read more',               'Gehiago irakurri'
-Locale.set_translation 'Feevy is a free service', 'Feevy aske eta doan da.'
-Locale.set_translation 'Get yours',               'Zurea egin'
-# catala lang file
-Locale.set('catala')
-Locale.set_translation 'read more',               'Segueix llegint'
-Locale.set_translation 'Feevy is a free service', 'Feevy es un servei lliure i gratu&iuml;t'
-Locale.set_translation 'Get yours',               'Fes el teu'
-# espanol-tu lang file
-Locale.set('espanol-tu')
-Locale.set_translation 'read more',               'Sigue leyendo'
+Locale.set_translation 'Get yours',               'Obtenu vian'
+# es-BA lang
+Locale.set('eu-BA')
+Locale.set_translation 'read more',               'gehiago irakurri'
+Locale.set_translation 'Feevy is a free service', 'Feevy zerbitzu librea da'
+Locale.set_translation 'Get yours',               'eskuratu zure iturriak'
+# es-CAT lang
+Locale.set('es-CAT')
+Locale.set_translation 'read more',               'llegeix m&eacute;s'
+Locale.set_translation 'Feevy is a free service', 'Feevy &eacute;s un servei gratu&iuml;t'
+Locale.set_translation 'Get yours',               'Aconsegueix el teu'
+# es-ES lang
+Locale.set('es-ES')
+Locale.set_translation 'read more',               'segu&iacute; leyendo'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Haz el tuyo'
-# espanol-vd lang file
-Locale.set('espanol-vd')
-Locale.set_translation 'read more',               'Siga leyendo'
-Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
-Locale.set_translation 'Get yours',               'Haga el suyo'
-# espanol-vos lang file
-Locale.set('espanol-vos')
-Locale.set_translation 'read more',               'Segu&iacute; leyendo'
+# es-EU lang
+Locale.set('es-EU')
+Locale.set_translation 'read more',               'irakurri gehiago'
+Locale.set_translation 'Feevy is a free service', 'Feevy doan da'
+Locale.set_translation 'Get yours',               'egin zurea'
+# es-AR lang
+Locale.set('es-AR')
+Locale.set_translation 'read more',               'Leer m&aacute;s'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Hac&eacute; el tuyo'
-# francais lang file
-Locale.set('francaise')
+# es-GAL lang
+Locale.set('es-GAL')
+Locale.set_translation 'read more',               'Sigue lendo'
+Locale.set_translation 'Feevy is a free service', 'Feevy &eacute; un servizo libre e gratuito'
+Locale.set_translation 'Get yours',               'Fai o teu'
+# fr-FR lang
+Locale.set('fr-FR')
 Locale.set_translation 'read more',               'lire plus'
-Locale.set_translation 'Feevy is a free service', 'Feevy est un service libre et gratuit'
-Locale.set_translation 'Get yours',               'Cr&eacute;e le tiens'
-# pt-PT lang file
-Locale.set('portugues')
-Locale.set_translation 'read more',               'Leia mais'
+Locale.set_translation 'Feevy is a free service', 'Feevy est un service gratuit'
+Locale.set_translation 'Get yours',               'cr&eacute;e le tiens'
+# pt-PT lang
+Locale.set('pt-PT')
+Locale.set_translation 'read more',               'leia mais'
 Locale.set_translation 'Feevy is a free service', 'Feevy &eacute; um serviço livre'
-Locale.set_translation 'Get yours',               'Tenha tamb&eacute;m o seu!'
+Locale.set_translation 'Get yours',               'tenha tamb&eacute;m o seu!'
 # Set default language
 Locale.set_base_language('en-US')
 
