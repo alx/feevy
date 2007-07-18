@@ -36,7 +36,6 @@
     <%= observe_field "display_feevy", 
                       :url => {:controller => "manage", :action => "update_opt_display_sub"},
                       :with => "'display_feevy='+ escape($('display_feevy').value)" %>
-	<p><%= select_lang(@user.opt_lang) %></p>
     <!-- add blog partial -->
     <%= render :partial => 'add_blog', :locals => {:position => 'top'} %>
     
