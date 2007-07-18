@@ -66,6 +66,11 @@ Locale.set('es-ES')
 Locale.set_translation 'read more',               'segu&iacute; leyendo'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Haz el tuyo'
+# es-USTED lang
+Locale.set('es-USTED')
+Locale.set_translation 'read more',               'Siga leyendo'
+Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
+Locale.set_translation 'Get yours',               'Haga el tuyo'
 # es-EU lang
 Locale.set('es-EU')
 Locale.set_translation 'read more',               'irakurri gehiago'

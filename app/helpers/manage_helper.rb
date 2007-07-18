@@ -56,7 +56,7 @@ module ManageHelper
             ["eo-EO",   "Esperanto"], 
             ["es-AR",   "Espa&ntilde;ol (de t&uacute;)"], 
             ["es-ES",   "Espa&ntilde;ol (de vos)"],
-	          ["es-ES",   "Espa&ntilde;ol (de usted)"],
+	          ["es-USTED",   "Espa&ntilde;ol (de usted)"],
             ["es-CAT",  "Catal&agrave"],
             ["eu-BA",   "Euskara"],
             ["es-GAL",  "Galego"],
