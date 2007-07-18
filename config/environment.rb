@@ -61,12 +61,12 @@ Locale.set('es-CAT')
 Locale.set_translation 'read more',               'llegeix m&eacute;s'
 Locale.set_translation 'Feevy is a free service', 'Feevy &eacute;s un servei gratu&iuml;t'
 Locale.set_translation 'Get yours',               'Aconsegueix el teu'
-# es-ES lang
-Locale.set('es-ES')
-Locale.set_translation 'read more',               'segu&iacute; leyendo'
+# es-AR lang (vos) 
+Locale.set('es-AR')
+Locale.set_translation 'read more',               'Segu&iacute; leyendo'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
-Locale.set_translation 'Get yours',               'Haz el tuyo'
-# es-USTED lang
+Locale.set_translation 'Get yours',               'Hac&eacute; el tuyo'
+# es-UST lang (usted)
 Locale.set('es-UST')
 Locale.set_translation 'read more',               'Siga leyendo'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
@@ -76,11 +76,11 @@ Locale.set('es-EU')
 Locale.set_translation 'read more',               'irakurri gehiago'
 Locale.set_translation 'Feevy is a free service', 'Feevy doan da'
 Locale.set_translation 'Get yours',               'egin zurea'
-# es-AR lang
-Locale.set('es-AR')
-Locale.set_translation 'read more',               'Leer m&aacute;s'
+# es-AR lang (tu)
+Locale.set('es-ES')
+Locale.set_translation 'read more',               'Sigue leyendo'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
-Locale.set_translation 'Get yours',               'Hac&eacute; el tuyo'
+Locale.set_translation 'Get yours',               'Haz el tuyo'
 # es-GAL lang
 #Locale.set('es-GAL')
 #Locale.set_translation 'read more',               'Sigue lendo'
