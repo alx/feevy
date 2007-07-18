@@ -82,10 +82,10 @@ Locale.set_translation 'read more',               'Leer m&aacute;s'
 Locale.set_translation 'Feevy is a free service', 'Feevy es libre y gratuito'
 Locale.set_translation 'Get yours',               'Hac&eacute; el tuyo'
 # es-GAL lang
-Locale.set('es-GAL')
-Locale.set_translation 'read more',               'Sigue lendo'
-Locale.set_translation 'Feevy is a free service', 'Feevy &eacute; un servizo libre e gratuito'
-Locale.set_translation 'Get yours',               'Fai o teu'
+#Locale.set('es-GAL')
+#Locale.set_translation 'read more',               'Sigue lendo'
+#Locale.set_translation 'Feevy is a free service', 'Feevy &eacute; un servizo libre e gratuito'
+#Locale.set_translation 'Get yours',               'Fai o teu'
 # fr-FR lang
 Locale.set('fr-FR')
 Locale.set_translation 'read more',               'lire plus'

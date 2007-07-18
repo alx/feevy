@@ -59,7 +59,6 @@ module ManageHelper
 	          ["es-UST",   "Espa&ntilde;ol (de usted)"],
             ["es-CAT",  "Catal&agrave"],
             ["eu-BA",   "Euskara"],
-            ["es-GAL",  "Galego"],
             ["fr-FR",   "Fran&ccedil;ais"],
             ["pt-PT",   "Portugu&ecirc;s"]]
             
