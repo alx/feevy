@@ -11,7 +11,7 @@
 <h1><a href=\"<%= post[:post_url] %>\"><%= url_escape(post[:title]) %></a></h1>
 </div>
 <div class=\"feevy_content\">
-<%= url_escape(post[:texto]) %>&nbsp;<a href=\"<%= post[:post_url] %>\"><%= "read more".t %></a>
+<%= url_escape(post[:texto]) %>&nbsp;<a href=\"<%= post[:post_url] %>\">read more</a>
 </div>
 <a class=\"blog_url\" href=\"<%= post[:blog_url] %>\"><%= url_escape(post[:name]) %></a>
 <br/>
@@ -20,7 +20,7 @@
 </div>
 <% end -%>
 <% end -%>
-<div class=\"footer\"><%= "Feevy is a free service".t %> <a href=\"http://www.feevy.com\"><%= "Get yours".t %></a></div>
+<div class=\"footer\">Feevy is a free service <a href=\"http://www.feevy.com\">Get yours</a></div>
 </div>
 <b class=\"bar_bottom\"><b class=\"bar_round_4\"></b><b class=\"bar_round_3\"></b><b class=\"bar_round_2\"></b><b class=\"bar_round_1\"></b></b>
 </div>
