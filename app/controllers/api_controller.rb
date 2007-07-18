@@ -153,13 +153,16 @@ class ApiController < ApplicationController
   end
   
   def user_options
-    # Expected params: api_key, user_mail, displayed_feeds
+    # Expected params: api_key, user_mail, displayed_feeds, lang
     @user = get_api_user
     if @user.nil?
       render :nothing => true, :status => 503
     else
       unless params[:user_mail].nil?
         @user.update_attribute :email, params[:user_mail]
+      end
+      unless params[:lang].nil?
+        @user.update_attribute :opt_lang, params[:lang]
       end
       unless params[:displayed_feeds].nil?
         @user.update_attribute :opt_displayed_subscriptions, params[:displayed_feeds]
