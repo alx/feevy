@@ -5,8 +5,8 @@
   </span>
   <span id='tag_form_<%= subscription.id %>' class='tag_list' style='display:none;'>
     <form action='/manage/tag_blog' method='post' onsubmit="new Ajax.Request('/manage/tag_blog', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
-      <input type='hidden' name='id' value='<%= subscription.id %>'>
-      <input type='text' name='tag_input' value='<%= subscription.tag_list %>' id='tag_input_<%= subscription.id %>' size='30'>
+      <input type='hidden' name='id' value='<%= subscription.id %>'/>
+      <input type='text' name='tag_input' value='<%= subscription.tag_list %>' id='tag_input_<%= subscription.id %>' size='30'/>
       <input type='submit' value='validate' class='submit'/>
     </form>
   </span>
