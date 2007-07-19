@@ -167,6 +167,7 @@ class AdminController < ApplicationController
   
   def delete_feed
     require_auth 'admin'
+    @headers["Content-Type"] = "text/javascript"
     @feed = Feed.find params[:id]
     if @feed
       @feed.destroy
@@ -175,6 +176,7 @@ class AdminController < ApplicationController
   
   def no_more_bogus
     require_auth 'admin'
+    @headers["Content-Type"] = "text/javascript"
     @feed = Feed.find params[:id]
     # resolve bugs
     Bug.resolve_feed(@feed)

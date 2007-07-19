@@ -72,6 +72,7 @@ class ManageController < ApplicationController
 
   def show_blog
     check_user
+    @headers["Content-Type"] = "text/javascript"
     @subscription = Subscription.find(params[:id])
   end
 
@@ -84,6 +85,7 @@ class ManageController < ApplicationController
 
   def change_avatar
     check_user
+    @headers["Content-Type"] = "text/javascript"
     @subscription = Subscription.find params[:id]
   end
 
@@ -139,6 +141,7 @@ class ManageController < ApplicationController
 
   def delete_blog
     check_user
+    @headers["Content-Type"] = "text/javascript"
     subscription = Subscription.find(params[:id])
     @deleted_blog = "blog_" << params[:id]
     @deleted_bogus = "bogus_" << params[:id] if subscription.feed.bogus == true 
@@ -147,6 +150,7 @@ class ManageController < ApplicationController
 
   def edit_blog
     check_user
+    @headers["Content-Type"] = "text/javascript"
     @subscription = Subscription.find(params[:id])
     @return = params[:return]
   end
@@ -167,9 +171,9 @@ class ManageController < ApplicationController
 
   def display_feevy_code
     check_user
+    @headers["Content-Type"] = "text/javascript"
     style = ""
     style = "/" << params[:style] unless params[:style] == "dark"
-
     script = "<script type='text/javascript' src='http://www.feevy.com/code/#{@user.id}#{style}'></script>"
     render :text => HTMLEntities.encode_entities(script)
   end
@@ -189,6 +193,7 @@ class ManageController < ApplicationController
 
   def tag_blog
     check_user
+    @headers["Content-Type"] = "text/javascript"
     @subscription = Subscription.find(params[:id])
     if params[:tag_input]
       @tag_list = params[:tag_input].gsub(/([^,])\s/, '\1, ')

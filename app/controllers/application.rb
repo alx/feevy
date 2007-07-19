@@ -4,7 +4,8 @@ require 'auth_system'
 class ApplicationController < ActionController::Base
     include AuthSystem
     helper :auth
-    before_filter :app_config, :ident, :set_charset
+    before_filter :app_config, :ident
+    after_filter :set_charset
     service :notification
 
     # Used to be able to leave out the action
