@@ -11,9 +11,9 @@
       <div class="show_blog">
         <br/>
         <% if feed.avatar_locked == 1 %>
-          <img src='<%= feed.avatar.url %>' style='float:left;padding-right:5px;'/>
+          <img src='<%= feed.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>
         <% else %>
-          <img src='<%= subscription.avatar.url %>' style='float:left;padding-right:5px;'/>
+          <img src='<%= subscription.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>
         <% end %>
         <h3><%= "#{index}. #{feed.title}" %></h3>
         <h5><%= truncate(feed.href, 50) %></h5>
