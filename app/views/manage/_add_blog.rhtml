@@ -13,7 +13,7 @@
         <a class='right' onclick='$("add_blog_box_<%= position %>").hide()' href='#' <% unless display.nil? %> style='display:none;' <% end %>>close this box</a>
         <form class='select_blogs' action='/manage/select_blogs' method='post'>
           <div id='add_blog_form_<%= position %>'>
-            <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs[]'/></p>
+            <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs'/></p>
           </div>
           <div class='ladob'><input type='submit' class='submit' value='next >' id='boton2'/></div>
           <br/>
