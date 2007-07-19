@@ -48,7 +48,7 @@ module ManageHelper
   def option_display_feevy(value, string, selected)
     selection = ""
     selection = "SELECTED" if selected == true
-    "<option value='#{value}' #{selection}>#{string}"
+    "<option value='#{value}' #{selection}>#{string}</option>"
   end
   
   def select_lang(current)
@@ -80,6 +80,6 @@ module ManageHelper
     if selected
       option << "selected"
     end
-    option << ">#{description}"
+    option << ">#{description}</option>"
   end
 end
