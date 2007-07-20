@@ -1,4 +1,4 @@
-- Requirement:
+- Requirements
 
 * memcached run as a daemon on default port (11211)
 * Ruby and rubygems
@@ -16,6 +16,7 @@
 - Install
 
 * Get necessary gems: sudo gem install -y rails hpricot simple-rss open-uri timeout cached_model mongrel
+* Copy ./conf/database.example to ./conf/database.yml
 * Configure your database access in ./conf/database.yml
 * Install database schema: rake db:schema:dump
 
