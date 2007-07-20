@@ -1,0 +1,25 @@
+- Requirement:
+
+* memcached run as a daemon on default port (11211)
+* Ruby and rubygems
+* gem list:
+	- rails
+	- hpricot
+	- simple-rss
+	- open-uri
+	- timeout
+	- cached_model
+	- mongrel
+* Database (mysql, sqlite, ...)
+* Feevy source: http://www.feevy.com/source.tgz
+
+- Install
+
+* Get necessary gems: sudo gem install -y rails hpricot simple-rss open-uri timeout cached_model mongrel
+* Configure your database access in ./conf/database.yml
+* Install database schema: rake db:schema:dump
+
+- Run
+
+* In your Feevy directory: mongrel_rails start
+* In your browser: http://localhost:3000
