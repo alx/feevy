@@ -32,6 +32,9 @@ set :user, "wwwfeev"
 set :repository, "svn+ssh://#{user}@#{domain}#{deploy_to}/repos/trunk"
 set :rails_env, "production"
 
+set :svn_username, Proc.new { "wwwfeev --password feevy2323" }
+
+
 # Automatically symlink these directories from current/public to shared/public.
 set :app_symlinks, %w{images/avatars}
 
@@ -144,4 +147,17 @@ end
 desc "stop backgroundrb"
 task :stop_backgroundrb do
   sudo "backgroundrb stop"
+end
+
+# =============================================================================
+# SOURCES TASKS
+# =============================================================================
+
+desc "package feevy sources"
+task :package_source do
+  # Remove old sources if exists
+  run "rm -f #{shared_path}/public/source.tgz"
+  # Create new source archive
+  # excluding database.yml and deploy.rb
+  run "tar -czvf #{shared_path}/public/source.tgz -X #{deploy_to}/#{current_dir}/exclude_tar #{deploy_to}/#{current_dir}"
 end
