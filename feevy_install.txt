@@ -1,7 +1,9 @@
 - Requirements
 
-* memcached run as a daemon on default port (11211)
-* Ruby and rubygems
+* memcached run as a daemon on default port (11211) - http://www.danga.com/memcached/
+* Ruby - http://www.ruby-lang.org/
+* Rubygems - http://rubyforge.org/frs/?group_id=126
+* GD2 library - http://www.boutell.com/gd/
 * gem list:
 	- rails
 	- hpricot
@@ -10,6 +12,7 @@
 	- timeout
 	- cached_model
 	- mongrel
+	- gd2
 * Database (mysql, sqlite, ...)
 * Feevy source: http://www.feevy.com/source.tgz
 
