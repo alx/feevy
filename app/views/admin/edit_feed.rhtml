@@ -10,6 +10,7 @@
 </form>
 </table>
 
+<% unless @feed.latest_post.nil? %>
 <p>
 	<h3>Latest post:</h3>
 	<ul>
@@ -18,6 +19,8 @@
 		<li>Url: <a href="<%= @feed.latest_post.url %>"><%= @feed.latest_post.url %></a></li>
 	</ul>
 </p>
+<% end %>
+
 <p>
   Errors: <%= @feed.bugs.count %><br/>
   <% @feed.bugs.each do |bug| -%>
