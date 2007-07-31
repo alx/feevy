@@ -62,7 +62,7 @@ module ManageHelper
             ["fr-FR",   "Fran&ccedil;ais"],
             ["pt-PT",   "Portugu&ecirc;s"]]
             
-    select = "Choose language:&nbsp;"
+    select = "choose language:&nbsp;"
     select <<  "<select name='lang' id='lang'>"
     lang.each do |code, description|
       selected = true if current == code
