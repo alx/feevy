@@ -144,32 +144,46 @@ class UserController < ApplicationController
 
   
   def feevy
-    @user = User.find(params[:id])
-    @entries = @user.generate_feevy(params[:tags])
+    # Generate cache_key
+    cache_key = "feevy_#{params[:id]}"
+    cache_key << "_#{params[:tags]}" if params[:tags]
+    cache_key << "_#{params[:style]}" if params[:style]
     
-    # Get style parameter and set partial to load
-    style = params[:style] || "dark"
-    partial_style = "user/badge/style/"
-    partial_badge = "user/badge/content/"
+    # Get entries from cache or generate entries if not found
+    unless @feevy = CACHE.get(cache_key)
     
-    # Define layout
-    if style == "light" || style == "liquid"
-      partial_style += "light"
-      partial_badge += "light"
-    elsif style == "white"
-      partial_badge += "normal"
-      partial_style += "white"
+      @user = User.find(params[:id])
+      @entries = @user.generate_feevy(params[:tags])
+    
+      # Get style parameter and set partial to load
+      style = params[:style] || "dark"
+      partial_style = "user/badge/style/"
+      partial_badge = "user/badge/content/"
+    
+      # Define layout
+      if style == "light" || style == "liquid"
+        partial_style += "light"
+        partial_badge += "light"
+      elsif style == "white"
+        partial_badge += "normal"
+        partial_style += "white"
+      else
+        partial_badge += "normal"
+        partial_style += "dark"
+      end
+    
+      partial_badge += "_" + @user.opt_lang.gsub('-','_')
+    
+      logger.debug "partial_style: #{partial_style}"
+      logger.debug "partial_badge: #{partial_badge}"
+    
+      @style =  render_to_string(:partial => partial_style, :locals => { :id => params[:id]})
+      @content = render_to_string(:partial => partial_badge, :locals => { :id => params[:id], :entradas => @entries} )
+      @feevy = [@content, @style]
+      CACHE.set(cache_key, @feevy, 60*5)
     else
-      partial_badge += "normal"
-      partial_style += "dark"
+      @content = @feevy[0]
+      @style = @feevy[1]
     end
-    
-    partial_badge += "_" + @user.opt_lang.gsub('-','_')
-    
-    logger.debug "partial_style: #{partial_style}"
-    logger.debug "partial_badge: #{partial_badge}"
-    
-    @style =  render_to_string(:partial => partial_style, :locals => { :id => params[:id]})
-    @content = render_to_string(:partial => partial_badge, :locals => { :id => params[:id], :entradas => @entries} )
   end
 end
