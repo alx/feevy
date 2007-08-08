@@ -123,9 +123,9 @@ ActionMailer::Base.server_settings = {
   :address  => "mail.feevy.com",
   :port  => 25, 
   :domain  => 'www.feevy.com',
-  :authentication => :login,
-  :user_name => 'error+feevy.com',
-  :password => 'error'
+  :user_name => "error+feevy.com",
+  :password => "error",
+  :authentication => :login
 }
 
 FEEVY_URL = "http://www.feevy.com/"
