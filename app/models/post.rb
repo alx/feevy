@@ -21,7 +21,7 @@ class Post < ActiveRecord::Base
     if description.include? "&lt;"
       description = HTMLEntities.decode_entities(description)
     else
-      description = HTMLEntities.encode_entities(description, :named, :decimal)
+      description = HTMLEntities.encode_entities(description, :named, :decimal) if charset == 'utf-8'
     end
     description = clean(convertEncoding(description, charset), 200) unless description.blank?
     description.gsub!(/((https?):\/\/([^\/]+)\/(.*))/, '[<a href=\'\1\'>link</a>]') unless description.blank?
