@@ -12,6 +12,10 @@ Errors: <%= @errors.size %><br/>
 </table>
 
 <h1>Feeds</h1>
+<form action='/admin/search_feed' method='post'>
+  <input type="text" name="search" value="" id="search"><input type="submit" value="Search &raquo;" id="some_name">
+</form>
+<br/>
 <ul>
   <li><%= link_to "Display all feeds", :action => "feeds" %></li>
   <li><%= link_to "Display bogus feeds", :action => "bogus_feeds" %></li>
