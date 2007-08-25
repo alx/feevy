@@ -171,7 +171,7 @@ class Feed < ActiveRecord::Base
       title = doc.search("//title:first").text
     
       # Set link as atom link if rss is still blank
-      link = Rfeedfinder.feed(href)
+      link = Rfeedfinder::feed(href)
       link = atom_link if link.blank?
       logger.debug "link: #{link}"
     
