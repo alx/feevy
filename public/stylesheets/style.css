@@ -377,6 +377,19 @@ form.select_blogs .submit {
   left:189px;
 }
 
+form.select_blogs .waiting {
+	font-size:12px;
+	float:left;
+  	position:relative;
+	top:-25px;
+	height:0px;
+}
+
+form.select_blogs .waiting img{
+	vertical-align:bottom;
+	padding-left:3px;
+}
+
 form.select_blogs small {
   float:left;
   position:relative;

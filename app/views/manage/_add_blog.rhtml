@@ -15,7 +15,8 @@
           <div id='add_blog_form_<%= position %>'>
             <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs'/></p>
           </div>
-          <input type='submit' class='submit' value='next >' id='boton2'/>
+          <input type='submit' class='submit' value='next >' id='boton2' onclick="Element.show('waiting');"/>
+		  <div id='waiting' class='waiting' style='display:none;'>adding feed<img alt="spinner" id="spinner" src="/images/spinner.gif" style="" /></div>
         </form>
       </div>
       <b class='spiffy'>
