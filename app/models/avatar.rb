@@ -12,12 +12,12 @@ class Avatar < ActiveRecord::Base
   end
 
   def Avatar.create_from_file(file, format)
-    unless file.nil?
-      require 'gd2'
-
+    logger.debug "Avatar - create from file"
+    if !file.nil?
+      
       avatar = Avatar.create
 
-      saved_file = "images/avatars/#{avatar.id}." << format
+      saved_file = "images/avatars/#{avatar.id}.#{format}"
       filepath = "#{RAILS_ROOT}/public/#{saved_file}"
       avatar_url = "http://www.feevy.com/#{saved_file}"
       saved = false

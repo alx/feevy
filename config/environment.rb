@@ -116,6 +116,8 @@ require 'simple-rss'
 require 'open-uri'
 require 'timeout'
 require 'cached_model'
+require 'gd2'
+require 'rfeedfinder'
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
