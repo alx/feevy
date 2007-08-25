@@ -159,52 +159,19 @@ class Feed < ActiveRecord::Base
 
   def update_feed_header(test=false)
     begin
-      # Get first item
+      # Open document
       doc = Hpricot(open(self.href))
+      
       # Get charset
       charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
       charset = charset[0] if charset.is_a? Array
       charset = charset.to_s.downcase
     
-      title = link = ""
-    
+      title = ""
       title = doc.search("//title:first").text
     
-      if self.href =~ /http:\/\/video\.google\.com/
-        rss_link = self.href << "&num=1&so=1&start=0&output=rss"
-      elsif self.href =~ /\.fotolog\.com/
-        rss_link = self.href
-        if rss_link !~ /\/$/
-          rss_link = rss_link << "/"
-        end
-        rss_link = rss_link << "feed/main/rss20"
-      elsif self.href =~ /\.bloger\.hr/ and self.href !~ /rss/
-        rss_link = self.href
-        if rss_link !~ /\/$/
-          rss_link = rss_link << "/"
-        end
-        rss_link = rss_link << "rss/"
-      elsif self.href =~ /\.blogsome\.com/
-        rss_link  = doc.search("//link[@type='text/xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-        rss_link = rss_link[0].to_s if rss_link.is_a? Array
-      elsif self.href =~ /lacomunidad\.elpais\.com/
-        if self.href =~ /posts$/
-          rss_link = self.href << ".rss"
-        elsif self.href =~ /\/$/
-          rss_link = self.href << "posts.rss"
-        else
-          rss_link = self.href << "/posts.rss"
-        end
-      else
-        rss_link  = doc.search("//link[@type='application/rss+xml']").to_s.scan(/href=['"]?([^'"]*)['" ]/)
-        rss_link = rss_link[0].to_s if rss_link.is_a? Array
-      
-        atom_link = doc.search("//link[@type='application/atom+xml']").to_s.scan(/href=['"]?([^'"]*)['"]/)
-        atom_link = atom_link[0].to_s if atom_link.is_a? Array
-      end
-    
       # Set link as atom link if rss is still blank
-      link = rss_link
+      link = Rfeedfinder.feed(href)
       link = atom_link if link.blank?
       logger.debug "link: #{link}"
     
@@ -348,8 +315,9 @@ class Feed < ActiveRecord::Base
         #                          :url => "http://lacomunidad.elpais.com/userfiles/#{elpais_user}/avatar48x48.png")
         #   self.update_attributes(:avatar_id => avatar.id, :avatar_locked => true) unless avatar.nil?
         # else
-          avatar_link = open(self.href.gsub(/[^\/]$/, "/") << "avatar.txt")
-
+          avatar_link = open(URI.join(self.href, "avatar.txt").to_s)
+          logger.debug "avatar link: #{avatar_link}"
+          
           unless avatar_link.nil?
             avatar_url = avatar_link.readline.strip
             avatar_link.close

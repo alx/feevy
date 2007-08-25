@@ -154,22 +154,18 @@ class UserController < ApplicationController
     
       @user = User.find(params[:id])
       @entries = @user.generate_feevy(params[:tags])
-    
-      # Get style parameter and set partial to load
-      style = params[:style] || "dark"
-      partial_style = "user/badge/style/"
-      partial_badge = "user/badge/content/"
-    
+      
       # Define layout
-      if style == "light" || style == "liquid"
-        partial_style += "light"
-        partial_badge += "light"
-      elsif style == "white"
-        partial_badge += "normal"
-        partial_style += "white"
-      else
-        partial_badge += "normal"
-        partial_style += "dark"
+      partial_badge = "user/badge/content/normal"
+      partial_style = "user/badge/style/dark"
+      
+      case params[:style]
+        when  "light", "liquid"
+          partial_badge = "user/badge/content/light"
+          partial_style = "user/badge/style/light"
+        when "white"
+          partial_badge = "user/badge/content/normal"
+          partial_style = "user/badge/style/white"
       end
     
       partial_badge += "_" + @user.opt_lang.gsub('-','_')
@@ -180,7 +176,7 @@ class UserController < ApplicationController
       @style =  render_to_string(:partial => partial_style, :locals => { :id => params[:id]})
       @content = render_to_string(:partial => partial_badge, :locals => { :id => params[:id], :entradas => @entries} )
       @feevy = [@content, @style]
-      CACHE.set(cache_key, @feevy, 60*5)
+      CACHE.set(cache_key, @feevy, 60*10)
     else
       @content = @feevy[0]
       @style = @feevy[1]
