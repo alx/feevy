@@ -50,81 +50,21 @@ class Feed < ActiveRecord::Base
     # clean up the url
     begin
       logger.debug "input_url: #{input_url}"
-      input_url = FeedTools::UriHelper.normalize_url(input_url)
+      input_url = self.normalize_url(input_url)
     rescue => err
       logger.debug "error on input_url: #{err.class}: #{err.message}#$/\n#{err.backtrace.join($/)}"
     end
-    if input_url.nil?
-      return nil
-    elsif is_rss?(input_url)
+    
+    return nil if input_url.nil?
+      
+    if Rfeedfinder::isFeed?(input_url)
       logger.debug "is_rss"
       # Client send rss url
-      doc = Hpricot(open(input_url), :xml => true)
-      doc_link = (doc/"link").first
-      # check href in link attribute
-      if !doc_link.inner_text.nil? or !doc_link.inner_text.empty?
-        url_from_rss = doc_link.inner_text
-      else
-        url_from_rss = doc_link.attributes['href'].to_s
-      end
-      # Register new blog if href has been found
-      if !url_from_rss.nil? or !url_from_rss.empty?
-        feed = Feed.find :first, :conditions => ["link LIKE ?", input_url]
-        if feed.nil?
-          begin
-            title = doc.search("//title:first").text
-            # Get charset
-            charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
-            charset = charset[0] if charset.is_a? Array
-            charset = charset.to_s.downcase
-            
-            feed = Feed.create(:href => url_from_rss, 
-                               :link => input_url, 
-                               :title => Feed.format_title(title, charset), 
-                               :avatar_id => 1)
-            # Refresh feed to update content and avatar
-            feed.refresh
-            # Discover avatar
-            feed.discover_avatar_txt
-          rescue => error
-            logger.error "Error while creating a feed from rss: #{error.message}"
-            return error
-          end
-        end
-      end
+      feed = self.create_from_rss(input_url)
     else
-      # find existing feed
-      feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
-      
-      if feed.nil?
-        begin
-          # Create new Feed
-          feed = Feed.create(:href => input_url, :avatar_id => 1)
-          logger.debug "Feed ID: #{feed.id}"
-          
-          # Update feed header
-          feed.update_feed_header
-          
-          # Find duplicate
-          @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
-          if @duplicates.size > 1
-            feed.destroy
-            feed = @duplicates[0] 
-          end
-          
-          # Refresh feed to update content and avatar
-          feed.refresh
-          
-          # Discover avatar
-          feed.discover_avatar_txt
-        rescue => error
-          logger.error "Error while creating a feed from blog: #{error.message}"
-          return error
-        end
-      end
-      
-      return feed
+      feed = self.create_from_webpage(input_url)
     end
+    return feed
   end
   
   def Feed.is_opml?(url)
@@ -139,12 +79,70 @@ class Feed < ActiveRecord::Base
     end
   end
   
-  def Feed.create_from_rss(url)
-    # Open rss document
-    doc = Hpricot(open(url))
-    # Create feed with href, title and link
-    feed = Feed.new :href => doc.search("link").text, :title => doc.search("title").text, :link => url
-    feed.save
+  def Feed.create_from_webpage(input_url)
+    # find existing feed
+    feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
+    
+    if feed.nil?
+      begin
+        # Create new Feed
+        feed = Feed.create(:href => input_url, :avatar_id => 1)
+        logger.debug "Feed ID: #{feed.id}"
+        
+        # Update feed header
+        feed.update_feed_header
+        
+        # Find duplicate
+        @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
+        if @duplicates.size > 1
+          feed.destroy
+          feed = @duplicates[0] 
+        end
+        
+        # Refresh feed to update content and avatar
+        feed.refresh
+        
+        # Discover avatar
+        feed.discover_avatar_txt
+      rescue => error
+        logger.error "Error while creating a feed from blog: #{error.message}"
+        return error
+      end
+    end
+  end
+  
+  def Feed.create_from_rss(input_url)
+    doc = Hpricot(open(input_url), :xml => true)
+    url_from_rss = (doc/"link").first.inner_text
+    url_from_rss = (doc/"link[@rel=alternate]").first[:href] if url_from_rss.empty?
+    url_from_rss = (doc/"link").first[:href] if url_from_rss.empty?
+  
+    # Register new blog if href has been found
+    if !url_from_rss.nil? or !url_from_rss.empty?
+      feed = Feed.find :first, :conditions => ["link LIKE ?", input_url]
+      if feed.nil?
+        begin
+          title = doc.search("//title:first").text
+          # Get charset
+          charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
+          charset = charset[0] if charset.is_a? Array
+          charset = charset.to_s.downcase
+        
+          feed = Feed.create(:href => url_from_rss, 
+                             :link => input_url, 
+                             :title => Feed.format_title(title, charset), 
+                             :avatar_id => 1)
+          # Refresh feed to update content and avatar
+          feed.refresh
+          # Discover avatar
+          feed.discover_avatar_txt
+        rescue => error
+          logger.error "Error while creating a feed from rss: #{error.message}"
+          return error
+        end
+      end
+    end
+    return feed
   end
   
   def has_error
@@ -464,6 +462,111 @@ class Feed < ActiveRecord::Base
     url =~ /\/feed$/
   end
   
+  def Feed.normalize_url(url)
+    if url.kind_of?(URI)
+      url = url.to_s
+    end
+    if url.blank?
+      return nil
+    end
+    normalized_url = CGI.unescape(url.strip)
+
+    # if a url begins with the '/' character, it only makes sense that they
+    # meant to be using a file:// url.  Fix it for them.
+    if normalized_url.length > 0 && normalized_url[0..0] == "/"
+      normalized_url = "file://" + normalized_url
+    end
+
+    # if a url begins with a drive letter followed by a colon, we're looking at
+    # a file:// url.  Fix it for them.
+    if normalized_url.length > 0 &&
+        normalized_url.scan(/^[a-zA-Z]:[\\\/]/).size > 0
+      normalized_url = "file:///" + normalized_url
+    end
+
+    # if a url begins with javascript:, it's quite possibly an attempt at
+    # doing something malicious.  Let's keep that from getting anywhere,
+    # shall we?
+    if (normalized_url.downcase =~ /javascript:/) != nil
+      return "#"
+    end
+
+    # deal with all of the many ugly possibilities involved in the rss:
+    # and feed: pseudo-protocols (incidentally, whose crazy idea was this
+    # mess?)
+    normalized_url.gsub!(/^http:\/*(feed:\/*)?/i, "http://")
+    normalized_url.gsub!(/^http:\/*(rss:\/*)?/i, "http://")
+    normalized_url.gsub!(/^feed:\/*(http:\/*)?/i, "http://")
+    normalized_url.gsub!(/^rss:\/*(http:\/*)?/i, "http://")
+    normalized_url.gsub!(/^file:\/*/i, "file:///")
+    normalized_url.gsub!(/^https:\/*/i, "https://")
+    # fix (very) bad urls (usually of the user-entered sort)
+    normalized_url.gsub!(/^http:\/*(http:\/*)*/i, "http://")
+
+    if (normalized_url =~ /^file:/i) == 0
+      # Adjust windows-style urls
+      normalized_url.gsub!(/^file:\/\/\/([a-zA-Z])\|/i, 'file:///\1:')
+      normalized_url.gsub!(/\\/, '/')
+    else
+      if (normalized_url =~ /^https?:\/\//i) == nil
+        normalized_url = "http://" + normalized_url
+      end
+      if normalized_url == "http://"
+        return nil
+      end
+      begin
+        scheme, host_part, path =
+          normalized_url.scan(/^(https?):\/\/([^\/]+)\/(.*)/i).flatten
+        if scheme != nil && host_part != nil && path != nil
+          scheme = scheme.downcase
+          if FeedTools::UriHelper.idn_enabled?
+            host_part =
+              IDN::Idna.toASCII(host_part)
+          end
+          new_path = ""
+          for index in 0...path.size
+            if path[index] <= 32 || path[index] >= 126
+              new_path << ("%" + path[index].to_s(16).upcase)
+            else
+              new_path << path[index..index]
+            end
+          end
+          path = new_path
+          normalized_url = scheme + "://" + host_part + "/" + path
+        end
+      rescue Object
+      end
+      begin
+        feed_uri = URI.parse(normalized_url)
+        if feed_uri.scheme == nil
+          feed_uri.scheme = "http"
+        end
+        if feed_uri.path.blank?
+          feed_uri.path = "/"
+        end
+        if (feed_uri.path =~ /^[\/]+/) == 0
+          feed_uri.path.gsub!(/^[\/]+/, "/")
+        end
+        while (feed_uri.path =~ /^\/\.\./)
+          feed_uri.path.gsub!(/^\/\.\./, "")
+        end
+        if feed_uri.path.blank?
+          feed_uri.path = "/"
+        end
+        feed_uri.host.downcase!
+        normalized_url = feed_uri.to_s
+      rescue URI::InvalidURIError
+      end
+    end
+
+    # We can't do a proper set of escaping, so this will
+    # have to do.
+    normalized_url.gsub!(/%20/, " ")
+    normalized_url.gsub!(/ /, "%20")
+
+    return normalized_url
+  end
+    
   private
   def destroy_relationship
     Bug.destroy_all "feed_id = #{self.id}"
