@@ -109,6 +109,7 @@ class Feed < ActiveRecord::Base
         return error
       end
     end
+    return feed
   end
   
   def Feed.create_from_rss(input_url)
