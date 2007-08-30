@@ -1,7 +1,7 @@
 <!-- show blog -->
 <% feed = subscription.feed %>
 <% unless feed.nil? %>
-<% if feed.is_bogus?  %>
+<% if !feed.is_bogus?  %>
 <div id="blog_<%= subscription.id %>" class="caja1">
   <!-- caja redondeada negra -->
   <div class="xsnazzy">
