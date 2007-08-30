@@ -37,7 +37,7 @@ class Feed < ActiveRecord::Base
   # Discover avatar.txt file to update avatar
   def Feed.update_avatars
     Feed.find(:all).each { |feed| 
-      unless feed.bogus == true
+      unless feed.is_bogus?
         logger.info "+++ Refresh avatar: #{feed.href}"
         feed.discover_avatar_txt
       else
@@ -147,13 +147,14 @@ class Feed < ActiveRecord::Base
   end
   
   def has_error
-    return Bug.feed_error(self).nil? ? false : true
+    return self.is_bogus == 1 ? true : false
   end
   
+  alias is_bogus? has_error
   alias bogus has_error
   
   def has_warnings
-    return Bug.feed_warnings(self).empty? ? false : true
+    return self.is_warning == 1 ? true : false
   end
 
   def update_feed_header(test=false)
@@ -177,7 +178,7 @@ class Feed < ActiveRecord::Base
       # Bogus feed when link is not found
       if link.blank?
         bug_message = "RSS/Atom link not found on this website"
-        Bug.raise_feed_bug(self, bug_message) unless self.bogus == true
+        Bug.raise_feed_bug(self, bug_message) unless self.is_bogus?
         raise bug_message
       else
         # complete bogus link with website href
@@ -189,7 +190,7 @@ class Feed < ActiveRecord::Base
                                :link => link
       end
     rescue => error
-      Bug.raise_feed_bug(self, error) unless self.bogus == true
+      Bug.raise_feed_bug(self, error) unless self.is_bogus?
     end 
     return self
   end
@@ -199,7 +200,7 @@ class Feed < ActiveRecord::Base
   end
   
   def update_content_hpricot(forced=false)
-    unless bogus == true
+    unless self.is_bogus?
       begin
         # Get first item
         Timeout::timeout(30) do
@@ -260,7 +261,7 @@ class Feed < ActiveRecord::Base
       rescue Timeout::Error
         Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
       rescue => err
-        Bug.raise_feed_bug(self, err) unless bogus == true
+        Bug.raise_feed_bug(self, err) unless self.is_bogus?
       end
     end
   end

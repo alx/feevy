@@ -144,7 +144,7 @@ class ManageController < ApplicationController
     @headers["Content-Type"] = "text/javascript"
     subscription = Subscription.find(params[:id])
     @deleted_blog = "blog_" << params[:id]
-    @deleted_bogus = "bogus_" << params[:id] if subscription.feed.bogus == true 
+    @deleted_bogus = "bogus_" << params[:id] if subscription.feed.is_bogus?
     subscription.destroy
   end
 

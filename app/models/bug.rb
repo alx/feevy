@@ -21,6 +21,7 @@ class Bug < ActiveRecord::Base
   def Bug.resolve_feed(feed)
     @bugs = Bug.find :all, :conditions => ["feed_id = ? AND status = ?", feed.id, Bug::NEW]
     @bugs.each {|bug| bug.resolve}
+    feed.update_attributes :is_bogus => 0, :is_warning => 0
   end
   
   # Create a new bug with default level of Bug::ERROR
@@ -30,6 +31,12 @@ class Bug < ActiveRecord::Base
     Bug.create(:level => level, 
                :description => error,
                :feed_id => feed.id).send_by_mail
+    if level = Bug::ERROR
+      feed.update_attribute :is_bogus, 1
+    end
+    if level = Bug::WARNING
+      feed.update_attribute :is_warning, 1
+    end
   end
   
   def resolve
