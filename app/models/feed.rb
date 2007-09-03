@@ -172,7 +172,6 @@ class Feed < ActiveRecord::Base
     
       # Set link as atom link if rss is still blank
       link = Rfeedfinder::feed(href)
-      link = atom_link if link.blank?
       logger.debug "link: #{link}"
     
       # Bogus feed when link is not found
@@ -181,11 +180,6 @@ class Feed < ActiveRecord::Base
         Bug.raise_feed_bug(self, bug_message) unless self.is_bogus?
         raise bug_message
       else
-        # complete bogus link with website href
-        if link !~ /^http:\/\// 
-          link = self.href << link.gsub(/^\//,"")
-        end
-      
         self.update_attributes :title => Feed.format_title(title, charset),
                                :link => link
       end
@@ -407,6 +401,7 @@ class Feed < ActiveRecord::Base
         duplicate.destroy
       end
     end
+    logger.debug "delete feed size: #{deleted_feeds.size}"
   end
   
   def Feed.move_blogspot_to_rss
