@@ -1,12 +1,22 @@
 require 'rubygems'
 require 'hpricot'
 require 'open-uri'
+require 'rfeedreader'
 
-#SERVER = "localhost:3000"
-SERVER = "www.feevy.com"
+SERVER = "localhost:3000"
+#SERVER = "www.feevy.com"
 
 # Set your id for update service stats
-ID = "david"
+ID = "testing"
+# Set pinger hash to be verified on server side
+HASH = ""
+
+def update_feed(id, entry)
+  res = Net::HTTP.post_form(URI.parse("http://#{SERVER}/ping/update_feed/#{id}"),
+                                {:post_link => entry.link,
+                                 :post_title => entry.title,
+                                 :post_description => entry.description})
+end
 
 puts "Starting updates..."
 while true
@@ -19,20 +29,13 @@ while true
       puts "Feed #{feed_id}: #{feed_rss}"
       # Read feed rss
       begin
-        dist = Hpricot(open(feed.at('rss').innerHTML), :xml => true)
-        item = dist.search("item|entry").first
-        # Get first post url
-        link = item.search("link:first")
-        unless link.nil?
-          post_url = link.text
-          post_url = link.to_s.scan(/href=['"]?([^'"]*)['" ]/).to_s if (post_url.nil? or post_url.empty?)
-        end
+        entry = Rfeedreader.read_first(feed_rss).entries[0]
         # puts "Old: #{feed_post}"
         # puts "New: #{post_url}"
         # If url not the same, ping server
-        if post_url != feed_post then
-          puts "pinging #{feed_id}..."
-          open("http://#{SERVER}/ping/update/#{feed_id}")
+        if entry.link != feed_post then
+          puts "updating #{feed_id}..."
+          update_feed(feed_id, entry)
         end
       rescue Timeout::Error
         puts "Timeout on this feed"
