@@ -146,7 +146,7 @@ class Feed < ActiveRecord::Base
       begin
         # Get first item
         Timeout::timeout(30) do
-          entry = Rfeedreader.read_first(input_url).entries[0]
+          entry = Rfeedreader.read_first(self.link).entries[0]
           
           unless entry.nil?
             # get item url
