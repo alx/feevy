@@ -82,7 +82,7 @@ class Feed < ActiveRecord::Base
         
           # Add new post to feed
           entry = feeding.entries[0]
-          Post.new(:url => entry.url, 
+          Post.new(:url => entry.link, 
                    :title => entry.title, 
                    :description => entry.description, 
                    :feed_id => feed.id)
@@ -114,7 +114,7 @@ class Feed < ActiveRecord::Base
                              
           # Add new post to feed
           entry = feeding.entries[0]
-          Post.new(:url => entry.url, 
+          Post.new(:url => entry.link, 
                    :title => entry.title, 
                    :description => entry.description, 
                    :feed_id => feed.id)
@@ -159,7 +159,7 @@ class Feed < ActiveRecord::Base
                 post.destroy unless post.nil?
               end
               # Save new post
-              Post.create(:url => entry.url, 
+              Post.create(:url => entry.link, 
                           :title => entry.title, 
                           :description => entry.description, 
                           :feed_id => id)
