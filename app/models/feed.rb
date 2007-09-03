@@ -141,62 +141,28 @@ class Feed < ActiveRecord::Base
     return self.is_warning == 1 ? true : false
   end
   
-  def update_content_hpricot(forced=false)
+  def refresh(forced=false)
     unless self.is_bogus?
       begin
         # Get first item
         Timeout::timeout(30) do
-          doc = Hpricot(open(link), :xml => true)
-          item = (doc/"item|entry").first
-          # Get charset
-          charset = doc.to_s.scan(/encoding=['"]?([^'"]*)['" ]/)
-          charset = charset[0] if charset.is_a? Array
-          charset = charset.to_s.downcase
-          logger.debug "charset: #{charset}"
+          entry = Rfeedreader.read_first(input_url).entries[0]
           
-          unless item.nil?
+          unless entry.nil?
             # get item url
-            post_url = read_link(item)
+            post_url = entry.url
             # built Post from first item if different url
-            if (not post_url.nil?) and (forced or latest_post.nil? or post_url != latest_post.url)
-              
-              # Get and format post title
-              title = Post.format_title(item.search("title").text, charset)
-              logger.debug "title: #{title}"
-              
-              # Test if picasa feed
-              if is_picasa?
-                description = Post.picasa_description(item, post_url)
-              # Test if fotolog feed
-              elsif is_fotolog?
-                description = Post.fotolog_description(item, post_url)
-              # Test if flickr feed
-              elsif is_flickr?
-                description = Post.flickr_description(item, post_url)
-              # Test if google video feed
-              elsif is_google_video?
-                description = Post.google_video_description(item, post_url)
-              # Test if jumpcut feed
-              elsif is_jumpcut?
-                description = Post.jumpcut_description(item, post_url)
-              # Test if el pais feed
-              elsif self.href =~ /lacomunidad\.elpais\.com/
-                description = Post.format_description((item/"content:encoded").text, charset)
-              # Else normal feed
-              else
-                description = Post.format_description((item/"description|summary|content|[@type='text']").text, charset)
-              end
-              logger.debug "description: #{description}"
+            if !entry.url.nil? and (forced or latest_post.nil? or entry.url != latest_post.url)
               # Delete existing post if forced update
               if forced == true
                 post = Post.find(:first, :conditions => ["url LIKE ? AND feed_id = ?", post_url, self.id])
                 post.destroy unless post.nil?
               end
               # Save new post
-              posts << Post.new(:url => post_url, 
-                                :title => title, 
-                                :description => description, 
-                                :feed_id => id)
+              Post.create(:url => entry.url, 
+                          :title => entry.title, 
+                          :description => entry.description, 
+                          :feed_id => id)
             end
           end
         end
@@ -207,8 +173,6 @@ class Feed < ActiveRecord::Base
       end
     end
   end
-  
-  alias refresh update_content_hpricot
   
   # Return true if feed is a flickr feed
   def is_flickr?
