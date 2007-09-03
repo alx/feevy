@@ -81,7 +81,7 @@ class Feed < ActiveRecord::Base
                              :avatar_id => 1)
         
           # Add new post to feed
-          entry = feed.entries[0]
+          entry = feeding.entries[0]
           Post.new(:url => entry.url, 
                    :title => entry.title, 
                    :description => entry.description, 
@@ -113,7 +113,7 @@ class Feed < ActiveRecord::Base
                              :avatar_id => 1)
                              
           # Add new post to feed
-          entry = feed.entries[0]
+          entry = feeding.entries[0]
           Post.new(:url => entry.url, 
                    :title => entry.title, 
                    :description => entry.description, 
