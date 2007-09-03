@@ -19,20 +19,6 @@ class Feed < ActiveRecord::Base
   validates_presence_of :link, :title, :href
   
   before_destroy :destroy_relationship
-    
-  
-  # before_save :generate_hashed_gravatar
-  # before_update :generate_hashed_gravatar
-  # 
-  # def generate_hashed_gravatar
-  #   return if gravatar_email.blank?
-  #   
-  #   self.gravatar_md5 = Digest::MD5.hexdigest(self.gravatar_email)
-  #   self.latest_post_time = 0
-  #   self.latest_post_description = "Esta bitácora no ha sido analizada aún"
-  #   self.latest_post_title = ""
-  #   self.latest_post_link = ""
-  # end
   
   # Discover avatar.txt file to update avatar
   def Feed.update_avatars
@@ -80,30 +66,30 @@ class Feed < ActiveRecord::Base
   end
   
   def Feed.create_from_webpage(input_url)
-    # find existing feed
+    # find existing feed with same webpage url
     feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
     
     if feed.nil?
       begin
-        # Create new Feed
-        feed = Feed.create(:href => input_url, :avatar_id => 1)
-        logger.debug "Feed ID: #{feed.id}"
+        feeding = Rfeedreader.read_first(input_url)
+        # find existing feed with same feed url
+        if Feed.find(:all, :conditions => ["link LIKE ?", feeding.feed_url]).empty?
+          # Create new Feed
+          feed = Feed.create(:href => input_url, 
+                             :link => feeding.feed_url, 
+                             :title => feeding.title,
+                             :avatar_id => 1)
         
-        # Update feed header
-        feed.update_feed_header
-        
-        # Find duplicate
-        @duplicates = Feed.find :all, :conditions => ["link LIKE ?", feed.link]
-        if @duplicates.size > 1
-          feed.destroy
-          feed = @duplicates[0] 
+          # Add new post to feed
+          entry = feed.entries[0]
+          Post.new(:url => entry.url, 
+                   :title => entry.title, 
+                   :description => entry.description, 
+                   :feed_id => feed.id)
+                   
+          # Discover avatar
+          feed.discover_avatar_txt
         end
-        
-        # Refresh feed to update content and avatar
-        feed.refresh
-        
-        # Discover avatar
-        feed.discover_avatar_txt
       rescue => error
         logger.error "Error while creating a feed from blog: #{error.message}"
         return error
@@ -113,28 +99,26 @@ class Feed < ActiveRecord::Base
   end
   
   def Feed.create_from_rss(input_url)
-    doc = Hpricot(open(input_url), :xml => true)
-    url_from_rss = (doc/"link").first.inner_text
-    url_from_rss = (doc/"link[@rel=alternate]").first[:href] if url_from_rss.empty?
-    url_from_rss = (doc/"link").first[:href] if url_from_rss.empty?
+    feeding = Rfeedreader.read_first(input_url)
   
     # Register new blog if href has been found
-    if !url_from_rss.nil? or !url_from_rss.empty?
-      feed = Feed.find :first, :conditions => ["link LIKE ?", input_url]
+    if !feeding.link.nil?
+      feed = Feed.find :first, :conditions => ["link LIKE ?", feeding.link]
       if feed.nil?
         begin
-          title = doc.search("//title:first").text
-          # Get charset
-          charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
-          charset = charset[0] if charset.is_a? Array
-          charset = charset.to_s.downcase
         
-          feed = Feed.create(:href => url_from_rss, 
+          feed = Feed.create(:href => feeding.link, 
                              :link => input_url, 
-                             :title => Feed.format_title(title, charset), 
+                             :title => feeding.title, 
                              :avatar_id => 1)
-          # Refresh feed to update content and avatar
-          feed.refresh
+                             
+          # Add new post to feed
+          entry = feed.entries[0]
+          Post.new(:url => entry.url, 
+                   :title => entry.title, 
+                   :description => entry.description, 
+                   :feed_id => feed.id)
+                   
           # Discover avatar
           feed.discover_avatar_txt
         rescue => error
@@ -155,42 +139,6 @@ class Feed < ActiveRecord::Base
   
   def has_warnings
     return self.is_warning == 1 ? true : false
-  end
-
-  def update_feed_header(test=false)
-    begin
-      # Open document
-      doc = Hpricot(open(self.href))
-      
-      # Get charset
-      charset = doc.to_s.scan(/charset=['"]?([^'"]*)['" ]/)
-      charset = charset[0] if charset.is_a? Array
-      charset = charset.to_s.downcase
-    
-      title = ""
-      title = doc.search("//title:first").text
-    
-      # Set link as atom link if rss is still blank
-      link = Rfeedfinder::feed(href)
-      logger.debug "link: #{link}"
-    
-      # Bogus feed when link is not found
-      if link.blank?
-        bug_message = "RSS/Atom link not found on this website"
-        Bug.raise_feed_bug(self, bug_message) unless self.is_bogus?
-        raise bug_message
-      else
-        self.update_attributes :title => Feed.format_title(title, charset),
-                               :link => link
-      end
-    rescue => error
-      Bug.raise_feed_bug(self, error) unless self.is_bogus?
-    end 
-    return self
-  end
-  
-  def Feed.format_title(title, charset='utf-8')
-    clean(convertEncoding(title, charset)).downcase
   end
   
   def update_content_hpricot(forced=false)
@@ -404,21 +352,6 @@ class Feed < ActiveRecord::Base
     logger.debug "delete feed size: #{deleted_feeds.size}"
   end
   
-  def Feed.move_blogspot_to_rss
-    @feeds = Feed.find(:all)
-    @feeds.each do |feed|
-      if feed.href =~ /(blogspot)|(blogger)/ and feed.link !~ /rss/
-        begin
-          puts "Moving #{feed.href} from atom: #{feed.link}"
-          feed.update_feed_header
-          feed.update_feed_content
-          puts "to rss: #{feed.link}"
-        rescue
-        end
-      end
-    end
-  end
-  
   def Feed.merge_duplicates(central_feed_id, merged_feed_id)
     @central_feed = Feed.find central_feed_id
     @merged_feed = Feed.find merged_feed_id
@@ -439,24 +372,6 @@ class Feed < ActiveRecord::Base
         end
       end
     }
-  end
-  
-  def Feed.is_rss?(url)
-    url =~ /\.xml$/ or
-    url =~ /\.rdf$/ or
-    url =~ /rss$/ or
-    url =~ /rss2$/ or
-    url =~ /atom$/ or
-    url =~ /^http:\/\/feeds\.feedburner\.com/ or
-    url =~ /\/?rss=1$/ or
-    url =~ /rss\.php/ or
-    url =~ /rss2\.php/ or
-    url =~ /\/rss\.html$/ or
-    url =~ /\?q=node\/feed$/ or
-    url =~ /\/rss\// or
-    url =~ /\/feed\// or
-    url =~ /\/feeds\// or
-    url =~ /\/feed$/
   end
   
   def Feed.normalize_url(url)
