@@ -6,6 +6,25 @@ class PingController < ApplicationController
     render :nothing => true
   end
   
+  def update_feed
+    pinger = Ping.find(:first, :conditions => ["hash like ?", params[:pinger_hash]]))
+    
+    unless pinger.nil?
+      # Create new post
+      Post.create(:url => params[:post_link], 
+                  :title => params[:post_title], 
+                  :description => params[:post_description], 
+                  :feed_id => params[:id])
+    
+      # Delete old posts
+      @posts = Post.find(:all, :conditions => "feed_id = #{params[:id]}", :order => "created_on DESC")
+      @posts.delete_at(0)
+      @posts.each {|post|post.destroy}
+    end
+    
+    render :nothing => true
+  end
+  
   def list
     # Get master Ping offset or create it if nil
     @ping = Ping.find(:first, :conditions => ["name like ?", "Master Ping"])

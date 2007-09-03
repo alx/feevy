@@ -9,6 +9,8 @@ class AdminController < ApplicationController
     @percent_error    = (@errors.size * 100.0) / @bugs.size
     @percent_warning  = (@warnings.size * 100.0) / @bugs.size
     @percent_working  = 100.0 - (@percent_warning + @percent_error)
+    
+    @pingers = Ping.find(:all)
   end
   
   def feeds
