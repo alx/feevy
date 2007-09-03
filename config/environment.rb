@@ -118,6 +118,7 @@ require 'timeout'
 require 'cached_model'
 require 'gd2'
 require 'rfeedfinder'
+require 'rfeedreader'
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
