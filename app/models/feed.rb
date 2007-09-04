@@ -328,14 +328,9 @@ class Feed < ActiveRecord::Base
   end
 
   def Feed.keep_unique_post
-    Feed.find(:all).each {|feed|
-      unless feed.nil?
-        post = feed.latest_post
-        unless post.nil?
-          Post.find(:all, :conditions => ["id != ? AND feed_id = ?", post.id, feed.id]).each {|object| object.destroy}
-        end
-      end
-    }
+    Feed.find(:all).each do |feed|
+      feed.latest_post.on_per_feed unless feed.nil? or feed.latest_post.nil?
+    end
   end
   
   def Feed.normalize_url(url)

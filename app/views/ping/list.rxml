@@ -6,8 +6,10 @@ xml.feevy do
         xml.id    feed.id
         # RSS link to read
         xml.rss   feed.link
-        # Post url to check update
-        xml.post  feed.latest_post.url
+        unless feed.latest_post.nil?
+          # Post url to check update
+          xml.post  feed.latest_post.url
+        end
       end
     end
   end

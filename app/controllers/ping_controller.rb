@@ -7,19 +7,17 @@ class PingController < ApplicationController
   end
   
   def update_feed
-    pinger = Ping.find(:first, :conditions => ["password like ?", params[:pinger_password]]))
+    pinger = Ping.find(:first, :conditions => ["password like ?", params[:pinger_password]])
     
     unless pinger.nil?
       # Create new post
-      Post.create(:url => params[:post_link], 
-                  :title => params[:post_title], 
-                  :description => params[:post_description], 
-                  :feed_id => params[:id])
+      post = Post.create(:url => params[:post_link], 
+                         :title => params[:post_title], 
+                         :description => params[:post_description], 
+                         :feed_id => params[:id])
     
       # Delete old posts
-      @posts = Post.find(:all, :conditions => "feed_id = #{params[:id]}", :order => "created_on DESC")
-      @posts.delete_at(0)
-      @posts.each {|post|post.destroy}
+      post.one_per_feed
     end
     
     render :nothing => true
@@ -64,7 +62,7 @@ class PingController < ApplicationController
       # Get list of feeds to send to client, depending on master ping offset
       @feeds = Feed.find(:all, :limit => nb_feeds_in_list, :offset => current_offset)
       @feeds = Feed.find(:all, :conditions => ["feeds.id in (?)", @feeds], :include => :latest_post, :order => 'feeds.id, posts.created_at')
-      @feeds.delete_if {|feed| feed.link.nil? or feed.latest_post.nil? }
+      @feeds.delete_if {|feed| feed.link.nil? }
       @ping.update_attribute("lock", 0)
       render :layout => false
     end
