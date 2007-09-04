@@ -1,6 +1,4 @@
-<% flash_names = [:notice, :warning, :message] %>
-
-<% for name in flash_names %>
+<% [:notice, :warning, :message].each do |name| %>
   <% if flash[name] %>
   <div class="content">
 		<div class="content6">
