@@ -9,13 +9,14 @@ SERVER = "localhost:3000"
 # Set your id for update service stats
 ID = "testing"
 # Set pinger hash to be verified on server side
-HASH = ""
+PASSWORD = ""
 
 def update_feed(id, entry)
   res = Net::HTTP.post_form(URI.parse("http://#{SERVER}/ping/update_feed/#{id}"),
-                                {:post_link => entry.link,
-                                 :post_title => entry.title,
-                                 :post_description => entry.description})
+                            {:pinger_password => PASSWORD,
+                             :post_link => entry.link,
+                             :post_title => entry.title,
+                             :post_description => entry.description})
 end
 
 puts "Starting updates..."

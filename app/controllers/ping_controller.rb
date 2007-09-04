@@ -7,7 +7,7 @@ class PingController < ApplicationController
   end
   
   def update_feed
-    pinger = Ping.find(:first, :conditions => ["hash like ?", params[:pinger_hash]]))
+    pinger = Ping.find(:first, :conditions => ["password like ?", params[:pinger_password]]))
     
     unless pinger.nil?
       # Create new post

@@ -36,8 +36,8 @@ Errors: <%= @errors.size %><br/>
 <h1>Pingers</h1>
 <p><a href="http://www.feevy.com/ping/unlock_ping/1">Unlock master lock</a></p>
 <p><table border="0" cellspacing="5" cellpadding="5">
-	<tr><th>Name</th><th>Hash</th><th>Ping count</th></tr>
+	<tr><th>Name</th><th>Password</th><th>Ping count</th></tr>
 	<% @pingers.each do |ping| -%>
-		<tr><td><%= ping.name %></td><td><%= ping.hash %></td><td><%= ping.total_count %></td></tr>
+		<tr><td><%= ping.name %></td><td><%= ping.password %></td><td><%= ping.total_count %></td></tr>
 	<% end -%>
 </table></p>
