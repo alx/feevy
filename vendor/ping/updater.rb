@@ -3,11 +3,11 @@ require 'hpricot'
 require 'open-uri'
 require 'rfeedreader'
 
-SERVER = "localhost:3000"
-#SERVER = "www.feevy.com"
+#SERVER = "localhost:3000"
+SERVER = "www.feevy.com"
 
 # Set your id for update service stats
-ID = "testing"
+ID = ""
 # Set pinger hash to be verified on server side
 PASSWORD = ""
 
@@ -26,7 +26,9 @@ while true
     (doc/:feed).each do |feed|
       feed_id   = feed.at('id').innerHTML
       feed_rss  = feed.at('rss').innerHTML
-      feed_post = feed.at('post').innerHTML
+      unless feed.at('post').nil?
+        feed_post = feed.at('post').innerHTML
+      end
       puts "Feed #{feed_id}: #{feed_rss}"
       # Read feed rss
       begin
@@ -34,7 +36,7 @@ while true
         # puts "Old: #{feed_post}"
         # puts "New: #{post_url}"
         # If url not the same, ping server
-        if entry.link != feed_post then
+        if feed_post.nil? or entry.link != feed_post
           puts "updating #{feed_id}..."
           update_feed(feed_id, entry)
         end
