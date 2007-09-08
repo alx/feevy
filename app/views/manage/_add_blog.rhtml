@@ -1,4 +1,4 @@
-<div <% if display.nil? %> style='display:none;' <% end %> id='add_blog_box_<%= position %>' class='cajab'>
+<div <% if display.nil? %> style='display:none;' <% end %> id='add_blog_box' class='cajab'>
   <div class='caja10'>
     <div class='box'>
       <b class='spiffy'>
@@ -10,14 +10,24 @@
       </b> 
       <div class='spiffy_content'>
         <br/>
-        <a class='right' onclick='$("add_blog_box_<%= position %>").hide()' href='#' <% unless display.nil? %> style='display:none;' <% end %>>close this box</a>
+        <a class='right' onclick='$("add_blog_box").hide();' href='#' <% unless display.nil? %> style='display:none;' <% end %>>close this box</a>
+		<br/>
+		<div id='add_blog_form'>
         <form class='select_blogs' action='/manage/select_blogs' method='post'>
-          <div id='add_blog_form_<%= position %>'>
-            <p>blog address<br/><input type='text' name='blogs[]' size='27' id='blogs'/></p>
+          <div id='add_blog_input'>
+            <p><b>Blog Url</b> | <a href='#add_blog_box' onclick='$("add_blog_form").hide();$("add_opml_form").show();'>OPML File</a><br/><input type='text' name='blogs[]' size='27' id='blogs'/></p>
           </div>
-          <input type='submit' class='submit' value='next >' id='boton2' onclick="Element.show('waiting');"/>
-		  <div id='waiting' class='waiting' style='display:none;'>adding feed<img alt="spinner" id="spinner" src="/images/spinner.gif" style="" /></div>
+          <input type='submit' class='submit' value='next >' id='boton2' onclick="Element.show('waiting_blog');"/>
+		  <div id='waiting_blog' class='waiting' style='display:none;'>adding feed<img alt="spinner" src="/images/spinner.gif"/></div>
         </form>
+		</div>
+		<div id='add_opml_form' style='display:none;'>
+        <form class='select_blogs' action='/manage/select_blogs_with_opml' method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <p><a href='#add_blog_box' onclick='$("add_opml_form").hide();$("add_blog_form").show();'>Blog Url</a> | <b>OPML File</b><br/><input type='file' name='opml_file' size='16' id='opml_file'/></p>
+          <input type='submit' class='submit' value='next >' id='boton2' onclick="Element.show('waiting_opml');"/>
+		  <div id='waiting_opml' class='waiting' style='display:none;'>reading opml<img alt="spinner" src="/images/spinner.gif"/></div>
+        </form>
+		</div>
       </div>
       <b class='spiffy'>
         <b class='spiffy5'></b>

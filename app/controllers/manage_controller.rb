@@ -11,7 +11,7 @@ class ManageController < ApplicationController
       # Do not select avatar if nothing to select
       if not @subscriptions.detect{ |sub| sub.feed.avatar_locked == 1 }.nil?
         @user.subscriptions_added
-        @user.update_attributes(:registration_stage => 2)
+        @user.update_attribute :registration_stage, 2
         flash[:message] = "Feeds has been added to your Feevy list."
         redirect_to :action => 'index'
       else
@@ -41,6 +41,37 @@ class ManageController < ApplicationController
               subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
             end
             flash[:message] = "Feeds has been added to your Feevy list."
+          rescue => err
+            flash[:warning] = "A problem occured with a feed: #{err.message}"
+          end
+        end
+      end
+      redirect_to :action => 'index'
+    end
+  end
+  
+  def select_blogs_with_opml
+    require_auth
+    if request.post?
+      @user.update_attributes(:registration_stage => 1)
+      unless params[:opml_file].nil?
+        
+        require 'tempfile'
+
+        tempfile = Tempfile.new('tmp')
+        tempfile.write params[:opml_file].read
+        tempfile.flush
+        
+        if tempfile.nil? or !Feed.is_opml?(tempfile)
+          flash[:warning] = "Error while reading OPML file"
+        else
+          begin
+            feeds = Feed.create_from_opml(tempfile)
+            # If feed exists, connect it to user using subscription
+            unless feeds.nil? or feeds.empty?
+              feeds.each {|feed| Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])}
+            end
+            flash[:message] = "#{feeds.size} feeds has been added to your Feevy list."
           rescue => err
             flash[:warning] = "A problem occured with a feed: #{err.message}"
           end
