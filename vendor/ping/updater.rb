@@ -7,9 +7,9 @@ require 'rfeedreader'
 SERVER = "www.feevy.com"
 
 # Set your id for update service stats
-ID = ""
+ID = "testing"
 # Set pinger hash to be verified on server side
-PASSWORD = ""
+PASSWORD = "ec34122ebcda5e58dad4fb205becc8a1"
 
 def update_feed(id, entry)
   res = Net::HTTP.post_form(URI.parse("http://#{SERVER}/ping/update_feed/#{id}"),
@@ -42,6 +42,8 @@ while true
         end
       rescue Timeout::Error
         puts "Timeout on this feed"
+      rescue Hpricot::ParseError
+        puts "Parsing error with Hpricot: #{err}"
       rescue => err
         puts "Error while reading this feed: #{err}"
       end
