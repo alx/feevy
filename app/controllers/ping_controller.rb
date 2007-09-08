@@ -11,16 +11,26 @@ class PingController < ApplicationController
     
     unless pinger.nil?
       # Create new post
-      post = Post.create(:url => params[:post_link], 
-                         :title => params[:post_title], 
-                         :description => params[:post_description], 
-                         :feed_id => params[:id])
-    
-      # Delete old posts
-      post.one_per_feed
+      Post.create(:url => params[:post_link], 
+                  :title => params[:post_title], 
+                  :description => params[:post_description], 
+                  :feed_id => params[:id])
     end
     
     render :nothing => true
+  end
+  
+  def verify
+    pinger_name, pinger_password = params[:id].split('-')
+    pinger = Ping.find(:first, :conditions => ["name like ? and password like ?", 
+                                               pinger_name,
+                                               pinger_password])
+    
+    if pinger.nil?
+      render :nothing => true, :status => 503
+    else
+      render :nothing => true
+    end
   end
   
   def list
