@@ -3,57 +3,85 @@ require 'hpricot'
 require 'open-uri'
 require 'rfeedreader'
 
-#SERVER = "localhost:3000"
-SERVER = "www.feevy.com"
-
-# Set your id for update service stats
-ID = "testing"
-# Set pinger hash to be verified on server side
-PASSWORD = "ec34122ebcda5e58dad4fb205becc8a1"
-
-def update_feed(id, entry)
-  res = Net::HTTP.post_form(URI.parse("http://#{SERVER}/ping/update_feed/#{id}"),
-                            {:pinger_password => PASSWORD,
-                             :post_link => entry.link,
-                             :post_title => entry.title,
-                             :post_description => entry.description})
+class Feed
+  attr_accessor :id, :rss, :post_link, :updated, :entry
+  
+  def initialize(feed)
+    @id         = feed.at('id').innerHTML
+    @rss        = feed.at('rss').innerHTML
+    @post_link  = feed.at('post').innerHTML unless feed.at('post').nil?
+    @updated    = false
+    @entry      = nil
+  end
+  
+  def updated?
+    puts "Checking: #{@rss}"
+    @entry = Rfeedreader.read_first(@rss).entries[0]
+    @updated = true if @post.nil? or @entry.link != @post_link
+  end
 end
 
-puts "Starting updates..."
-while true
-  begin
-    doc = Hpricot(open("http://#{SERVER}/ping/list/#{ID}"), :xml => true)
-    (doc/:feed).each do |feed|
-      feed_id   = feed.at('id').innerHTML
-      feed_rss  = feed.at('rss').innerHTML
-      unless feed.at('post').nil?
-        feed_post = feed.at('post').innerHTML
-      end
-      puts "Feed #{feed_id}: #{feed_rss}"
-      # Read feed rss
-      begin
-        entry = Rfeedreader.read_first(feed_rss).entries[0]
-        # puts "Old: #{feed_post}"
-        # puts "New: #{post_url}"
-        # If url not the same, ping server
-        if feed_post.nil? or entry.link != feed_post
-          puts "updating #{feed_id}..."
-          update_feed(feed_id, entry)
-        end
-      rescue Timeout::Error
-        puts "Timeout on this feed"
-      rescue Hpricot::ParseError
-        puts "Parsing error with Hpricot: #{err}"
-      rescue => err
-        puts "Error while reading this feed: #{err}"
-      end
-    end  
-  rescue Timeout::Error
-    puts "Timeout on this cycle"
-  rescue => err
-    puts "Error on this cycle: #{err} - Waiting a minute"
-    sleep(60)
+class Updater
+  
+  attr_accessor :server, :id, :password, :ready
+  
+  def initialize
+    @ready = false
+    config = YAML::load(File.open('config.yml'))
+  
+    # Set server url
+    @server = config['server']
+    # Set your id for update service stats
+    @id = config['username']
+    # Set pinger hash to be verified on server side
+    @password = config['password']
+  
+    begin
+      open("http://#{@server}/ping/verify/#{@id}-#{@password}")
+      @ready = true
+    rescue
+      puts "Error with updater login info, please verify your config.yml"
+    end
   end
-  puts "Pinging cycle finished, restarting it"
-  puts "===="
+  
+  def update_cycle
+    request_feed_list.each do |feed| 
+      update(feed) if feed.updated? 
+    end
+  end
+
+  def update(feed)
+    puts "Update!"
+    res = Net::HTTP.post_form(URI.parse("http://#{@server}/ping/update_feed/#{feed.id}"),
+                              {:pinger_password => @password,
+                               :post_link => feed.entry.link,
+                               :post_title => feed.entry.title,
+                               :post_description => feed.entry.description})
+  end
+
+  def request_feed_list
+    feed_list = []
+    begin
+      doc = Hpricot(open("http://#{@server}/ping/list/#{@id}"), :xml => true)
+      (doc/:feed).each do |feed_info|
+        feed_list << Feed.new(feed_info)
+      end
+      puts "#{feed_list.size} feeds loaded"
+    rescue => err
+      puts "Error while requesting feed list: #{err}"
+      puts "Waiting a minute..."
+      sleep(60)
+    end
+    return feed_list
+  end
+end
+
+updater = Updater.new
+if updater.ready
+  puts "Starting updates..."
+  while true
+    updater.update_cycle
+    puts "Pinging cycle finished, restarting it"
+    puts "===="
+  end
 end
