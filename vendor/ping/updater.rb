@@ -16,8 +16,12 @@ class Feed
   
   def updated?
     puts "Checking: #{@rss}"
-    @entry = Rfeedreader.read_first(@rss).entries[0]
-    @updated = true if @post.nil? or @entry.link != @post_link
+    begin
+      @entry = Rfeedreader.read_first(@rss).entries[0]
+      @updated = true if !@entry.nil? and (@post.nil? or @entry.link != @post_link)
+    rescue => err
+      puts "Error while checking feed updates: #{err}"
+    end
   end
 end
 
