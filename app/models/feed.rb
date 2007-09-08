@@ -44,11 +44,10 @@ class Feed < ActiveRecord::Base
     return nil if input_url.nil?
       
     if Rfeedfinder::isFeed?(input_url)
-      feed = Feed.create_feed(feed_url=input_url)
+      return Feed.create_feed(feed_url=input_url)
     else
-      feed = Feed.create_feed(web_url=input_url)
+      return Feed.create_feed(web_url=input_url)
     end
-    return feed
   end
   
   def Feed.is_opml?(opml)
