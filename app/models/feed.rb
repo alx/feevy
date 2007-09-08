@@ -36,7 +36,7 @@ class Feed < ActiveRecord::Base
     # clean up the url
     begin
       logger.debug "input_url: #{input_url}"
-      input_url = self.normalize_url(input_url)
+      input_url = Feed.normalize_url(input_url)
     rescue => err
       logger.debug "error on input_url: #{err.class}: #{err.message}#$/\n#{err.backtrace.join($/)}"
     end
@@ -44,90 +44,105 @@ class Feed < ActiveRecord::Base
     return nil if input_url.nil?
       
     if Rfeedfinder::isFeed?(input_url)
-      logger.debug "is_rss"
-      # Client send rss url
-      feed = self.create_from_rss(input_url)
+      feed = Feed.create_feed(feed_url=input_url)
     else
-      feed = self.create_from_webpage(input_url)
+      feed = Feed.create_feed(web_url=input_url)
     end
     return feed
   end
   
-  def Feed.is_opml?(url)
-    url =~ /\.opml$/
+  def Feed.is_opml?(opml)
+    doc = Hpricot(open(opml))
+    return (doc/:opml)
   end
   
   def Feed.create_from_opml(opml)
+    feeds = []
     doc = Hpricot(open(opml))
     (doc/"outline[@htmlurl]").each do |url|
-      logger.debug "#{url.attributes['htmlurl']}"
-      Feed.create_from_url url.attributes['htmlurl']
+      logger.debug "xml: #{url[:xmlurl]} - html: #{url[:htmlurl]}"
+      feed = nil
+      if !url[:xmlurl].nil? and !url[:htmlurl].nil?
+        feed = create_feed(web_url=url[:htmlurl], feed_url=url[:xmlurl])
+      elsif !url[:xmlurl].nil?
+        feed = Feed.create_feed(feed_url=url[:xmlurl])
+      else
+        feed = Feed.create_feed(web_url=url[:htmlurl])
+      end  
+      feeds << feed unless feed.nil?
     end
+    return feeds
   end
   
-  def Feed.create_from_webpage(input_url)
-    # find existing feed with same webpage url
-    feed = Feed.find :first, :conditions => ["href LIKE ?", input_url]
+  def Feed.create_feed(web_url=nil, feed_url=nil)
     
-    if feed.nil?
-      begin
-        feeding = Rfeedreader.read_first(input_url)
-        # find existing feed with same feed url
-        if Feed.find(:all, :conditions => ["link LIKE ?", feeding.feed_url]).empty?
-          # Create new Feed
-          feed = Feed.create(:href => input_url, 
-                             :link => feeding.feed_url, 
-                             :title => feeding.title,
-                             :avatar_id => 1)
-        
-          # Add new post to feed
-          entry = feeding.entries[0]
-          Post.new(:url => entry.link, 
-                   :title => entry.title, 
-                   :description => entry.description, 
-                   :feed_id => feed.id)
-                   
-          # Discover avatar
-          feed.discover_avatar_txt
-        end
-      rescue => error
-        logger.error "Error while creating a feed from blog: #{error.message}"
-        return error
-      end
+    return nil if web_url.nil? and fedd_url.nil?
+    
+    if !feed_url.nil? and web_url.nil?
+      # Check existing feed with this feed url
+      feed = Feed.find :first, :conditions => ["link LIKE ?", feed_url]
+      logger.debug("feed found") if !feed.nil?
+      return feed if !feed.nil?
+      feeding = Rfeedreader.read_first(feed_url)
+      web_url = feeding.link
+      return nil if web_url.nil? or web_url.empty?
+    elsif !web_url.nil? and feed_url.nil?
+      # Check existing feed with this web url
+      feed = Feed.find :first, :conditions => ["href LIKE ?", web_url]
+      logger.debug("feed found") if !feed.nil?
+      return feed if !feed.nil?
+      feeding = Rfeedreader.read_first(web_url)
+      feed_url = feeding.feed_url
+      return nil if feed_url.nil? or feed_url.empty?
+    else
+      feed = Feed.find :first, :conditions => ["href LIKE ? or link LIKE ?", web_url, feed_url]
+      return feed if !feed.nil?
+      feeding = Rfeedreader.read_first(feed_url)
     end
+    
+    return nil if feeding.nil? or web_url.nil? or feed_url.nil?
+    
+    feed = Feed.create(:href => web_url, 
+                       :link => feed_url, 
+                       :title => feeding.title,
+                       :avatar_id => 1)
+                       
+    # Add new post to feed if possible
+    if !feeding.entries.nil? and !feeding.entries[0].nil?
+      entry = feeding.entries[0]
+      Post.create(:url => entry.link, 
+                  :title => entry.title, 
+                  :description => entry.description, 
+                  :feed_id => feed.id)
+    end
+                 
+    # Discover avatar
+    feed.discover_avatar_txt
+      
     return feed
   end
   
-  def Feed.create_from_rss(input_url)
-    feeding = Rfeedreader.read_first(input_url)
-  
-    # Register new blog if href has been found
-    if !feeding.link.nil?
-      feed = Feed.find :first, :conditions => ["link LIKE ?", feeding.link]
-      if feed.nil?
-        begin
-        
-          feed = Feed.create(:href => feeding.link, 
-                             :link => input_url, 
-                             :title => feeding.title, 
-                             :avatar_id => 1)
-                             
-          # Add new post to feed
-          entry = feeding.entries[0]
-          Post.new(:url => entry.link, 
-                   :title => entry.title, 
-                   :description => entry.description, 
-                   :feed_id => feed.id)
-                   
-          # Discover avatar
-          feed.discover_avatar_txt
-        rescue => error
-          logger.error "Error while creating a feed from rss: #{error.message}"
-          return error
+  def refresh(forced=false)
+    unless is_bogus?
+      begin
+        # Get first item
+        Timeout::timeout(30) do
+          entry = Rfeedreader.read_first(link).entries[0]
+          
+          if !entry.nil? and !entry.link.nil? and (forced or latest_post.nil? or entry.url != latest_post.url)        
+            # Save new post
+            Post.create(:url => entry.link, 
+                        :title => entry.title, 
+                        :description => entry.description, 
+                        :feed_id => id)
+          end
         end
+      rescue Timeout::Error
+        Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
+      rescue => err
+        Bug.raise_feed_bug(self, err) unless self.is_bogus?
       end
     end
-    return feed
   end
   
   def has_error
@@ -139,64 +154,6 @@ class Feed < ActiveRecord::Base
   
   def has_warnings
     return self.is_warning == 1 ? true : false
-  end
-  
-  def refresh(forced=false)
-    unless self.is_bogus?
-      begin
-        # Get first item
-        Timeout::timeout(30) do
-          entry = Rfeedreader.read_first(self.link).entries[0]
-          
-          unless entry.nil?
-            # get item url
-            post_url = entry.url
-            # built Post from first item if different url
-            if !entry.url.nil? and (forced or latest_post.nil? or entry.url != latest_post.url)
-              # Delete existing post if forced update
-              if forced == true
-                post = Post.find(:first, :conditions => ["url LIKE ? AND feed_id = ?", post_url, self.id])
-                post.destroy unless post.nil?
-              end
-              # Save new post
-              Post.create(:url => entry.link, 
-                          :title => entry.title, 
-                          :description => entry.description, 
-                          :feed_id => id)
-            end
-          end
-        end
-      rescue Timeout::Error
-        Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
-      rescue => err
-        Bug.raise_feed_bug(self, err) unless self.is_bogus?
-      end
-    end
-  end
-  
-  # Return true if feed is a flickr feed
-  def is_flickr?
-    link =~ /http:\/\/api\.flickr\.com/
-  end
-  
-  # Return true if feed is a picasa feed
-  def is_picasa?
-    link =~ /http:\/\/picasaweb\.google\.com/
-  end
-  
-  # Return true if feed is a fotolog feed
-  def is_fotolog?
-    link =~ /\.fotolog\.com/
-  end
-  
-  # Return true if feed is a google video feed
-  def is_google_video?
-    link =~ /http:\/\/video\.google\.com/
-  end
-  
-  # Return true if feed is a jumpcut feed
-  def is_jumpcut?
-    link =~ /http:\/\/rss\.jumpcut\.com/
   end
   
   # Return the rss item link
