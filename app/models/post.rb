@@ -4,6 +4,8 @@ class Post < ActiveRecord::Base
   
   validates_presence_of :url
   
+  after_create :unique_per_feed
+  
   def Post.remove_orphelin
     Post.find(:all).each do |post|
       if post.feed.nil?
@@ -12,7 +14,7 @@ class Post < ActiveRecord::Base
     end
   end
   
-  def one_per_feed
-    Post.find(:all, :conditions => ["id != ? AND feed_id = ?", self.id, self.feed_id]).each {|object| object.destroy}
+  def unique_per_feed
+    Post.find(:all, :conditions => ["id != ? AND feed_id = ?", id, feed_id]).each {|object| object.destroy}
   end
 end
