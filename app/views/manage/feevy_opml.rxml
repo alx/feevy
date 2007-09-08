@@ -1,0 +1,15 @@
+xml.opml do
+  xml.head do
+    xml.title "Feevy OPML"
+    xml.dateCreated Time.now
+  end
+  xml.body do
+    @subscriptions.each do |sub|
+      xml.outline do
+        xml.title    sub.feed.title
+        xml.xmlurl   sub.feed.link
+        xml.htmlurl  sub.feed.href
+      end
+    end
+  end
+end

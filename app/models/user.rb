@@ -3,7 +3,7 @@ require 'digest/sha1'
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
   
-  has_many :subscriptions
+  has_many :subscriptions, :include => :feed
   has_many :feeds, :through => :subscriptions
   
 	# Protecting the fields

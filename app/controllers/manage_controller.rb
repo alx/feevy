@@ -234,6 +234,12 @@ class ManageController < ApplicationController
     end
   end
   
+  def export_opml
+    check_user
+    @subscriptions = @user.subscriptions
+    render :file => "manage/feevy_opml", :use_full_path => true
+  end
+  
   protected
   def check_user
     unless @user
