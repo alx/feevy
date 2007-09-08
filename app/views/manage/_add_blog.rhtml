@@ -23,7 +23,7 @@
 		</div>
 		<div id='add_opml_form' style='display:none;'>
         <form class='select_blogs' action='/manage/select_blogs_with_opml' method="post" accept-charset="utf-8" enctype="multipart/form-data">
-            <p><a href='#add_blog_box' onclick='$("add_opml_form").hide();$("add_blog_form").show();'>Blog Url</a> | <b>OPML File</b><br/><input type='file' name='opml_file' size='16' id='opml_file'/></p>
+            <p><a href='#add_blog_box' onclick='$("add_opml_form").hide();$("add_blog_form").show();'>Blog Url</a> | <b>OPML File [<a href="http://en.wikipedia.org/wiki/OPML">help</a>]</b><br/><input type='file' name='opml_file' size='16' id='opml_file'/></p>
           <input type='submit' class='submit' value='next >' id='boton2' onclick="Element.show('waiting_opml');"/>
 		  <div id='waiting_opml' class='waiting' style='display:none;'>reading opml<img alt="spinner" src="/images/spinner.gif"/></div>
         </form>
