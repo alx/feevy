@@ -260,8 +260,10 @@ class Feed < ActiveRecord::Base
     deleted_feeds = []
     @feeds = Feed.find(:all)
     @feeds.each do |feed|
+      logger.info "Feed: #{feed.link}"
       @duplicates = @feeds.select{|duplicate| duplicate.id != feed.id and duplicate.link == feed.link}
       @duplicates.each do |duplicate|
+        logger.info "Duplicate found: #{duplicate.id}"
         duplicate.subscriptions.each {|sub| sub.update_attribute(:feed_id, feed.id)}
         duplicate.posts.each {|post| post.update_attribute(:feed_id, feed.id)}
         @feeds.delete(duplicate)
