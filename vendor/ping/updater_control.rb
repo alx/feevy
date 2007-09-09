@@ -3,7 +3,6 @@ require 'daemons'
 
 options = {
   :app_name   => "feevy_updater",
-  :ARGV       => ['start', '-f'],
   :dir_mode   => :script,
   :dir        => 'pids',
   :multiple   => true,
