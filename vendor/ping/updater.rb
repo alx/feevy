@@ -31,15 +31,16 @@ class Updater
   
   def initialize
     @ready = false
-    config = YAML::load(File.open('config.yml'))
-  
+    config = YAML::load(File.open(File.join(File.dirname(__FILE__), 
+'config.yml')))
+
     # Set server url
     @server = config['server']
     # Set your id for update service stats
     @id = config['username']
     # Set pinger hash to be verified on server side
     @password = config['password']
-  
+
     begin
       open("http://#{@server}/ping/verify/#{@id}-#{@password}")
       @ready = true
