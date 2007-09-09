@@ -262,12 +262,13 @@ class Feed < ActiveRecord::Base
     @feeds.each do |feed|
       @duplicates = @feeds.select{|duplicate| duplicate.id != feed.id and duplicate.link == feed.link}
       @duplicates.each do |duplicate|
-        Subscription.find(:all, :conditions => ["feed_id = ?", duplicate.id]).each {|sub| sub.update_attribute :feed_id, feed.id}
-        Post.find(:all, :conditions => ["feed_id = ?", duplicate.id]).each {|post| post.update_attribute :feed_id, feed.id}
+        duplicate.subscriptions.each {|sub| sub.update_attribute(:feed_id, feed.id)}
+        duplicate.posts.each {|post| post.update_attribute(:feed_id, feed.id)}
         @feeds.delete(duplicate)
         deleted_feeds << duplicate.link
         duplicate.destroy
       end
+      @feeds.delete(feed)
     end
     logger.debug "delete feed size: #{deleted_feeds.size}"
   end
