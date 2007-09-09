@@ -1,8 +1,13 @@
 class PingController < ApplicationController
   
   def update
-    feed = Feed.find(params[:id])
-    feed.refresh
+    if params[:url].nil?
+      feed = Feed.find(params[:id])
+    else
+      logger.info "Ping_update: #{CGI::unescape(params[:url])}"
+      feed = Feed.find :first, :conditions => ["link like ?", CGI::unescape(params[:url])]
+    end
+    feed.refresh unless feed.nil?
     render :nothing => true
   end
   
