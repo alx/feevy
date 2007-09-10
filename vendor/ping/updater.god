@@ -2,20 +2,17 @@
 require 'rubygems'
 require 'god'
 
-updaters = [0,1,2,3,4,5,6,7,8,9]
-
 God.init do |god|
   god.pid_file_directory = '/home/lasindias/updater/pids'
 end
 
-updaters.each do |updater|
+%{0 1}.each do |updater|
   God.watch do |w|
     # watch with no pid_file attribute set
     w.name = "updater_#{updater}"
     w.interval = 30.seconds # default
     w.start = "ruby /home/lasindias/updater/updater.rb"
     w.grace = 10.seconds
-    w.group = 'updaters'
     
     w.behavior(:clean_pid_file)
 
