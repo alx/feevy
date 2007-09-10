@@ -29,10 +29,9 @@ class Updater
   
   def initialize
     @ready = false
-    config = YAML::load(File.open(File.join(File.dirname(__FILE__), 
-'config.yml')))
+    config = YAML::load(File.open(File.join(File.dirname(__FILE__), 'config.yml')))
 
-    @logger = Logger.new('updater.log', 10, 1024000)
+    @logger = Logger.new(File.join(File.dirname(__FILE__), 'updater.log'), 10, 1024000)
 
     # Set server url
     @server = config['server']
