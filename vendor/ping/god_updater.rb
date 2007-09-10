@@ -8,7 +8,7 @@ God.init do |god|
   god.pid_file_directory = "#{ROOT}/pids"
 end
 
-%w{0 1}.each do |updater|
+%w{0 1 2 3 4 5 6 7 8 9}.each do |updater|
   God.watch do |w|
     # watch with no pid_file attribute set
     w.name = "updater_#{updater}"
