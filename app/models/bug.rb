@@ -31,12 +31,8 @@ class Bug < ActiveRecord::Base
     Bug.create(:level => level, 
                :description => error,
                :feed_id => feed.id).send_by_mail
-    if level = Bug::ERROR
-      feed.update_attribute :is_bogus, 1
-    end
-    if level = Bug::WARNING
-      feed.update_attribute :is_warning, 1
-    end
+    feed.update_attribute(:is_bogus, 1) if level == Bug::ERROR
+    feed.update_attribute(:is_warning, 1) if level == Bug::WARNING
   end
   
   def resolve
