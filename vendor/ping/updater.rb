@@ -2,6 +2,7 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 require 'rfeedreader'
+require 'logger'
 
 class Feed
   attr_accessor :id, :rss, :post_link, :updated, :entry
@@ -15,24 +16,23 @@ class Feed
   end
   
   def updated?
-    puts "Checking: #{@rss}"
-    begin
-      @entry = Rfeedreader.read_first(@rss).entries[0]
-      @updated = true if !@entry.nil? and (@post_link.nil? or @entry.link != @post_link)
-    rescue => err
-      puts "Error while checking feed updates: #{err}"
-    end
+    feed = Rfeedreader.read_first(@rss)
+    raise "Unreadable feed" if feed.nil? or feed.entries[0].nil?
+    @entry = feed.entries[0]
+    @updated = true if @post_link.nil? or @entry.link != @post_link
   end
 end
 
 class Updater
   
-  attr_accessor :server, :id, :password, :ready
+  attr_accessor :server, :id, :password, :ready, :logger
   
   def initialize
     @ready = false
     config = YAML::load(File.open(File.join(File.dirname(__FILE__), 
 'config.yml')))
+
+    @logger = Logger.new('updater.log', 10, 1024000)
 
     # Set server url
     @server = config['server']
@@ -45,18 +45,23 @@ class Updater
       open("http://#{@server}/ping/verify/#{@id}-#{@password}")
       @ready = true
     rescue
-      puts "Error with updater login info, please verify your config.yml"
+      @logger.error "Error with updater login info, please verify your config.yml"
     end
   end
   
   def update_cycle
-    request_feed_list.each do |feed| 
-      update(feed) if feed.updated? 
+    request_feed_list.each do |feed|
+      @logger.info "Checking #{feed.rss}"
+      begin
+        update(feed) if feed.updated?
+      rescue => err
+        @logger.error "Error while checking #{feed.rss}: " << err 
+      end 
     end
   end
 
   def update(feed)
-    puts "Update!"
+    @logger.info "Update!"
     res = Net::HTTP.post_form(URI.parse("http://#{@server}/ping/update_feed/#{feed.id}"),
                               {:pinger_password => @password,
                                :post_link => feed.entry.link,
@@ -71,10 +76,10 @@ class Updater
       (doc/:feed).each do |feed_info|
         feed_list << Feed.new(feed_info)
       end
-      puts "#{feed_list.size} feeds loaded"
+      @logger.info "#{feed_list.size} feeds loaded"
     rescue => err
-      puts "Error while requesting feed list: #{err}"
-      puts "Waiting a minute..."
+      @logger.error "Error while requesting feed list: #{err}"
+      @logger.warning "Waiting a minute..."
       sleep(60)
     end
     return feed_list
@@ -83,10 +88,7 @@ end
 
 updater = Updater.new
 if updater.ready
-  puts "Starting updates..."
   while true
     updater.update_cycle
-    puts "Pinging cycle finished, restarting it"
-    puts "===="
   end
 end
