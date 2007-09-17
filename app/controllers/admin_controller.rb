@@ -37,7 +37,7 @@ class AdminController < ApplicationController
   
   def bogus_feeds
     require_auth 'admin'
-    condition = ["is_bogus == 1 or is_warning == 1"]
+    condition = ["is_bogus = 1 or is_warning = 1"]
     @feeds, @page = Feed.paginate(:all, 
                                   :include => [:bugs], 
                                   :conditions => condition, 
