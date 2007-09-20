@@ -10,7 +10,7 @@
       <!-- capa contenedora -->
       <div class="show_blog">
         <br/>
-        <% if feed.avatar_locked == 1 %>
+        <% if feed.avatar_locked == 1 and !feed.avatar.nil? %>
           <img src='<%= feed.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>
         <% else %>
           <img src='<%= subscription.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>

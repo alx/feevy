@@ -5,11 +5,9 @@ xml.opml do
   end
   xml.body do
     @subscriptions.each do |sub|
-      xml.outline do
-        xml.title    sub.feed.title
-        xml.xmlurl   sub.feed.link
-        xml.htmlurl  sub.feed.href
-      end
+      xml.outline :title => sub.feed.title,
+                  :xmlurl => sub.feed.link.gsub("&amp;", "&"),
+                  :htmlurl => sub.feed.href.gsub("&amp;", "&")
     end
   end
 end

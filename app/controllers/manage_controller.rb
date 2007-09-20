@@ -234,6 +234,7 @@ class ManageController < ApplicationController
   def export_opml
     check_user
     @subscriptions = @user.subscriptions
+    @subscriptions.delete_if {|sub| sub.feed.nil?}
     render :file => "manage/feevy_opml", :use_full_path => true
   end
   
