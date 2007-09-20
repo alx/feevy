@@ -63,8 +63,6 @@ class AuthadminController < ApplicationController
   				if not @params[:edituser][:image].content_type.chomp =~ /^image/
   					notice += "Your picture isn't an image !" 
   				else
-  					require 'GD'
-  					require 'tempfile'
   
 						tempfile = Tempfile.new('tmp')
   					tempfile.write @params[:edituser][:image].read

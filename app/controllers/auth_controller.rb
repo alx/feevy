@@ -73,8 +73,6 @@ class AuthController < ApplicationController
 					notice += "Your picture isn't an image !" 
 					return false
 				else
-					require 'GD'
-					require 'tempfile'
 
 					tempfile = Tempfile.new('tmp')
 					tempfile.write @params[:post][:picture].read

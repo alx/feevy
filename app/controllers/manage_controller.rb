@@ -56,8 +56,6 @@ class ManageController < ApplicationController
       @user.update_attributes(:registration_stage => 1)
       unless params[:opml_file].nil?
         
-        require 'tempfile'
-
         tempfile = Tempfile.new('tmp')
         tempfile.write params[:opml_file].read
         tempfile.flush
@@ -131,7 +129,6 @@ class ManageController < ApplicationController
         flash[:warning] = "Your picture isn't an image !" 
         return false
       else
-        require 'tempfile'
 
         tempfile = Tempfile.new('tmp')
         tempfile.write @params[:subscription][:picture].read
