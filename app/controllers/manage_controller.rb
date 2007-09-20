@@ -175,6 +175,14 @@ class ManageController < ApplicationController
     @deleted_bogus = "bogus_" << params[:id] if subscription.feed.is_bogus?
     subscription.destroy
   end
+  
+  def delete_all
+    check_user
+    @user.subscriptions.each do |sub|
+      sub.destroy
+    end
+    redirect_to :action => 'index'
+  end
 
   def edit_blog
     check_user

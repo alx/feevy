@@ -52,6 +52,7 @@
 <div class="right">
 <a href='#add_blog_box_top' onclick='$("add_blog_box").show()'>+ add another blog</a>
 </div>
+
 <% unless @subscriptions.nil? || @subscriptions.empty? %>
   <% index = 1  %>
   <% @subscriptions.each do |subscription| %>
@@ -59,8 +60,13 @@
     <% index = index + 1 %>
   <% end -%>
 <% end -%>
+
+<% if @subscriptions.size > 1 -%>
 <div class="right">
+<a href='/manage/delete_all'>- delete all subscriptions</a>
 <a href='#add_blog_box_top' onclick='$("add_blog_box").show()'>+ add another blog</a>
 <a href='/manage/export_opml'>+ export opml</a>
 </div>
+<% end -%>
+
 </div>
