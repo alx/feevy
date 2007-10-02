@@ -1,21 +1,21 @@
-<div id=\"feevy_bar_<%= id %>\">
-<div class=\"bar_content\">
+<div id="feevy_bar_<%= id %>">
+<div class="bar_content">
 <% if @entries %>
 <% @entries.each do |post| %>
-<div class=\"feevy_item\">
-<div class=\"item_content\">
-<div class=\"feevy_title\">
-<img src=\"<%= post[:img] %>\" width=40 height=40/>
-<h1><a href=\"<%= post[:post_url] %>\"><%= url_escape(post[:title]) %></a></h1>
+<div class="feevy_item">
+<div class="item_content">
+<div class="feevy_title">
+<img src="<%= post[:img] %>" width=40 height=40/>
+<h1><a href="<%= post[:post_url] %>"><%= url_escape(post[:title]) %></a></h1>
 </div>
-<div class=\"feevy_content\">
-<%= url_escape(post[:texto]) %>&nbsp;<a href=\"<%= post[:post_url] %>\">en savoir plus</a>
+<div class="feevy_content">
+<%= url_escape(post[:texto]) %>&nbsp;<a href="<%= post[:post_url] %>">en savoir plus</a>
 </div>
-<a class=\"blog_url\" href=\"<%= post[:blog_url] %>\"><%= url_escape(post[:name]) %></a>
+<a class="blog_url" href="<%= post[:blog_url] %>"><%= url_escape(post[:name]) %></a>
 </div>
 </div>
 <% end -%>
 <% end -%>
-<div class=\"footer\">Feevy est un service gratuit <a href=\"http://www.feevy.com\">cr&eacute;e le tiens</a></div>
+<div class="footer">Feevy est un service gratuit <a href="http://www.feevy.com">cr&eacute;e le tiens</a></div>
 </div>
 </div>
