@@ -181,5 +181,16 @@ class UserController < ApplicationController
       @content = @feevy[0]
       @style = @feevy[1]
     end
+    logger.debug "#{request.env['HTTP_ACCEPT']}"
+    if request.env['HTTP_ACCEPT'] =~ /(application|text)\/(html|xhtml)/
+      render :layout => false
+    else 
+      render :action => "feevy_script", 
+             :style => @style, :content => @content,
+             :layout => false 
+    end
+  end
+  
+  def feevy_script
   end
 end
