@@ -1,0 +1,9 @@
+@style.each_line { |linea|
+  linea.strip!
+  page << "document.writeln(\'" +  escape_javascript(linea) + "\');" unless linea.length == 0
+}
+
+@content.each_line { |linea| 
+  linea.strip!
+  page << "document.writeln('" +  escape_javascript(linea) + "');" unless linea.length == 0
+}
