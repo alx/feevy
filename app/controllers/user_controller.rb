@@ -183,14 +183,16 @@ class UserController < ApplicationController
     end
     logger.debug "#{request.env['HTTP_ACCEPT']}"
     if request.env['HTTP_ACCEPT'] =~ /(application|text)\/(html|xhtml)/
+      # render html version
+      logger.debug @content.to_s
       render :layout => false
-    else 
-      render :action => "feevy_script", 
-             :style => @style, :content => @content,
-             :layout => false 
+    else
+      # render script version
+      render :action => "feevy_script" 
     end
   end
   
   def feevy_script
+    render :layout => false 
   end
 end
