@@ -181,7 +181,7 @@ class UserController < ApplicationController
       @content = @feevy[0]
       @style = @feevy[1]
     end
-    logger.debug "#{request.env['HTTP_ACCEPT']}"
+    
     if request.env['HTTP_ACCEPT'] =~ /(application|text)\/(html|xhtml)/
       # render html version
       logger.debug @content.to_s
