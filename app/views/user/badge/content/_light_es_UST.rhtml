@@ -6,12 +6,12 @@
 <div class="item_content">
 <div class="feevy_title">
 <img src="<%= post[:img] %>" width=40 height=40/>
-<h1><a href="<%= post[:post_url] %>"><%= url_escape(post[:title]) %></a></h1>
+<h1><a href="<%= post[:post_url] %>"><%= post[:title] %></a></h1>
 </div>
 <div class="feevy_content">
-<%= url_escape(post[:texto]) %>&nbsp;<a href="<%= post[:post_url] %>">Siga leyendo</a>
+<%= post[:texto] %>&nbsp;<a href="<%= post[:post_url] %>">Siga leyendo</a>
 </div>
-<a class="blog_url" href="<%= post[:blog_url] %>"><%= url_escape(post[:name]) %></a>
+<a class="blog_url" href="<%= post[:blog_url] %>"><%= post[:name] %></a>
 </div>
 </div>
 <% end -%>
