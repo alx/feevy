@@ -176,7 +176,7 @@ class UserController < ApplicationController
       @style =  render_to_string(:partial => partial_style, :locals => { :id => params[:id]})
       @content = render_to_string(:partial => partial_badge, :locals => { :id => params[:id], :entradas => @entries} )
       @feevy = [@content, @style]
-      CACHE.set(cache_key, @feevy, 60*10)
+      CACHE.set(cache_key, @feevy, 60*5)
     else
       @content = @feevy[0]
       @style = @feevy[1]

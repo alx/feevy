@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
       if self.opt_displayed_subscriptions != "all"
         @entries = @entries[1..self.opt_displayed_subscriptions.to_i]
       end
-      CACHE.set(cache_key, @entries, 60*10)
+      CACHE.set(cache_key, @entries, 60*5)
     end
     return @entries
   end
