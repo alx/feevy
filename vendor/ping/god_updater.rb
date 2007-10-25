@@ -3,7 +3,7 @@ require 'rubygems'
 require 'god'
 
 ROOT = File.dirname(__FILE__)
-nb_updaters = 15
+nb_updaters = 30
 
 God.pid_file_directory = "#{ROOT}/pids/"
 
@@ -26,7 +26,7 @@ God.pid_file_directory = "#{ROOT}/pids/"
     
     w.restart_if do |restart|
       restart.condition(:memory_usage) do |c|
-        c.above = 150.megabytes
+        c.above = 30.megabytes
         c.times = [3, 5] # 3 out of 5 intervals
       end
       
