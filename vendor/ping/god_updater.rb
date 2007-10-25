@@ -26,7 +26,7 @@ God.pid_file_directory = "#{ROOT}/pids/"
     
     w.restart_if do |restart|
       restart.condition(:memory_usage) do |c|
-        c.above = 30.megabytes
+        c.above = 50.megabytes
         c.times = [3, 5] # 3 out of 5 intervals
       end
       
