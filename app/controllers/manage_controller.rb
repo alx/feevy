@@ -32,15 +32,9 @@ class ManageController < ApplicationController
         unless blog.empty?
           begin
             # Create or find a feed using specified blog url
-            logger.debug "create from blog: #{blog}"
             feed = Feed.create_from_blog(blog)
-            logger.debug "blog create: #{feed.id}"
-            # If feed exists, connect it to user using subscription
-            unless feed.nil?
-              logger.debug "feed #{feed.id}: #{feed.link}"
-              subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
-            end
-            flash[:message] = "Feeds has been added to your Feevy list."
+            @user.add_subscription(feed)
+            flash[:message] = "Feed has been added to your Feevy list."
           rescue => err
             flash[:warning] = "A problem occured with a feed: #{err.message}"
           end
@@ -65,10 +59,7 @@ class ManageController < ApplicationController
         else
           begin
             feeds = Feed.create_from_opml(tempfile)
-            # If feed exists, connect it to user using subscription
-            unless feeds.nil? or feeds.empty?
-              feeds.each {|feed| Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])}
-            end
+            @user.add_subscriptions(feeds)
             flash[:message] = "#{feeds.size} feeds has been added to your Feevy list."
           rescue => err
             flash[:warning] = "A problem occured with a feed: #{err.message}"

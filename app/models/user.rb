@@ -15,6 +15,19 @@ class User < ActiveRecord::Base
   cattr_accessor :salt
   attr_accessor :ident, :expire_at, :password, :passwordbis
   
+  def add_subscription(feed)
+    if !feed.nil? or !Subscription.exists?(:user_id => id, :feed_id => feed.id)
+      Subscription.create(:feed_id => feed.id, 
+                          :user_id => id, 
+                          :avatar_id => 1,
+                          :just_added => 1)
+    end
+  end
+  
+  def add_subscriptions(feeds)
+    feeds.each{|feed| add_subscription(feed)} if !feeds.empty? or !feeds.nil?
+  end
+  
   def just_added_subscriptions
     self.subscriptions.select{|sub| (not sub.feed.nil?) and sub.just_added == 1}
   end
