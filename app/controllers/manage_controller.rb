@@ -33,11 +33,10 @@ class ManageController < ApplicationController
           begin
             # Create or find a feed using specified blog url
             feed = Feed.create_from_blog(blog)
+            flash[:message] = "Feed has been added to your Feevy list."
             if @user.add_subscription(feed).nil?
               flash[:message] = "You've already got this feed in your Feevy."
               @user.update_attribute :registration_stage, 2
-            else
-              flash[:message] = "Feed has been added to your Feevy list."
             end
           rescue => err
             flash[:warning] = "A problem occured with a feed: #{err.message}"
@@ -64,11 +63,10 @@ class ManageController < ApplicationController
           begin
             feeds = Feed.create_from_opml(tempfile)
             subscription_size = @user.add_subscriptions(feeds)
+            flash[:message] = "#{subscription_size} feeds has been added to your Feevy list."
             if subscription_size == 0
               flash[:message] = "You've already got all your OPML feeds in your Feevy."
               @user.update_attribute :registration_stage, 2
-            else
-              flash[:message] = "#{subscription_size} feeds has been added to your Feevy list."
             end
           rescue => err
             flash[:warning] = "A problem occured with a feed: #{err.message}"
