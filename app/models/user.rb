@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
   
   def add_subscriptions(feeds)
-    feeds.each{|feed| add_subscription(feed)} if !feeds.empty? or !feeds.nil?
+    feeds.each{|feed| add_subscription(feed)} if !feeds.empty? and !feeds.nil?
   end
   
   def just_added_subscriptions
