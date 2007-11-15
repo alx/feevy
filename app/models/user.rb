@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   attr_accessor :ident, :expire_at, :password, :passwordbis
   
   def add_subscription(feed)
-    if !feed.nil? or !Subscription.exists?(:user_id => id, :feed_id => feed.id)
+    if !feed.nil? and !Subscription.exists?(:user_id => id, :feed_id => feed.id)
       Subscription.create(:feed_id => feed.id, 
                           :user_id => id, 
                           :avatar_id => 1,
