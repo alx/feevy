@@ -21,11 +21,19 @@ class User < ActiveRecord::Base
                           :user_id => id, 
                           :avatar_id => 1,
                           :just_added => 1)
+    else
+      return nil
     end
   end
   
   def add_subscriptions(feeds)
-    feeds.each{|feed| add_subscription(feed)} if !feeds.empty? and !feeds.nil?
+    added_subscription = 0
+    if !feeds.empty? and !feeds.nil?
+      feeds.each do |feed| 
+        added_subscription += 1 if !add_subscription(feed).nil?
+      end
+    end
+    return added_subscription
   end
   
   def just_added_subscriptions
