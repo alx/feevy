@@ -93,9 +93,7 @@ class User < ActiveRecord::Base
       @entries = @entries.sort_by{|entry| entry[:date]}.reverse
 
       # Only get last displayed feeds depending on user choice
-      if self.opt_displayed_subscriptions != "all"
-        @entries = @entries[1..self.opt_displayed_subscriptions.to_i]
-      end
+      @entries = @entries[0..opt_displayed_subscriptions.to_i] if opt_displayed_subscriptions != "all"
       CACHE.set(cache_key, @entries, 60*5)
     end
     return @entries
