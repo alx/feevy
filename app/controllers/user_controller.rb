@@ -174,6 +174,7 @@ class UserController < ApplicationController
       logger.debug "partial_badge: #{partial_badge}"
     
       @style =  render_to_string(:partial => partial_style, :locals => { :id => params[:id]})
+      @style = "" if params[:style] == "open-css"
       @content = render_to_string(:partial => partial_badge, :locals => { :id => params[:id], :entradas => @entries} )
       @feevy = [@content, @style]
       CACHE.set(cache_key, @feevy, 60*5)

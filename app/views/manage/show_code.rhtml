@@ -19,7 +19,8 @@
           <select name="style" id="style">
                <option value="dark">classic dark</option>
                <option value="white">white - new!</option>
-               <option value="liquid">liquid -for CSS customization</option>
+               <option value="liquid">liquid - for CSS customization</option>
+               <option value="open-css">open-css - no style included</option>
           </select>
           <%= observe_field "style",
                :url => {:controller => "manage", :action => "display_feevy_code"},
