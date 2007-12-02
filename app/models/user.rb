@@ -58,15 +58,14 @@ class User < ActiveRecord::Base
   def generate_feevy(tags)
     # Generate cache_key
     cache_key = "entries_#{self.id}"
-    cache_key << "_#{tags}" if tags
+    cache_key << "_#{tags.gsub(" ", "+")}" if tags
     
     # Get entries from cache or generate entries if not found
     unless @entries = CACHE.get(cache_key)
       @entries = []
       if tags
         # Manage multitags
-        tags = tags.gsub("+", ", ") if tags.include? '+'
-        subscriptions = self.subscriptions.find_tagged_with(tags)
+        subscriptions = self.subscriptions.find_tagged_with(tags, :match_all => true)
       else
         subscriptions = self.subscriptions
       end

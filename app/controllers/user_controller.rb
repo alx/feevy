@@ -144,10 +144,9 @@ class UserController < ApplicationController
 
   
   def feevy
-    params[:tags].gsub!(" ", "+") if params[:tags]
     # Generate cache_key
     cache_key = "feevy_#{params[:id]}"
-    cache_key << "_#{params[:tags]}" if params[:tags]
+    cache_key << "_#{params[:tags].gsub(" ", "+")}" if params[:tags]
     cache_key << "_#{params[:style]}" if params[:style]
     
     # Get entries from cache or generate entries if not found
