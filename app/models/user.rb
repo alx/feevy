@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
       @entries = []
       if tags
         # Manage multitags
-        subscriptions = self.subscriptions.find_tagged_with(tags, :match_all => true)
+        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", "), :match_all => true)
       else
         subscriptions = self.subscriptions
       end
