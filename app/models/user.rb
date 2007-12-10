@@ -82,7 +82,12 @@ class User < ActiveRecord::Base
             entry[:date]      = post.created_at
             entry[:texto]     = post.description.nil?  ? "" : post.description
             entry[:post_url]  = post.url
-            entry[:img]       = feed.avatar_locked == 1 ? feed.avatar.url : subscription.avatar.url 
+            
+            avatar = subscription.avatar
+            avatar = feed.avatar if feed.avatar_locked == 1
+            
+            entry[:img] = avatar.nil? ? "" : avatar.url
+            
             @entries << entry
           end
         end
