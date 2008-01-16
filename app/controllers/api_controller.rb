@@ -128,8 +128,9 @@ class ApiController < ApplicationController
       raise Exception if @sub.nil?
 
       if params[:tag_list]
-        @tag_list = params[:tag_list].gsub(/([^,])\s/, '\1, ')
-        @sub.update_attribute(:tag_list, @tag_list)
+        @tag_list = params[:tag_list].gsub(/\+/, ', ')
+        @sub.tag_list = @tag_list
+        @sub.save
       end
       @subscriptions = @user.subscriptions
     rescue
