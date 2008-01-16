@@ -117,16 +117,23 @@ class ApiController < ApplicationController
   def edit_tags
     # Expected params: api_key, feed_id, tag_list
     @user = get_api_user
-    if @user.nil? || params[:feed_id].nil? || params[:tag_list].nil?
-      render :nothing => true, :status => 503
-    else
-      @subscription = Subscription.find(params[:feed_id])
+    begin
+      raise Exception if @user.nil? || params[:feed_url].nil? || params[:tag_list].nil?
+      
+      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
+      raise Exception if feed.nil?
+      
+      @sub = Subscription.find(:first, 
+                              :conditions => ["feed_id LIKE ? AND user_id LIKE ?",feed.id,@user.id])
+      raise Exception if @sub.nil?
+
       if params[:tag_list]
         @tag_list = params[:tag_list].gsub(/([^,])\s/, '\1, ')
-        @subscription.update_attribute(:tag_list, @tag_list)
+        @sub.update_attribute(:tag_list, @tag_list)
       end
       @subscriptions = @user.subscriptions
-      render :action => "list_feed"
+    rescue
+      render :nothing => true, :status => 503
     end
   end
   
