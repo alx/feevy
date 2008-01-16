@@ -94,20 +94,29 @@ class ApiController < ApplicationController
   def edit_avatar
     # Expected params: api_key, feed_id, avatar_url
     @user = get_api_user
-    if @user.nil? || params[:feed_id].nil? || params[:avatar_url].nil?
-      render :nothing => true, :status => 503
-    else
-      @sub = Subscription.find(params[:feed_id])
-      # Do not change locked feed
-      if @sub.feed.avatar_locked != 1
+    
+    begin
+      raise Exception if @user.nil? || params[:feed_url].nil? || params[:avatar_url].nil?
+      
+      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
+      raise Exception if feed.nil?
+      
+      sub = Subscription.find(:first, 
+                              :conditions => ["feed_id LIKE ? AND user_id LIKE ?",feed.id,@user.id])
+      raise Exception if @sub.nil?
+      
+      if sub.feed.avatar_locked != 1
         # Find or create new avatar
         unless @avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
           @avatar = Avatar.create(:url => params[:avatar_url])
         end
-        @sub.update_attribute(:avatar_id, @avatar.id)
+        sub.update_attribute(:avatar_id, @avatar.id)
       end
+      
       @subscriptions = @user.subscriptions
       render :action => "list_feed"
+    rescue
+      render :nothing => true, :status => 503
     end
   end
   
