@@ -128,7 +128,9 @@ class ApiController < ApplicationController
       raise Exception if @sub.nil?
 
       if params[:tag_list]
+        logger.debug "params[:tag_list] #{params[:tag_list]}"
         @tag_list = params[:tag_list].gsub(/\+/, ', ')
+        logger.debug "params[:tag_list] #{@tag_list}"
         @sub.tag_list = @tag_list
         @sub.save
       end
