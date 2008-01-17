@@ -22,9 +22,9 @@ class Avatar < ActiveRecord::Base
       avatar_url = "http://www.feevy.com/#{saved_file}"
       saved = false
 
-      logger.debug "#{saved_file}"
-      logger.debug "#{filepath}"
-      logger.debug "#{avatar_url}"
+      logger.debug "Avatar.create_from_file #{saved_file}"
+      logger.debug "Avatar.create_from_file #{filepath}"
+      logger.debug "Avatar.create_from_file #{avatar_url}"
       
       begin
         File::open(file.path, mode="r") { |f|
