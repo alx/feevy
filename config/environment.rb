@@ -65,6 +65,7 @@ require 'gd2'
 require 'rfeedfinder'
 require 'rfeedreader'
 require 'tempfile'
+require 'rio'
 
 # Include your app's configuration here:
 ActionMailer::Base.delivery_method = :smtp
