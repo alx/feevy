@@ -98,12 +98,8 @@ class ApiController < ApplicationController
     begin
       raise Exception if @user.nil? || params[:feed_url].nil? || params[:avatar_url].nil?
       
-      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
-      raise Exception if feed.nil?
-      
-      sub = Subscription.find(:first, 
-                              :conditions => ["feed_id LIKE ? AND user_id LIKE ?",feed.id,@user.id])
-      raise Exception if @sub.nil?
+      sub = get_subscription(@user, params[:feed_url])
+      raise Exception if sub.nil?
       
       if sub.feed.avatar_locked != 1
         # Find or create new avatar
@@ -129,11 +125,7 @@ class ApiController < ApplicationController
     begin
       raise Exception if @user.nil? || params[:feed_url].nil? || params[:tag_list].nil?
       
-      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
-      raise Exception if feed.nil?
-      
-      @sub = Subscription.find(:first, 
-                              :conditions => ["feed_id LIKE ? AND user_id LIKE ?",feed.id,@user.id])
+      @sub = get_subscription(@user, params[:feed_url])
       raise Exception if @sub.nil?
 
       if params[:tag_list]
@@ -195,5 +187,13 @@ class ApiController < ApplicationController
       unless params[:api_key].nil?
         return User.find(:first, :conditions => ["api_key LIKE ?", params[:api_key]])
       end
+    end
+    
+    def get_subscription(user, feed_url)
+      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
+      raise Exception if feed.nil?
+      
+      return Subscription.find(:first, 
+                               :conditions => ["feed_id LIKE ? AND user_id LIKE ?",feed.id,user.id])
     end
 end
