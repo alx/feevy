@@ -105,7 +105,7 @@ class ApiController < ApplicationController
         # Find or create new avatar
         unless @avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
           
-          extension = params[:avatar_url][/[^\.]*$/]
+          extension = params[:avatar_url].slice(/[^\.]*$/)
           tempfile = Tempfile.new('tmp')
           rio(params[:avatar_url]) > rio(tempfile.path)
           
