@@ -104,7 +104,13 @@ class ApiController < ApplicationController
       if sub.feed.avatar_locked != 1
         # Find or create new avatar
         unless @avatar = Avatar.find(:first, :conditions => ["url LIKE ?", params[:avatar_url]])
-          @avatar = Avatar.create(:url => params[:avatar_url])
+          
+          extension = params[:avatar_url][/[^\.]*$/]
+          tempfile = Tempfile.new('tmp')
+          rio(params[:avatar_url]) > rio(tempfile.path)
+          
+          @avatar = Avatar.create_from_file(tempfile, extension)
+          raise Exception if @avatar.nil?
         end
         sub.update_attribute(:avatar_id, @avatar.id)
       end
