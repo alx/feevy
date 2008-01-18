@@ -47,7 +47,9 @@ class ApiController < ApplicationController
     else
       
       if !params[:feed_url].nil?
-        @subscriptions = [get_subscription(@user, params[:feed_url])]
+        sub = get_subscription(@user, params[:feed_url])
+        logger.debug "list_feed: #{sub}"
+        @subscriptions = [sub]
       else
         @subscriptions = @user.subscriptions
       end
