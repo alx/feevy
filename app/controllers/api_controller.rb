@@ -58,6 +58,7 @@ class ApiController < ApplicationController
       render :nothing => true, :status => 503
     else
       
+      logger.debug "list_feed: #{params[:feed_url]}"
       sub = get_subscription(@user, params[:feed_url])
       logger.debug "list_feed: #{sub}"
       @subscriptions = [sub]
@@ -210,7 +211,7 @@ class ApiController < ApplicationController
     end
     
     def get_subscription(user, feed_url)
-      feed = Feed.find(:first, :conditions => ["link LIKE ?", params[:feed_url]])
+      feed = Feed.find(:first, :conditions => ["link LIKE ?", feed_url])
       raise Exception if feed.nil?
       
       return Subscription.find(:first, 
