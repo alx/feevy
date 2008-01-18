@@ -45,7 +45,13 @@ class ApiController < ApplicationController
     if @user.nil?
       render :nothing => true, :status => 503
     else
-      @subscriptions = @user.subscriptions
+      
+      if !params[:feed_url].nil?
+        @subscriptions = get_subscription(@user, params[:feed_url])
+      else
+        @subscriptions = @user.subscriptions
+      end
+      
       # Render RXML template
       render :layout => false
     end
@@ -106,7 +112,7 @@ class ApiController < ApplicationController
         extension = params[:avatar_url].slice(/[^\.]*$/)
         tempfile = Tempfile.new('tmp')
         rio(params[:avatar_url]) > rio(tempfile.path)
-          
+        
         @avatar = Avatar.create_from_file(tempfile, extension)
         raise Exception if @avatar.nil?
 
