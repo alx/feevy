@@ -45,17 +45,25 @@ class ApiController < ApplicationController
     if @user.nil?
       render :nothing => true, :status => 503
     else
-      
-      if !params[:feed_url].nil?
-        sub = get_subscription(@user, params[:feed_url])
-        logger.debug "list_feed: #{sub}"
-        @subscriptions = [sub]
-      else
-        @subscriptions = @user.subscriptions
-      end
-      
+      @subscriptions = @user.subscriptions
       # Render RXML template
       render :layout => false
+    end
+  end
+  
+  def get_feed
+    # Expected params: api_key
+    @user = get_api_user
+    if @user.nil? || params[:feed_url].nil?
+      render :nothing => true, :status => 503
+    else
+      
+      sub = get_subscription(@user, params[:feed_url])
+      logger.debug "list_feed: #{sub}"
+      @subscriptions = [sub]
+      
+      # Render RXML template
+      render :action => "list_feed", :layout => false
     end
   end
   
