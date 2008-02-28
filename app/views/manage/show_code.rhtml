@@ -12,7 +12,7 @@
         <p></p>
         <p></p><p></p><p></p>
         <p id='feevy_code'>
-          <%= h("<script type='text/javascript' src='http://www.feevy.com/code/#{@user.id}'></script>") %>
+			&lt;script type='text/javascript' src='http://www.feevy.com/code/<%= @user.id %>'&gt;&lt;/script&gt;
         </p>
         <p class='code_control'>
           choose style/color:

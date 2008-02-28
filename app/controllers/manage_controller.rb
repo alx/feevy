@@ -208,8 +208,8 @@ class ManageController < ApplicationController
     @headers["Content-Type"] = "text/javascript"
     style = ""
     style = "/" << params[:style] unless params[:style] == "dark"
-    script = "<script type='text/javascript' src='http://www.feevy.com/code/#{@user.id}#{style}'></script>"
-    render :text => HTMLEntities.encode_entities(script)
+    script = "&lt;script type='text/javascript' src='http://www.feevy.com/code/#{@user.id}#{style}'&gt;&lt;/script&gt;"
+    render :text => script
   end
 
   def update_opt_display_sub
