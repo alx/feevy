@@ -58,14 +58,14 @@ class Feed < ActiveRecord::Base
   def Feed.create_from_opml(opml)
     feeds = []
     doc = Hpricot(open(opml))
-    (doc/"outline[@htmlurl]").each do |url|
+    (doc/"outline").each do |url|
       logger.debug "xml: #{url[:xmlurl]} - html: #{url[:htmlurl]}"
       feed = nil
       if !url[:xmlurl].nil? and !url[:htmlurl].nil?
         feed = create_feed(web_url=url[:htmlurl], feed_url=url[:xmlurl])
       elsif !url[:xmlurl].nil?
         feed = Feed.create_feed(feed_url=url[:xmlurl])
-      else
+      elsif !url[:htmlurl].nil?
         feed = Feed.create_feed(web_url=url[:htmlurl])
       end  
       feeds << feed unless feed.nil?
@@ -77,6 +77,7 @@ class Feed < ActiveRecord::Base
     
     return nil if web_url.nil? and fedd_url.nil?
     
+    # If it's a feed url
     if !feed_url.nil? and web_url.nil?
       # Check existing feed with this feed url
       feed = Feed.find :first, :conditions => ["link LIKE ?", feed_url]
@@ -85,6 +86,8 @@ class Feed < ActiveRecord::Base
       feeding = Rfeedreader.read_first(feed_url)
       web_url = feeding.link
       return nil if web_url.nil? or web_url.empty?
+      
+    # If it's a blog url
     elsif !web_url.nil? and feed_url.nil?
       # Check existing feed with this web url
       feed = Feed.find :first, :conditions => ["href LIKE ?", web_url]
@@ -93,6 +96,8 @@ class Feed < ActiveRecord::Base
       feeding = Rfeedreader.read_first(web_url)
       feed_url = feeding.feed_url
       return nil if feed_url.nil? or feed_url.empty?
+      
+    # If both url are provided
     else
       feed = Feed.find :first, :conditions => ["href LIKE ? or link LIKE ?", web_url, feed_url]
       return feed if !feed.nil?
@@ -128,7 +133,7 @@ class Feed < ActiveRecord::Base
         Timeout::timeout(30) do
           entry = Rfeedreader.read_first(link).entries[0]
           
-          if !entry.nil? and !entry.link.nil? and (forced or latest_post.nil? or entry.url != latest_post.url)        
+          if !entry.nil? and !entry.link.nil? and (forced or latest_post.nil? or entry.link != latest_post.url)        
             # Save new post
             Post.create(:url => entry.link, 
                         :title => entry.title, 
@@ -284,12 +289,6 @@ class Feed < ActiveRecord::Base
     @merged_feed.posts.each {|post| post.update_attribute(:feed_id, @central_feed.id)}
     # Delete merged feed
     @merged_feed.destroy
-  end
-
-  def Feed.keep_unique_post
-    Feed.find(:all).each do |feed|
-      feed.latest_post.on_per_feed unless feed.nil? or feed.latest_post.nil?
-    end
   end
   
   def Feed.normalize_url(url)
