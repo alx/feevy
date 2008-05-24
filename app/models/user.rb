@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
       @entries = []
       if tags
         # Manage multitags
-        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", "), :match_all => true)
+        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", ").gsub("porsmilin", ""), :match_all => true)
       else
         subscriptions = self.subscriptions
       end
@@ -98,6 +98,7 @@ class User < ActiveRecord::Base
 
       # Only get last displayed feeds depending on user choice
       @entries = @entries[0..(opt_displayed_subscriptions.to_i - 1)] if opt_displayed_subscriptions != "all"
+      @entries = @entries[0..9] if !tags.nil? and tags.include? "porsmilin"
       CACHE.set(cache_key, @entries, 60*5)
     end
     return @entries
