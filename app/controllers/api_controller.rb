@@ -70,8 +70,12 @@ class ApiController < ApplicationController
       render :nothing => true, :status => 503
     else
       begin
-        # Create or find a feed using specified blog url
-        feed = Feed.create_from_blog(params[:url])
+        if !params[:href].nil?
+          # Create or find a feed using specified blog url
+          feed = Feed.create_feed(web_url = params[:href], feed_url = params[:url])
+        else
+          feed = Feed.create_feed(feed_url = params[:url])
+        end
         # If feed exists, connect it to user using subscription
         unless feed.nil?
           subscription = Subscription.create(["feed" => feed, "user" => @user, "avatar_id" => 1])
