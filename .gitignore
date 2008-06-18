@@ -1,1 +1,4 @@
 database.yml
+environment.rb
+tmp
+*.log
