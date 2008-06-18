@@ -1,29 +1,72 @@
-- Requirements
+h1. Feevy
+
+Display content from other blogs at your website with just one simple html tag.
+
+* Access content by html or js
+* Each user has got a special code to display his feevy bar
+* Css customization available
+* Tag system to filter out feeds to display
+* Avatar can be set for each subscription
+
+Example of sites using Feevy:
+
+* "Las Indias":http://lasindias.net/
+* "Deugarte.com":http://deugarte.com
+* "Escola de redes":http://escoladeredes.org/
+* "USF Bloggers":http://www.usfbloggers.com/
+
+h1. Requirements
 
 * memcached run as a daemon on default port (11211) - http://www.danga.com/memcached/
 * Ruby - http://www.ruby-lang.org/
 * Rubygems - http://rubyforge.org/frs/?group_id=126
 * GD2 library - http://www.boutell.com/gd/
 * gem list:
-	- rails
-	- hpricot
-	- simple-rss
-	- open-uri
-	- timeout
-	- cached_model
-	- mongrel
-	- gd2
+** rails
+** hpricot
+** simple-rss
+** open-uri
+** timeout
+** cached_model
+** mongrel
+** gd2
 * Database (mysql, sqlite, ...)
-* Feevy source: http://www.feevy.com/source.tgz
+* "Feevy source":http://github.com/alx/feevy/tree/master (GitHub)
 
-- Install
+h1. Install
 
-* Get necessary gems: sudo gem install -y rails hpricot simple-rss open-uri timeout cached_model mongrel
-* Copy ./conf/database.example to ./conf/database.yml
-* Configure your database access in ./conf/database.yml
-* Install database schema: rake db:schema:dump
+h2. Get necessary gems
 
-- Run
+<pre>
+<code>
+sudo gem install -y rails hpricot simple-rss open-uri timeout cached_model mongrel rfeedreader rfeedfinder
+</code>
+</pre>
 
-* In your Feevy directory: mongrel_rails start
-* In your browser: http://localhost:3000
+h2. Create and configure database.yml
+
+<pre>
+<code>
+cp config/database.yml.tmpl config/database.yml
+</code>
+</pre>
+
+h2. Install database schema
+
+<pre>
+<code>
+rake db:schema:dump
+</code>
+</pre>
+
+h1. Run
+
+In your Feevy rails directory: 
+
+<pre>
+<code>
+mongrel_rails start
+</code>
+</pre>
+
+"Access Feevy in your browser":http://localhost:3000
