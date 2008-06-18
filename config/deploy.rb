@@ -58,16 +58,3 @@ task :symlink_public do
      end
    end
 end
-
-# =============================================================================
-# SOURCES TASKS
-# =============================================================================
-
-desc "package feevy sources"
-task :package_source do
-  # Remove old sources if exists
-  run "rm -f #{shared_path}/public/source.tgz"
-  # Create new source archive
-  # excluding database.yml and deploy.rb
-  run "tar -czvf #{shared_path}/public/source.tgz -X #{deploy_to}/#{current_dir}/exclude_tar #{deploy_to}/#{current_dir}"
-end
