@@ -42,58 +42,6 @@ ActiveRecord::Schema.define(:version => 32) do
   create_table "feevies", :force => true do |t|
   end
 
-  create_table "globalize_countries", :force => true do |t|
-    t.column "code",                   :string, :limit => 2
-    t.column "english_name",           :string
-    t.column "date_format",            :string
-    t.column "currency_format",        :string
-    t.column "currency_code",          :string, :limit => 3
-    t.column "thousands_sep",          :string, :limit => 2
-    t.column "decimal_sep",            :string, :limit => 2
-    t.column "currency_decimal_sep",   :string, :limit => 2
-    t.column "number_grouping_scheme", :string
-  end
-
-  add_index "globalize_countries", ["code"], :name => "index_globalize_countries_on_code"
-
-  create_table "globalize_languages", :force => true do |t|
-    t.column "iso_639_1",             :string,  :limit => 2
-    t.column "iso_639_2",             :string,  :limit => 3
-    t.column "iso_639_3",             :string,  :limit => 3
-    t.column "rfc_3066",              :string
-    t.column "english_name",          :string
-    t.column "english_name_locale",   :string
-    t.column "english_name_modifier", :string
-    t.column "native_name",           :string
-    t.column "native_name_locale",    :string
-    t.column "native_name_modifier",  :string
-    t.column "macro_language",        :boolean
-    t.column "direction",             :string
-    t.column "pluralization",         :string
-    t.column "scope",                 :string,  :limit => 1
-  end
-
-  add_index "globalize_languages", ["iso_639_1"], :name => "index_globalize_languages_on_iso_639_1"
-  add_index "globalize_languages", ["iso_639_2"], :name => "index_globalize_languages_on_iso_639_2"
-  add_index "globalize_languages", ["iso_639_3"], :name => "index_globalize_languages_on_iso_639_3"
-  add_index "globalize_languages", ["rfc_3066"], :name => "index_globalize_languages_on_rfc_3066"
-
-  create_table "globalize_translations", :force => true do |t|
-    t.column "type",                :string
-    t.column "tr_key",              :string
-    t.column "table_name",          :string
-    t.column "item_id",             :integer
-    t.column "facet",               :string
-    t.column "built_in",            :boolean, :default => true
-    t.column "language_id",         :integer
-    t.column "pluralization_index", :integer
-    t.column "text",                :text
-    t.column "namespace",           :string
-  end
-
-  add_index "globalize_translations", ["tr_key", "language_id"], :name => "index_globalize_translations_on_tr_key_and_language_id"
-  add_index "globalize_translations", ["table_name", "item_id", "language_id"], :name => "globalize_translations_table_name_and_item_and_language"
-
   create_table "pings", :force => true do |t|
     t.column "name",           :text
     t.column "current_offset", :integer,  :default => 0
