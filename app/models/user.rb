@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
       end
       subscriptions.each do |subscription|
         feed = subscription.feed
-        if !feed.nil? and !feed.is_bogus? then
+        if !feed.nil? then
           #post = Post.from_google_api(feed) unless feed.link.nil?
           post = feed.latest_post
           unless post.nil? or post.created_at.nil?

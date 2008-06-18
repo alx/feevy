@@ -9,15 +9,6 @@ ActiveRecord::Schema.define(:version => 32) do
     t.column "url",  :string
   end
 
-  create_table "bugs", :force => true do |t|
-    t.column "level",       :integer
-    t.column "status",      :integer,  :default => 0
-    t.column "description", :text
-    t.column "created_at",  :datetime
-    t.column "updated_at",  :datetime
-    t.column "feed_id",     :integer
-  end
-
   create_table "cached_feeds", :force => true do |t|
     t.column "href",           :string
     t.column "title",          :string

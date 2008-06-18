@@ -2,22 +2,12 @@ class AdminController < ApplicationController
 
   def index
     require_auth 'admin'
-    @bugs = Bug.find(:all)
-    @errors = @bugs.select{|bug| bug.level == Bug::ERROR and bug.status == Bug::NEW}
-    @warnings = @bugs.select{|bug| bug.level == Bug::WARNING and bug.status == Bug::NEW}
-    
-    @percent_error    = (@errors.size * 100.0) / @bugs.size
-    @percent_warning  = (@warnings.size * 100.0) / @bugs.size
-    @percent_working  = 100.0 - (@percent_warning + @percent_error)
-    
     @pingers = Ping.find(:all)
   end
   
   def feeds
     require_auth 'admin'
-    @feeds, @page = Feed.paginate(:all, 
-                                  :include => [:bugs], 
-                                  :page => params[:page])
+    @feeds, @page = Feed.paginate(:all, :page => params[:page])
     @nb_pages = Feed.count
   end
   
@@ -27,27 +17,13 @@ class AdminController < ApplicationController
     condition = ["feeds.href LIKE ? OR feeds.title LIKE ? OR feeds.link LIKE ?", search, search, search]
     
     @feeds, @page = Feed.paginate(:all, 
-                                  :include => [:bugs], 
                                   :conditions => condition,
                                   :page => params[:page])        
     @nb_pages = Feed.find(:all,
                           :conditions => condition).size
     render :action => 'feeds'
   end
-  
-  def bogus_feeds
-    require_auth 'admin'
-    condition = ["is_bogus = 1 or is_warning = 1"]
-    @feeds, @page = Feed.paginate(:all, 
-                                  :include => [:bugs], 
-                                  :conditions => condition, 
-                                  :page => params[:page])        
-    @nb_pages = Feed.find(:all, 
-                          :include => [:bugs], 
-                          :conditions => condition).size
-    render :action => 'feeds'
-  end
-  
+
   def feed_repair
     require_auth 'admin'
     @feeds = Feed.find(:all)
@@ -58,7 +34,7 @@ class AdminController < ApplicationController
   
   def edit_feed
     require_auth 'admin'
-    @feed = Feed.find params[:id], :include => [:bugs]
+    @feed = Feed.find params[:id]
     if request.post?
       @feed.update_attributes params[:feed]
     end
@@ -98,15 +74,12 @@ class AdminController < ApplicationController
     @posts.each do |post|
       # get post base url
       base_url = post.url.slice(/^(http:\/\/).[^\/]*/)
-      logger.debug "base_url: #{base_url}"
       unless base_url.nil?
         if @similars.has_key?(base_url)
           if not @similars[base_url].include?(post.feed_id)
-            logger.debug "adding to array#{@similars[base_url].size}: #{post.feed_id}"
             @similars[base_url] << post.feed_id
           end
         else
-          logger.debug "creating new array: #{post.feed_id}"
           @similars[base_url] = [post.feed_id]
         end
       end
@@ -139,8 +112,6 @@ class AdminController < ApplicationController
     @feed.update_attribute 'link', params[:feed][:link]
     # update title if nil
     @feed.fix_with_rss
-    # resolve bugs
-    Bug.resolve_feed(@feed)
     redirect_to :action => 'feed_repair'
   end
   
@@ -152,8 +123,6 @@ class AdminController < ApplicationController
       feed.update_attribute 'link', feed.href
       # update title if nil
       feed.fix_with_rss
-      # resolve bugs
-      Bug.resolve_feed(feed)
     end
     redirect_to :action => 'feed_repair'
   end
@@ -174,13 +143,5 @@ class AdminController < ApplicationController
     if @feed
       @feed.destroy
     end
-  end
-  
-  def no_more_bogus
-    require_auth 'admin'
-    @headers["Content-Type"] = "text/javascript"
-    @feed = Feed.find params[:id]
-    # resolve bugs
-    Bug.resolve_feed(@feed)
   end
 end

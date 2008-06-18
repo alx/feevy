@@ -1,6 +1,4 @@
 page.visual_effect :fade, "#{@deleted_blog}", :duration=>1
-page.visual_effect(:fade, "#{@deleted_bogus}", :duration=>1) unless @deleted_bogus.nil?
 page.delay(1) do
   page.remove "#{@deleted_blog}"
-  page.remove("#{@deleted_bogus}") unless @deleted_bogus.nil?
 end

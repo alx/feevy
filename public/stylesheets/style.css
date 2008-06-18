@@ -868,50 +868,6 @@ width:400px;
 color: #FFF;
 }
 
-
-
-/**
-* Bogus blog display
-**/
-
-.bogus_feed h1, .bogus_feed h2, .bogus_feed p { margin: 0 10px }
-.bogus_feed h1 { font-size: 2.5em; color: #ffffff; }
-.bogus_feed h2 { font-size: 1em; color: #ffffff; border: 0; }
-.bogus_feed p { font:11px Helvetica, Arial, Sans-Serif; color: #cccccc;padding-bottom: 0.5em; }
-.bogus_feed h2 { padding-top: 0.5em; }
-.bogus_feed h5 {margin:0 0 10px 0; color: #ccc;}
-.bogus_feed h4  { font-size: 20px; color: #ccc; float: left; margin:0; margin-right: 5px;}
-.bogus_feed h3 {margin: 0}
-.bogus_feed a {color: #ccc;}
-.bogus_feed { background: transparent; margin: 1em; }
-
-.bogus_top, .bogus_bottom {display:block; background:transparent; font-size:1px;}
-.bogus_1, .bogus_2, .bogus_3, .bogus_4 {display:block; overflow:hidden;}
-.bogus_1, .bogus_2, .bogus_3 {height:1px;}
-.bogus_2, .bogus_3, .bogus_4 {background:#8F1E19; border-left:2px solid #8F1E19; border-right:2px solid #8F1E19;}
-.bogus_1 {margin:0 5px; background:#8F1E19;}
-.bogus_2 {margin:0 3px; border-width:0 10px;}
-.bogus_3 {margin:0 2px;}
-.bogus_4 {height:2px; margin:0 1px;}
-.bogus_content { display: table;display:block; background:#8F1E19; border:0 solid #8F1E19; border-width:0 2px;}
-
-.bogus_message{
-  float:left;
-  position:relative;
-  top:30px;
-  left:-180px;
-  height:0px;
-  text-align:right;
-}
-
-.bogus_message h1{
-  font-size:16px;
-}
-
-.bogus_message p{
-  font-size:12px;
-  color:#CCC;
-}
 /*CAMBIOS*/
 .navenlace {
    

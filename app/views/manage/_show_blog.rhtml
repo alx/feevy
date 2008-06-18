@@ -1,7 +1,6 @@
 <!-- show blog -->
 <% feed = subscription.feed %>
 <% unless feed.nil? %>
-<% if !feed.is_bogus?  %>
 <div id="blog_<%= subscription.id %>" class="caja1">
   <!-- caja redondeada negra -->
   <div class="xsnazzy">
@@ -31,42 +30,4 @@
   <!-- end caja redondeada -->
 </div>
 <!-- end caja! -->
-<% else %>
-<div id="bogus_<%= subscription.id %>" class='bogus_message'>
-  <h1>This blog is not working :-(</h1>
-  <p>The feed seems to be broken</p>
-  <p>Feevy team is working on it</p>
-</div>
-<!-- show blog -->
-<div id="blog_<%= subscription.id %>" class="caja1">
-  <!-- caja redondeada negra -->
-  <div class="bogus_feed">
-    <b class="bogus_top"><b class="bogus_1"></b><b class="bogus_2"></b><b class="bogus_3"></b><b class="bogus_4"></b></b>
-    <div class="bogus_content">
-      <!-- capa contenedora -->
-      <div class="show_blog">
-        <br/>
-        <% if feed.avatar_locked == 1 %>
-          <img src='<%= feed.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>
-        <% else %>
-          <img src='<%= subscription.avatar.url %>' alt='current avatar' style='float:left;padding-right:5px;'/>
-        <% end %>
-        <h3><%= "#{index}. #{feed.title}" %></h3>
-        <h5><%= truncate(feed.href, 50) %></h5>
-        <p>tags: <span id='tag_list_<%= subscription.id %>' class='tag_list'><%= subscription.tag_list %> <%= link_to_remote "edit tags", {:url => {:action => "tag_blog", :id => subscription.id }} %></span></p>
-        <div id="blog_control_<%= subscription.id %>" class='right'>
-          <%= link_to_remote "tag", {:url => {:action => "tag_blog", :id => subscription.id }} %>
-          <%= link_to_remote("change avatar", {:url => {:action => "edit_blog", :id => subscription.id }}) unless feed.avatar_locked == 1 %>
-          <%= link_to_remote "delete", {:url => {:action => "delete_blog", :id => subscription.id }} %>
-        </div>
-        <br/>
-      </div>
-      <br/>
-    </div>
-    <b class="bogus_bottom"><b class="bogus_4"></b><b class="bogus_3"></b><b class="bogus_2"></b><b class="bogus_1"></b></b>
-  </div>
-  <!-- end caja redondeada -->
-</div>
-<!-- end caja! -->   
-<% end %>
 <% end %>

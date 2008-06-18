@@ -1,15 +1,11 @@
 <% unless feed_row.nil? -%>
-<tr id='row_<%= feed_row.id %>' class="bogus_<%= feed_row.bogus %>">
+<tr id='row_<%= feed_row.id %>'>
   <td><%= feed_row.id %></td>
   <td><%= "<a href='#{feed_row.href}'>#{truncate(feed_row.title, 50)}</a>" %></td>
   <td><%= "<a href='#{feed_row.link}'>#{truncate(feed_row.link, 50)}</a>" %></td>
   <td>
     <%= link_to 'Edit', {:action => 'edit_feed', :id => feed_row.id} %><br/>
     <%= link_to_remote 'Delete', {:url => {:action => 'delete_feed', :id => feed_row.id}} %>
-    <% if feed_row.bogus -%>
-      <br/>
-      <%= link_to_remote "No more bogus", :url => {:action => 'no_more_bogus', :id => feed_row.id} %>
-    <% end -%>
   </td>
 </tr>
 <% end -%>

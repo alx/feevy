@@ -1,3 +1,0 @@
-page.replace "bogus_#{@bug.id}",
-              :partial => "bogus_feed",
-              :locals => {:bug => @bug, :status => @status}

@@ -11,7 +11,6 @@ class Feed < ActiveRecord::Base
 
   has_many :subscriptions
   has_many :users, :through => :subscriptions
-  has_many :bugs
   has_many :posts, :order => 'created_at DESC'
   has_one :latest_post, :class_name => 'Post', :order => 'id DESC'
   belongs_to :avatar
@@ -22,14 +21,7 @@ class Feed < ActiveRecord::Base
   
   # Discover avatar.txt file to update avatar
   def Feed.update_avatars
-    Feed.find(:all).each { |feed| 
-      unless feed.is_bogus?
-        logger.info "+++ Refresh avatar: #{feed.href}"
-        feed.discover_avatar_txt
-      else
-        logger.info "--- Not refreshing avatar: #{feed.href}"
-      end
-    }
+    Feed.find(:all).each { |feed| feed.discover_avatar_txt }
   end
 
   def Feed.create_from_blog(input_url)
@@ -127,37 +119,22 @@ class Feed < ActiveRecord::Base
   end
   
   def refresh(forced=false)
-    unless is_bogus?
-      begin
-        # Get first item
-        Timeout::timeout(30) do
-          entry = Rfeedreader.read_first(link).entries[0]
-          
-          if !entry.nil? and !entry.link.nil? and (forced or latest_post.nil? or entry.link != latest_post.url)        
-            # Save new post
-            Post.create(:url => entry.link, 
-                        :title => entry.title, 
-                        :description => entry.description, 
-                        :feed_id => id)
-          end
+    begin
+      # Get first item
+      Timeout::timeout(30) do
+        entry = Rfeedreader.read_first(link).entries[0]
+        
+        if !entry.nil? and !entry.link.nil? and (forced or latest_post.nil? or entry.link != latest_post.url)        
+          # Save new post
+          Post.create(:url => entry.link, 
+                      :title => entry.title, 
+                      :description => entry.description, 
+                      :feed_id => id)
         end
-      rescue Timeout::Error
-        Bug.raise_feed_bug(self, "timeout", Bug::WARNING)
-      rescue => err
-        Bug.raise_feed_bug(self, err) unless self.is_bogus?
       end
+    rescue Timeout::Error
+    rescue => err
     end
-  end
-  
-  def has_error
-    return self.is_bogus == 1 ? true : false
-  end
-  
-  alias is_bogus? has_error
-  alias bogus has_error
-  
-  def has_warnings
-    return self.is_warning == 1 ? true : false
   end
   
   # Return the rss item link
@@ -240,7 +217,6 @@ class Feed < ActiveRecord::Base
       
       return file
     rescue => error
-      Bug.raise_feed_bug(self, error, Bug::WARNING)
       return nil
     end
   end
@@ -257,7 +233,6 @@ class Feed < ActiveRecord::Base
                               :href => rss.channel.link
       end
     rescue => err
-      Bug.raise_feed_bug(self, err)
     end
   end
   
@@ -398,7 +373,6 @@ class Feed < ActiveRecord::Base
     
   private
   def destroy_relationship
-    Bug.destroy_all "feed_id = #{self.id}"
     Post.destroy_all "feed_id = #{self.id}"
     Subscription.destroy_all "feed_id = #{self.id}"
   end

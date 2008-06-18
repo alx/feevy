@@ -12,11 +12,10 @@ while true
   @feeds[@offset, @range].each {|feed|
     begin
       Timeout::timeout(@timeout) {
-        feed.refresh(true) unless feed.bogus == true
+        feed.refresh(true)
       }
     rescue Timeout::Error
       unless feed.nil?
-        feed.raise_bug("timeout", Bug::WARNING)
         puts "Timeout on feed ##{feed.id}: #{feed.link}"
       end
     end
