@@ -2,7 +2,7 @@ class MigrateAvatar < ActiveRecord::Migration
   def self.up
     
     # Create new id relationship for avatars
-    #add_column :subscriptions, :avatar_id, :integer
+    add_column :subscriptions, :avatar_id, :integer
     #add_column :feeds, :avatar_id, :integer
     
     # Add default avatar for all feeds
