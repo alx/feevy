@@ -255,6 +255,8 @@ class Feed < ActiveRecord::Base
     logger.debug "delete feed size: #{deleted_feeds.size}"
   end
   
+  # [*"www.a".."www.z"].each {|char| Feed.remove_regexp_duplicates(char)}
+  # [*"www.0".."www.9"].each {|char| Feed.remove_regexp_duplicates(char)}
   # [*"a".."z"].each {|char| Feed.remove_regexp_duplicates(char)}
   # [*"0".."9"].each {|char| Feed.remove_regexp_duplicates(char)}
   def Feed.remove_regexp_duplicates(char)
