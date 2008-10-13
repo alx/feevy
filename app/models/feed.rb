@@ -255,6 +255,27 @@ class Feed < ActiveRecord::Base
     logger.debug "delete feed size: #{deleted_feeds.size}"
   end
   
+  # [*"a".."z"].each {|char| Feed.remove_regexp_duplicates(char)}
+  # [*"0".."9"].each {|char| Feed.remove_regexp_duplicates(char)}
+  def Feed.remove_regexp_duplicates(char)
+    @feeds = Feed.find(:all, :order => "created_at DESC", :conditions => [ "link REGEXP ?", "^http:\\/\\/[[:<:]]#{char}[[:>:]].*$"])
+    @feeds.each do |feed|
+      @duplicates = @feeds.select{|testing| testing.id != feed.id and testing.link == feed.link}
+      @duplicates.each do |duplicate|
+        puts "Duplicate found: #{duplicate.id} - #{duplicate.link}"
+    	unless duplicate.subscriptions.nil? 
+    	duplicate.subscriptions.each {|sub| sub.update_attribute(:feed_id, feed.id)}
+    	end
+    	unless duplicate.posts.nil?
+    	duplicate.posts.each {|post| post.update_attribute(:feed_id, feed.id)}
+    	end
+        @feeds.delete(duplicate)
+        duplicate.destroy
+      end
+      @feeds.delete(feed)
+    end
+  end
+  
   def Feed.merge_duplicates(central_feed_id, merged_feed_id)
     @central_feed = Feed.find central_feed_id
     @merged_feed = Feed.find merged_feed_id
