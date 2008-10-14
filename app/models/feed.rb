@@ -53,13 +53,7 @@ class Feed < ActiveRecord::Base
     (doc/"outline").each do |url|
       logger.debug "xml: #{url[:xmlurl]} - html: #{url[:htmlurl]}"
       feed = nil
-      if !url[:xmlurl].nil? and !url[:htmlurl].nil?
-        feed = create_feed(web_url=url[:htmlurl], feed_url=url[:xmlurl])
-      elsif !url[:xmlurl].nil?
-        feed = Feed.create_feed(feed_url=url[:xmlurl])
-      elsif !url[:htmlurl].nil?
-        feed = Feed.create_feed(web_url=url[:htmlurl])
-      end  
+      feed = create_feed(web_url=url[:htmlurl], feed_url=url[:xmlurl])
       feeds << feed unless feed.nil?
     end
     return feeds
@@ -262,7 +256,7 @@ class Feed < ActiveRecord::Base
   def Feed.remove_regexp_duplicates(char)
     @feeds = Feed.find(:all, :order => "created_at DESC", :conditions => [ "link REGEXP ?", "^http:\\/\\/[[:<:]]#{char}[[:>:]].*$"])
     @feeds.each do |feed|
-      @duplicates = @feeds.select{|testing| testing.id != feed.id and testing.link == feed.link}
+      @duplicates = @feeds.select{|testing| testing.id != feed.id and testing.link.downcase == feed.link.downcase}
       @duplicates.each do |duplicate|
         puts "Duplicate found: #{duplicate.id} - #{duplicate.link}"
     	unless duplicate.subscriptions.nil? 
