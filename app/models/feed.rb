@@ -34,6 +34,10 @@ class Feed < ActiveRecord::Base
     end
     
     return nil if input_url.nil?
+    
+    feed = nil
+    feed = Feed.find :first, :conditions => ["link LIKE ? OR href = ?", input_url, input_url]
+    return feed unless feed.nil?
       
     if Rfeedfinder::isFeed?(input_url)
       return Feed.create_feed(feed_url=input_url)
@@ -92,11 +96,12 @@ class Feed < ActiveRecord::Base
     
     return nil if feeding.nil? or web_url.nil? or feed_url.nil?
     
-    feed = Feed.create(:href => web_url, 
-                       :link => feed_url, 
-                       :title => feeding.title,
-                       :avatar_id => 1)
-                       
+    begin
+      feed = Feed.create(:href => web_url, :link => feed_url, :title => feeding.title, :avatar_id => 1)
+    rescue
+      feed = Feed.find :first, :conditions => ["link LIKE ?", feed_url]
+    end
+                  
     # Add new post to feed if possible
     if !feeding.entries.nil? and !feeding.entries[0].nil?
       entry = feeding.entries[0]
