@@ -1,6 +1,6 @@
 @style.each_line { |linea|
   linea.strip!
-  page << "document.writeln(\'" +  url_escape(linea) + "\');" if !linea.empty?
+  page << "document.writeln(\'#{linea}\');" if !linea.empty?
 }
 
 @content.each_line { |linea| 
