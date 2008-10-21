@@ -64,8 +64,15 @@ class User < ActiveRecord::Base
     unless @entries = CACHE.get(cache_key)
       @entries = []
       if tags
+        
+        # Limits entrys with tags
+        if matches = tags.match(/views:(\d+)/i)
+          limit_views = matches[1]
+          tags.delete!(matches[0])
+        end
+        
         # Manage multitags
-        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", ").gsub("porsmilin", ""), :match_all => true)
+        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", ").delete("porsmilin"), :match_all => true)
       else
         subscriptions = self.subscriptions
       end
@@ -97,8 +104,14 @@ class User < ActiveRecord::Base
       @entries = @entries.sort_by{|entry| entry[:date]}.reverse
 
       # Only get last displayed feeds depending on user choice
-      @entries = @entries[0..(opt_displayed_subscriptions.to_i - 1)] if opt_displayed_subscriptions != "all"
-      @entries = @entries[0..9] if !tags.nil? and tags.include? "porsmilin"
+      if !tags.nil? and tags.include? "porsmilin"
+        @entries = @entries[0..9] 
+      elsif !limit_views.nil?
+        @entries = @entries[0..(limit_views - 1)]
+      elsif opt_displayed_subscriptions != "all"
+        @entries = @entries[0..(opt_displayed_subscriptions.to_i - 1)]
+      end
+      
       CACHE.set(cache_key, @entries, 60*5)
     end
     return @entries
