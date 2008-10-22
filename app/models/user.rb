@@ -65,14 +65,16 @@ class User < ActiveRecord::Base
       @entries = []
       if tags
         
-        # Limits entrys with tags
+        # Limits entrys with magic tag:
+        # views:X limit to X the number of entries
         if matches = tags.match(/views:(\d+)/i)
-          limit_views = matches[1]
-          tags.delete!(matches[0])
+          limit_views = matches[1].to_i
+          tags.gsub!(matches[0], "")
         end
         
-        # Manage multitags
-        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", ").delete("porsmilin"), :match_all => true)
+        # porsmilin tag is a magic tag (name of a beach in Brittany, France) 
+        # to limit the number of entries to 10
+        subscriptions = self.subscriptions.find_tagged_with(tags.gsub(" ", ", ").gsub("porsmilin", ""), :match_all => true)
       else
         subscriptions = self.subscriptions
       end
@@ -103,7 +105,6 @@ class User < ActiveRecord::Base
       # Sort by date to get latest posts first
       @entries = @entries.sort_by{|entry| entry[:date]}.reverse
 
-      # Only get last displayed feeds depending on user choice
       if !tags.nil? and tags.include? "porsmilin"
         @entries = @entries[0..9] 
       elsif !limit_views.nil?
