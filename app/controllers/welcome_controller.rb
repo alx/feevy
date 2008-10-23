@@ -31,7 +31,7 @@ class WelcomeController < ApplicationController
         @rss_english = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
         @rss_english << "<h4>" << (feed_item/"title").inner_text << "</h4><br/>"
         @rss_english << "<h5>" << (feed_item/"description").inner_text
-        @rss_english << "<a href=" << (feed_item/"link").inner_text << ">continue</a>.</h5><br/><br/>"
+        @rss_english << "<a href='" << (feed_item/"link").inner_text << "'>continue</a>.</h5><br/><br/>"
         CACHE.set("rss_english", @rss_english, 60*60)
       rescue => err
         logger.debug "Error while reading english blog feed: #{err}"
@@ -47,7 +47,7 @@ class WelcomeController < ApplicationController
         @rss_spanish = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
         @rss_spanish << "<h4>" << (feed_item/"title").inner_text << "</h4><br/>"
         @rss_spanish << "<h5>" << (feed_item/"description").inner_text
-        @rss_spanish << "<a href=" << (feed_item/"link").inner_text << ">continue</a>.</h5><br/><br/>"
+        @rss_spanish << "<a href='" << (feed_item/"link").inner_text << "'>continue</a>.</h5><br/><br/>"
         CACHE.set("rss_spanish", @rss_spanish, 60*60)
       rescue => err
         logger.debug "Error while reading spanish blog feed: #{err}"
