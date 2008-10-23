@@ -26,12 +26,7 @@ class WelcomeController < ApplicationController
     # Get english rss from cache or from net
     unless @rss_english = CACHE.get("rss_english")
       begin
-        feed_item = Hpricot(open('http://blog.feevy.com/feed/')).search("item").first
-        pubDate = Time.parse((feed_item/"pubDate").inner_text)
-        @rss_english = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
-        @rss_english << "<h4>" << (feed_item/"title").inner_text << "</h4><br/>"
-        @rss_english << "<h5>" << (feed_item/"description").inner_text
-        @rss_english << "<a href='" << (feed_item/"link").inner_text << "'>continue</a>.</h5><br/><br/>"
+        @rss_english = show_post Hpricot(open('http://blog.feevy.com/feed/')).search("item").first
         CACHE.set("rss_english", @rss_english, 60*60)
       rescue => err
         logger.debug "Error while reading english blog feed: #{err}"
@@ -42,12 +37,7 @@ class WelcomeController < ApplicationController
     # Get spanish rss from cache or from net
     unless @rss_spanish = CACHE.get("rss_spanish")
       begin
-        feed_item = Hpricot(open('http://bitacora.feevy.com/feed/')).search("item").first
-        pubDate = Time.parse((feed_item/"pubDate").inner_text)
-        @rss_spanish = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
-        @rss_spanish << "<h4>" << (feed_item/"title").inner_text << "</h4><br/>"
-        @rss_spanish << "<h5>" << (feed_item/"description").inner_text
-        @rss_spanish << "<a href='" << (feed_item/"link").inner_text << "'>continue</a>.</h5><br/><br/>"
+        @rss_spanish = show_post Hpricot(open('http://bitacora.feevy.com/feed/')).search("item").first
         CACHE.set("rss_spanish", @rss_spanish, 60*60)
       rescue => err
         logger.debug "Error while reading spanish blog feed: #{err}"
@@ -73,5 +63,16 @@ class WelcomeController < ApplicationController
   def dot_file
     @subscriptions = Subscription.find(:all)
     render :layout => false
+  end
+  
+  protected
+  
+  def show_post(item)
+    pubDate = Time.parse((item/"pubDate").inner_text)
+    post = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
+    post << "<h4>#{(item/"title").inner_text}</h4><br/>"
+    post << "<h5>#{(item/"description").inner_text}"
+    post << "<a href='#{(item/"link").inner_text}'>continue</a>.</h5><br/><br/>"
+    return post
   end
 end
