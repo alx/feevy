@@ -71,8 +71,8 @@ class WelcomeController < ApplicationController
     pubDate = Time.parse((item/"pubDate").inner_text)
     post = "<p>#{pubDate.day}.#{pubDate.month}.#{pubDate.year}<p><br/>"
     post << "<h4>#{(item/"title").inner_text}</h4><br/>"
-    post << "<h5>#{(item/"description").inner_text}"
-    post << "<a href='#{(item/"link").inner_text}'>continue</a>.</h5><br/><br/>"
+    post << "<h5>#{(item/"description").inner_text.gsub(" [...]", "...")}"
+    post << "<a href='#{(item/"link").inner_text}'>continue</a></h5><br/><br/>"
     return post
   end
 end
