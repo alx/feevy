@@ -33,6 +33,7 @@ class ManageController < ApplicationController
           begin
             # Create or find a feed using specified blog url
             feed = Feed.create_from_blog(blog)
+            raise "Empty feed" if feed.nil?
             flash[:message] = "Feed has been added to your Feevy list."
             if @user.add_subscription(feed).nil?
               flash[:message] = "You've already got this feed in your Feevy."
