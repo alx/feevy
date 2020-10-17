@@ -6,7 +6,7 @@ Display content from other blogs at your website with just one simple html tag.
 * Each user has got a special code to display his feevy bar
 * Css customization available
 * Tag system to filter out feeds to display
-* Avatar can be set for each subscription
+* An avatar can be set for each subscription
 
 Example of sites using Feevy:
 
